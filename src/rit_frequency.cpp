@@ -11,7 +11,7 @@ void RITFrequency::setRITFrequency(const std::string &input)
 
     if (std::regex_match(input, regex))
     {
-        double value = std::stod(input);
+        int value = std::stoi(input);
 
         frequencyInHz = value;
     }
