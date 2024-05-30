@@ -28,7 +28,7 @@ short int RITFrequency::getRITFrequencyInHz() const
 
 std::string RITFrequency::getRITFrequencyString()
 {
-    char formattedFrequency[5];
+    char formattedFrequency[6];
     std::sprintf(formattedFrequency, "%+05d", frequencyInHz);
 
     return formattedFrequency;

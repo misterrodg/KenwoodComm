@@ -28,7 +28,7 @@ unsigned short int StepFrequency::getStepFrequencyInHz() const
 
 std::string StepFrequency::getStepFrequencyString()
 {
-    char formattedFrequency[5];
+    char formattedFrequency[6];
     std::sprintf(formattedFrequency, "%05d", frequencyInHz);
 
     return formattedFrequency;
