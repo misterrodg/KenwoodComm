@@ -1,0 +1,24 @@
+#ifndef PARAMETERS_H
+#define PARAMETERS_H
+
+enum class Parameters
+{
+    SWITCH,
+    MODE,
+    FUNCTION,
+    FREQUENCY,
+    RIT_FREQUENCY,
+    STEP_FREQUENCY,
+    MEMORY_CHANNEL,
+    MEMORY_BANK,
+    MEMORY_CHANNEL_SPLIT,
+    MEMORY_LOCK,
+    RX_TX,
+    PASSBAND,
+    OFFSET,
+    TONE_FREQUENCY,
+    CALL_SIGN,
+    MODEL_NUMBER
+};
+
+#endif
