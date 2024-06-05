@@ -17,10 +17,14 @@ void initialize()
     }
     else
     {
-        std::cout << "Hello. What is your callsign?" << std::endl;
-        std::getline(std::cin, callSign);
+        bool properCallsign = false;
+        while (!properCallsign)
+        {
+            std::cout << "What is your callsign?" << std::endl;
+            std::getline(std::cin, callSign);
+            properCallsign = defaults.setCallSign(callSign);
+        }
         std::cout << "Hello, " << callSign << "!" << std::endl;
-        defaults.setCallSign(callSign);
     }
 
     if (!modelNumber.empty() && modelNumber != "UNRECOGNIZED")
@@ -29,9 +33,13 @@ void initialize()
     }
     else
     {
-        std::cout << "What is the model number of your radio?" << std::endl;
-        std::getline(std::cin, modelNumber);
-        defaults.setModelNumber(modelNumber);
+        bool properModelNumber = false;
+        while (!properModelNumber)
+        {
+            std::cout << "What is the model number of your radio?" << std::endl;
+            std::getline(std::cin, modelNumber);
+            properModelNumber = defaults.setModelNumber(modelNumber);
+        }
     }
 
     defaults.save();
