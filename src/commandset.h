@@ -3,17 +3,20 @@
 
 #include <string>
 #include <vector>
-#include "commands.h"
+#include "command.h"
+#include "helpers.h"
 #include "radios.h"
 
 class Commandset
 {
 private:
-    std::vector<Commands> availableCommands;
+    std::vector<Command::CommandEnum> availableCommands;
 
 public:
-    Commandset(Radios radioType);
-    std::vector<Commands> getAvailableCommands();
+    Commandset(Radios radioType = Radios::UNRECOGNIZED);
+    std::vector<Command::CommandEnum> getAvailableCommands();
+    void printAvailableCommands();
+    bool verifyCommand(std::string command);
 };
 
 #endif
