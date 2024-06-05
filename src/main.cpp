@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-void initialize()
+Defaults initialize()
 {
     std::string filepath = "./DEFAULTS.txt";
     Defaults defaults(filepath);
@@ -43,11 +43,13 @@ void initialize()
     }
 
     defaults.save();
+
+    return defaults;
 }
 
 int main()
 {
-    initialize();
+    Defaults defaults = initialize();
 
     return 0;
 }
