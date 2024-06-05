@@ -61,9 +61,14 @@ bool Defaults::setCallSign(const std::string newCallSign)
     return callSign.setCallSign(newCallSign);
 }
 
-std::string Defaults::getModelNumber()
+ModelNumber Defaults::getModelNumber()
 {
-    return modelNumber.getModelNumber();
+    return modelNumber;
+}
+
+std::string Defaults::getModelNumberString()
+{
+    return modelNumber.getModelNumberString();
 }
 
 bool Defaults::setModelNumber(const std::string newModelNumber)
@@ -84,7 +89,7 @@ void Defaults::save()
         }
 
         outputFile << CALLSIGN_KEY << callSign.getCallSignString() << "\n";
-        outputFile << MODEL_NUMBER_KEY << modelNumber.getModelNumber() << "\n";
+        outputFile << MODEL_NUMBER_KEY << modelNumber.getModelNumberString() << "\n";
 
         outputFile.close();
 

@@ -13,7 +13,8 @@ public:
     Defaults(const std::string filePath);
     std::string getCallSign();
     bool setCallSign(const std::string newCallSign);
-    std::string getModelNumber();
+    ModelNumber getModelNumber();
+    std::string getModelNumberString();
     bool setModelNumber(const std::string newModelNumber);
     void save();
 

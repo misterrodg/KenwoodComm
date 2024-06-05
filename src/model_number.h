@@ -10,7 +10,8 @@ class ModelNumber
 public:
     ModelNumber();
     bool setModelNumber(const std::string &input);
-    std::string getModelNumber();
+    Radios getModelNumber();
+    std::string getModelNumberString();
     std::string getGeneric();
 
 private:

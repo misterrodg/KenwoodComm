@@ -9,7 +9,7 @@ Defaults initialize()
     Defaults defaults(filepath);
 
     std::string callSign = defaults.getCallSign();
-    std::string modelNumber = defaults.getModelNumber();
+    std::string modelNumber = defaults.getModelNumberString();
 
     if (!callSign.empty())
     {

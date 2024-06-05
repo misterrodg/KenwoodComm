@@ -48,7 +48,12 @@ bool ModelNumber::setModelNumber(const std::string &input)
     return result;
 }
 
-std::string ModelNumber::getModelNumber()
+Radios ModelNumber::getModelNumber()
+{
+    return modelNumber;
+}
+
+std::string ModelNumber::getModelNumberString()
 {
     switch (modelNumber)
     {
