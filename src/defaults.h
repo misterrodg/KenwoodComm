@@ -12,9 +12,9 @@ class Defaults
 public:
     Defaults(const std::string filePath);
     std::string getCallSign();
-    void setCallSign(const std::string newCallSign);
+    bool setCallSign(const std::string newCallSign);
     std::string getModelNumber();
-    void setModelNumber(const std::string newModelNumber);
+    bool setModelNumber(const std::string newModelNumber);
     void save();
 
 private:

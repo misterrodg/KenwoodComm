@@ -55,10 +55,10 @@ std::string Defaults::getCallSign()
     return callSign.getCallSignString();
 }
 
-void Defaults::setCallSign(const std::string newCallSign)
+bool Defaults::setCallSign(const std::string newCallSign)
 {
     defaultsChanged = true;
-    callSign.setCallSign(newCallSign);
+    return callSign.setCallSign(newCallSign);
 }
 
 std::string Defaults::getModelNumber()
@@ -66,10 +66,10 @@ std::string Defaults::getModelNumber()
     return modelNumber.getModelNumber();
 }
 
-void Defaults::setModelNumber(const std::string newModelNumber)
+bool Defaults::setModelNumber(const std::string newModelNumber)
 {
     defaultsChanged = true;
-    modelNumber.setModelNumber(newModelNumber);
+    return modelNumber.setModelNumber(newModelNumber);
 }
 
 void Defaults::save()
