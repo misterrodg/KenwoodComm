@@ -1,4 +1,5 @@
 #include "defaults.h"
+#include "session.h"
 
 #include <iostream>
 #include <string>
@@ -50,6 +51,16 @@ Defaults initialize()
 int main()
 {
     Defaults defaults = initialize();
+    Session session(defaults.getModelNumber());
+
+    std::string command = "";
+
+    while (session.sessionOpen)
+    {
+        std::cout << ":: ";
+        std::getline(std::cin, command);
+        session.SendCommand(command);
+    }
 
     return 0;
 }
