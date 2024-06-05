@@ -1,22 +1,25 @@
 #include "call_sign.h"
 #include <regex>
-#include <stdexcept>
 
 CallSign::CallSign() : callSign(0) {}
 
-void CallSign::setCallSign(const std::string &input)
+bool CallSign::setCallSign(const std::string &input)
 {
+    bool result = false;
+
     std::regex regex(R"(^[a-zA-Z0-9]{3,6}$)");
     std::smatch match;
 
     if (std::regex_match(input, regex))
     {
-        callSign = input;
+        result = true;
     }
     else
     {
-        throw std::invalid_argument("Invalid call sign format");
+        printf("Invalid call sign format.\n");
     }
+
+    return result;
 }
 
 std::string CallSign::getCallSignString()

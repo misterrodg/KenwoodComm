@@ -1,7 +1,6 @@
 #include "model_number.h"
 #include <algorithm>
 #include <regex>
-#include <stdexcept>
 
 ModelNumber::ModelNumber() : modelNumber() {}
 
@@ -34,19 +33,27 @@ Radios ModelNumber::parseUnit(const std::string &modelStr)
     return Radios::UNRECOGNIZED;
 }
 
-void ModelNumber::setModelNumber(const std::string &input)
+bool ModelNumber::setModelNumber(const std::string &input)
 {
-    std::regex regex(R"(TS\d{3}[ABES])");
+    bool result = false;
+
+    std::regex regex(R"(TS\d{3}[ABES])", std::regex_constants::icase);
     std::smatch match;
 
     if (std::regex_match(input, regex))
     {
         modelNumber = parseUnit(input);
+        if (modelNumber != Radios::UNRECOGNIZED)
+        {
+            result = true;
+        }
     }
     else
     {
-        throw std::invalid_argument("Invalid channel format");
+        printf("Unrecognized model number.\n");
     }
+
+    return result;
 }
 
 std::string ModelNumber::getModelNumber()

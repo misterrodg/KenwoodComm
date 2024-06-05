@@ -8,7 +8,7 @@ class ModelNumber
 {
 public:
     ModelNumber();
-    void setModelNumber(const std::string &input);
+    bool setModelNumber(const std::string &input);
     std::string getModelNumber();
     std::string getGeneric();
 

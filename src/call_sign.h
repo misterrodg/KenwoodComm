@@ -8,7 +8,7 @@ class CallSign
 {
 public:
     CallSign();
-    void setCallSign(const std::string &input);
+    bool setCallSign(const std::string &input);
     std::string getCallSignString();
 
 private:
