@@ -31,6 +31,7 @@ Radios ModelNumber::parseUnit(const std::string &modelStr)
         return Radios::TS811E;
     if (lowerStr == "ts940s")
         return Radios::TS940S;
+    return Radios::UNRECOGNIZED;
 }
 
 void ModelNumber::setModelNumber(const std::string &input)
@@ -68,6 +69,8 @@ std::string ModelNumber::getModelNumber()
         return "TS811E";
     case Radios::TS940S:
         return "TS940S";
+    default:
+        return "UNRECOGNIZED";
     }
 }
 
@@ -91,5 +94,7 @@ std::string ModelNumber::getGeneric()
         return "811";
     case Radios::TS940S:
         return "940";
+    default:
+        return "UNRECOGNIZED";
     }
 }

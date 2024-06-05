@@ -10,7 +10,8 @@ enum class Radios
     TS811A,
     TS811B,
     TS811E,
-    TS940S
+    TS940S,
+    UNRECOGNIZED
 };
 
 #endif
