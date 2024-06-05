@@ -1,7 +1,7 @@
 #include "call_sign.h"
 #include <regex>
 
-CallSign::CallSign() : callSign(0) {}
+CallSign::CallSign() : callSign("") {}
 
 bool CallSign::setCallSign(const std::string &input)
 {
@@ -12,6 +12,7 @@ bool CallSign::setCallSign(const std::string &input)
 
     if (std::regex_match(input, regex))
     {
+        callSign = Helpers::toUpper(input);
         result = true;
     }
     else

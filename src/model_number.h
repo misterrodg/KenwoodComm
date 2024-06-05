@@ -1,6 +1,7 @@
 #ifndef MODEL_NUMBER_H
 #define MODEL_NUMBER_H
 
+#include "helpers.h"
 #include "radios.h"
 #include <string>
 
@@ -14,7 +15,6 @@ public:
 
 private:
     static Radios parseUnit(const std::string &unitStr);
-    static std::string toLower(const std::string &str);
 
     Radios modelNumber = Radios::UNRECOGNIZED;
 };

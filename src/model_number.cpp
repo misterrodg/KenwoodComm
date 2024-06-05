@@ -1,19 +1,11 @@
 #include "model_number.h"
-#include <algorithm>
 #include <regex>
 
-ModelNumber::ModelNumber() : modelNumber() {}
-
-std::string ModelNumber::toLower(const std::string &str)
-{
-    std::string lowerStr = str;
-    std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
-    return lowerStr;
-}
+ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {}
 
 Radios ModelNumber::parseUnit(const std::string &modelStr)
 {
-    std::string lowerStr = toLower(modelStr);
+    std::string lowerStr = Helpers::toLower(modelStr);
     if (lowerStr == "ts140s")
         return Radios::TS140S;
     if (lowerStr == "ts680s")
