@@ -3,7 +3,6 @@
 
 #include "helpers.h"
 #include <string>
-#include <cstdint>
 
 class CallSign
 {
