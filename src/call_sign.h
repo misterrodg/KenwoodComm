@@ -12,7 +12,7 @@ public:
     std::string getCallSignString();
 
 private:
-    std::string callSign;
+    std::string callSign = "";
 };
 
 #endif
