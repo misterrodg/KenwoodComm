@@ -248,13 +248,25 @@ std::vector<Command::CommandEnum> Commandset::getAvailableCommands()
     return availableCommands;
 }
 
-void Commandset::printAvailableCommands()
+void Commandset::printAvailableCommands(bool expand)
 {
     printf("Your available commands are: ");
+    if (expand)
+    {
+        printf("\n");
+    }
     for (size_t i = 0; i < availableCommands.size(); ++i)
     {
         std::string value = Command::commandToString(availableCommands[i]);
-        printf("%s ", value.c_str());
+        if (expand)
+        {
+            std::string expandedValue = Command::commandToStringExpanded(availableCommands[i]);
+            printf("%s: %s\n", value.c_str(), expandedValue.c_str());
+        }
+        else
+        {
+            printf("%s ", value.c_str());
+        }
     }
     printf("\n");
 }

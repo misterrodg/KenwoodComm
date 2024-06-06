@@ -15,7 +15,7 @@ private:
 public:
     Commandset(Radios radioType = Radios::UNRECOGNIZED);
     std::vector<Command::CommandEnum> getAvailableCommands();
-    void printAvailableCommands();
+    void printAvailableCommands(bool expand = false);
     bool verifyCommand(std::string command);
 };
 

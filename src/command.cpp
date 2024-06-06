@@ -99,3 +99,52 @@ std::string Command::commandToString(const Command::CommandEnum &command)
     }
     return "";
 }
+
+std::string Command::commandToStringExpanded(const Command::CommandEnum &command)
+{
+    static const std::map<Command::CommandEnum, std::string> enumMap = {
+        {Command::CommandEnum::AI, "AUTO INFORMATION"},
+        {Command::CommandEnum::AT, "ANTENNA TUNER"},
+        {Command::CommandEnum::DI, "DCS ID"},
+        {Command::CommandEnum::DN, "DOWN"},
+        {Command::CommandEnum::DS, "DCS"},
+        {Command::CommandEnum::FA, "FREQUENCY VFO A"},
+        {Command::CommandEnum::FB, "FREQUENCY VFO B"},
+        {Command::CommandEnum::FN, "FUNCTION"},
+        {Command::CommandEnum::HD, "SCAN HOLD"},
+        {Command::CommandEnum::ID, "ID"},
+        {Command::CommandEnum::IF, "INFORMATION"},
+        {Command::CommandEnum::LK, "LOCK"},
+        {Command::CommandEnum::LO, "LOCAL"},
+        {Command::CommandEnum::MC, "MEMORY CHANNEL"},
+        {Command::CommandEnum::MD, "MODE"},
+        {Command::CommandEnum::MR, "MEMORY READ"},
+        {Command::CommandEnum::MS, "MEMORY SCAN"},
+        {Command::CommandEnum::MW, "MEMORY WRITE"},
+        {Command::CommandEnum::OS, "OFFSET"},
+        {Command::CommandEnum::RC, "RIT CLEAR"},
+        {Command::CommandEnum::RD, "RIT DOWN"},
+        {Command::CommandEnum::RU, "RIT UP"},
+        {Command::CommandEnum::RT, "RIT"},
+        {Command::CommandEnum::RX, "RX"},
+        {Command::CommandEnum::SC, "SCAN"},
+        {Command::CommandEnum::SH, "SLOPE TUNE HIGH"},
+        {Command::CommandEnum::SL, "SLOPE TUNE LOW"},
+        {Command::CommandEnum::SP, "SPLIT"},
+        {Command::CommandEnum::ST, "STEP"},
+        {Command::CommandEnum::TN, "TONE NUMBER"},
+        {Command::CommandEnum::TO, "TONE"},
+        {Command::CommandEnum::TX, "TX"},
+        {Command::CommandEnum::UP, "UP"},
+        {Command::CommandEnum::VB, "VBT"},
+        {Command::CommandEnum::VR, "VOICE RECALL"},
+        {Command::CommandEnum::XT, "XIT"},
+    };
+
+    auto it = enumMap.find(command);
+    if (it != enumMap.end())
+    {
+        return it->second;
+    }
+    return "";
+}

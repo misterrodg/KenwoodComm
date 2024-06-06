@@ -49,6 +49,7 @@ public:
     };
     static CommandEnum stringToCommand(const std::string &commandString);
     static std::string commandToString(const CommandEnum &command);
+    static std::string commandToStringExpanded(const CommandEnum &command);
     static const int COMMAND_LENGTH;
 };
 
