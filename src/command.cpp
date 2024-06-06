@@ -1,5 +1,7 @@
 #include "command.h"
 
+const int Command::COMMAND_LENGTH = 2;
+
 Command::CommandEnum Command::stringToCommand(const std::string &commandString)
 {
     static const std::map<std::string, Command::CommandEnum> enumMap = {

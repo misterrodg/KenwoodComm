@@ -59,7 +59,7 @@ int main()
     {
         std::cout << ":: ";
         std::getline(std::cin, command);
-        session.SendCommand(command);
+        session.CheckCommand(command);
     }
 
     return 0;

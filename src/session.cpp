@@ -7,30 +7,49 @@ Session::Session(ModelNumber modelNumber)
     availableCommands.printAvailableCommands();
 }
 
-void Session::SendCommand(std::string command)
+void Session::CheckCommand(std::string command)
 {
+    bool validCommand = false;
     std::string commandUpper = Helpers::toUpper(command);
 
     if (commandUpper == "COMMANDS")
     {
         availableCommands.printAvailableCommands();
+        validCommand = true;
+    }
+
+    if (commandUpper == "COMMANDHELP")
+    {
+        availableCommands.printAvailableCommands(true);
+        validCommand = true;
+    }
+
+    if (startsWithCommand(commandUpper))
+    {
+        SendCommand(commandUpper);
+        validCommand = true;
     }
 
     if (commandUpper == "EXIT")
     {
         printf("Closing the session.\n");
+        validCommand = true;
         sessionOpen = false;
     }
-    else
+
+    if (!validCommand)
     {
-        bool validCommand = availableCommands.verifyCommand(command);
-        if (validCommand)
-        {
-            printf("Command Sent.\n");
-        }
-        else
-        {
-            printf("Invalid Command.\n");
-        }
+        printf("Invalid Command.\n");
     }
+}
+
+void Session::SendCommand(std::string command)
+{
+    printf("Sending: %s\n", command.c_str());
+}
+
+bool Session::startsWithCommand(const std::string &fullCommand)
+{
+    std::string commandChars = fullCommand.substr(0, Command::COMMAND_LENGTH);
+    return availableCommands.verifyCommand(commandChars);
 }

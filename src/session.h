@@ -1,6 +1,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
+#include "command.h"
 #include "commandset.h"
 #include "helpers.h"
 #include "model_number.h"
@@ -10,10 +11,12 @@ class Session
 {
 public:
     Session(ModelNumber modelNumber);
+    void CheckCommand(std::string command);
     void SendCommand(std::string command);
     bool sessionOpen = true;
 
 private:
+    bool startsWithCommand(const std::string &fullCommand);
     Commandset availableCommands = {};
 };
 
