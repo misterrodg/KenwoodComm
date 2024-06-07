@@ -24,6 +24,11 @@ When running the program for the first time, it will prompt you for your callsig
 - `commandhelp`: Displays the same list as above, with the meaning of the command identifiers.
 - `exit`: Closes the terminal connection and exits the program.
 
-At the moment, using any of the available commands will display `Sending: XX`, where `XX` is the command.
+### Control Commands
+
+- `AI`: Parameters `ON` or `OFF`.
+- `AT`: Parameters `NONE` (ignores any additional characters).
+
+At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command.`.
-At the moment, no data is sent.
+No data is sent via the planned serial connection.
