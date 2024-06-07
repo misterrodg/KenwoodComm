@@ -69,6 +69,11 @@ void Session::SendCommand(std::string command)
     }
 }
 
+void Session::parameterWarning(const std::string &commandPrefixString, const std::string &parameter)
+{
+    printf("%s accepts no parameters. Ignoring \"%s\" and sending standard %s command.\n", commandPrefixString.c_str(), parameter.c_str(), commandPrefixString.c_str());
+}
+
 bool Session::startsWithCommand(const std::string &fullCommand)
 {
     std::string commandChars = getCommand(fullCommand);

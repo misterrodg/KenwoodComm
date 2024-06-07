@@ -18,6 +18,7 @@ public:
     bool sessionOpen = true;
 
 private:
+    void parameterWarning(const std::string &commandPrefixString, const std::string &parameter);
     bool startsWithCommand(const std::string &fullCommand);
     std::string getCommand(const std::string &fullCommand);
     std::string getParameter(const std::string &fullCommand);
