@@ -17,6 +17,8 @@ public:
 
 private:
     bool startsWithCommand(const std::string &fullCommand);
+    std::string getCommand(const std::string &fullCommand);
+    std::string getParameter(const std::string &fullCommand);
     Commandset availableCommands = {};
 };
 

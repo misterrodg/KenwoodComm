@@ -45,11 +45,29 @@ void Session::CheckCommand(std::string command)
 
 void Session::SendCommand(std::string command)
 {
-    printf("Sending: %s\n", command.c_str());
+    std::string commandPrefixString = getCommand(command);
+    CommandPrefix::CommandPrefixEnum commandPrefixEnum = CommandPrefix::StringToCommandPrefix(commandPrefixString);
+    std::string parameter = getParameter(command);
+
+    switch (commandPrefixEnum)
+    {
+    default:
+        printf("Command \"%s\" Not Implemented.\n", command.c_str());
+    }
 }
 
 bool Session::startsWithCommand(const std::string &fullCommand)
 {
-    std::string commandChars = fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH);
+    std::string commandChars = getCommand(fullCommand);
     return availableCommands.verifyCommand(commandChars);
+}
+
+std::string Session::getCommand(const std::string &fullCommand)
+{
+    return fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH);
+}
+
+std::string Session::getParameter(const std::string &fullCommand)
+{
+    return fullCommand.substr(CommandPrefix::COMMAND_LENGTH);
 }
