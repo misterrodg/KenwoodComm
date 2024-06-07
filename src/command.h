@@ -6,6 +6,7 @@
 class Command
 {
 public:
+    Command(int &bufferLength, std::string &commandPrefix);
     Command(int &bufferLength, std::string &commandPrefix, std::string &parameter);
     std::string ToString();
 
