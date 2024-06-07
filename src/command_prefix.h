@@ -1,13 +1,13 @@
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef COMMAND_PREFIX_H
+#define COMMAND_PREFIX_H
 
 #include <map>
 #include <string>
 
-class Command
+class CommandPrefix
 {
 public:
-    enum class CommandEnum
+    enum class CommandPrefixEnum
     {
         AI, // Auto Information
         AT, // Antenna Tuner
@@ -47,9 +47,9 @@ public:
         XT, // XIT
         ZZ  // NOT A COMMAND
     };
-    static CommandEnum stringToCommand(const std::string &commandString);
-    static std::string commandToString(const CommandEnum &command);
-    static std::string commandToStringExpanded(const CommandEnum &command);
+    static CommandPrefixEnum StringToCommandPrefix(const std::string &commandString);
+    static std::string CommandToString(const CommandPrefixEnum &command);
+    static std::string CommandToStringExpanded(const CommandPrefixEnum &command);
     static const int COMMAND_LENGTH;
 };
 

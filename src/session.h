@@ -1,7 +1,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include "command.h"
+#include "command_prefix.h"
 #include "commandset.h"
 #include "helpers.h"
 #include "model_number.h"

@@ -50,6 +50,6 @@ void Session::SendCommand(std::string command)
 
 bool Session::startsWithCommand(const std::string &fullCommand)
 {
-    std::string commandChars = fullCommand.substr(0, Command::COMMAND_LENGTH);
+    std::string commandChars = fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH);
     return availableCommands.verifyCommand(commandChars);
 }
