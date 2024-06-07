@@ -2,6 +2,7 @@
 #define SESSION_H
 
 #include "auto_information.h"
+#include "antenna_tuner.h"
 #include "command_prefix.h"
 #include "commandset.h"
 #include "helpers.h"

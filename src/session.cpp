@@ -57,6 +57,13 @@ void Session::SendCommand(std::string command)
             printf("Sending: %s\n", autoInformation.ToCommand().c_str());
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::AT):
+        if (parameter != "")
+        {
+            printf("AT has accepts no parameters. Ignoring \"%s\" and sending standard AT command.\n", parameter.c_str());
+        }
+        printf("Sending: %s\n", AntennaTuner::ToCommand().c_str());
+        break;
     default:
         printf("Command \"%s\" Not Implemented.\n", command.c_str());
     }
