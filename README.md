@@ -26,10 +26,13 @@ When running the program for the first time, it will prompt you for your callsig
 
 ### Control Commands
 
+Any command that expects `NONE` for parameters will ignore anything beyond the command itself.
+
 - `AI`: Parameters `ON` or `OFF`.
-- `AT`: Parameters `NONE` (ignores any additional characters).
-- `DN`: Parameters `NONE` (ignores any additional characters).
-- `UP`: Parameters `NONE` (ignores any additional characters).
+- `AT`: Parameters `NONE`.
+- `DI`: Parameters `NONE`.
+- `DN`: Parameters `NONE`.
+- `UP`: Parameters `NONE`.
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command.`.

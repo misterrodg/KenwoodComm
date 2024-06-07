@@ -8,7 +8,7 @@ BUILD_DIR = build
 
 # Source files
 # SRC = $(wildcard $(SRC_DIR)/*.cpp)
-SRC = src/main.cpp src/helpers.cpp src/antenna_tuner.cpp src/auto_information.cpp src/call_sign.cpp src/command.cpp src/command_prefix.cpp src/commandset.cpp src/defaults.cpp src/dn_up.cpp src/model_number.cpp src/session.cpp src/switch.cpp
+SRC = src/main.cpp src/helpers.cpp src/antenna_tuner.cpp src/auto_information.cpp src/call_sign.cpp src/command.cpp src/command_prefix.cpp src/commandset.cpp src/defaults.cpp src/dcs_id.cpp src/dn_up.cpp src/model_number.cpp src/session.cpp src/switch.cpp
 
 # Object files (place in the build directory)
 OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC))

@@ -5,6 +5,7 @@
 #include "antenna_tuner.h"
 #include "command_prefix.h"
 #include "commandset.h"
+#include "dcs_id.h"
 #include "dn_up.h"
 #include "helpers.h"
 #include "model_number.h"

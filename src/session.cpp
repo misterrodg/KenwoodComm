@@ -64,6 +64,13 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", AntennaTuner::ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::DI):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", DcsId::ToCommand().c_str());
+        break;
     case (CommandPrefix::CommandPrefixEnum::DN):
         if (parameter != "")
         {
