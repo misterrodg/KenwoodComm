@@ -22,7 +22,7 @@ std::string AutoInformation::ToCommand()
 {
     std::string command = CommandPrefix::CommandToString(CommandPrefix::CommandPrefixEnum::AI);
     std::string enabledString = Switch::SwitchToBoolString(enabled);
-    int bufferLength = CommandPrefix::COMMAND_LENGTH + Switch::MAX_SWITCH_LENGTH + Command::COMMAND_TERMINATOR_LENGTH + 1;
+    int bufferLength = CommandPrefix::COMMAND_LENGTH + Switch::MAX_SWITCH_LENGTH;
 
-    return Command::CreateCommand(bufferLength, command, enabledString);
+    return Command(bufferLength, command, enabledString).ToString();
 }

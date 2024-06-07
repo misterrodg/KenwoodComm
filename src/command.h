@@ -6,9 +6,13 @@
 class Command
 {
 public:
-    Command();
-    static std::string CreateCommand(int &bufferLength, std::string &commandPrefix, std::string &parameter);
+    Command(int &bufferLength, std::string &commandPrefix, std::string &parameter);
+    std::string ToString();
+
+private:
+    std::string commandString;
     static const int COMMAND_TERMINATOR_LENGTH;
+    static const int NULL_TERMINATOR_LENGTH;
 };
 
 #endif
