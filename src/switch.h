@@ -14,6 +14,7 @@ public:
         UNKNOWN
     };
     static SwitchEnum StringToSwitch(const std::string &switchString);
+    static std::string SwitchToBoolString(const SwitchEnum &switchEnum);
     static std::string SwitchToString(const SwitchEnum &switchEnum);
     static const int MAX_SWITCH_LENGTH;
 };

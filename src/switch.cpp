@@ -16,6 +16,20 @@ Switch::SwitchEnum Switch::StringToSwitch(const std::string &switchString)
     return SwitchEnum::UNKNOWN;
 }
 
+std::string Switch::SwitchToBoolString(const SwitchEnum &switchEnum)
+{
+    static const std::map<Switch::SwitchEnum, std::string> enumMap = {
+        {Switch::SwitchEnum::OFF, "0"},
+        {Switch::SwitchEnum::ON, "1"}};
+
+    auto it = enumMap.find(switchEnum);
+    if (it != enumMap.end())
+    {
+        return it->second;
+    }
+    return "UNKNOWN";
+}
+
 std::string Switch::SwitchToString(const SwitchEnum &switchEnum)
 {
     static const std::map<Switch::SwitchEnum, std::string> enumMap = {

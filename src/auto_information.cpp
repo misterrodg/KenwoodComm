@@ -21,7 +21,7 @@ bool AutoInformation::SetAutoInformation(std::string &status)
 std::string AutoInformation::ToCommand()
 {
     std::string command = CommandPrefix::CommandToString(CommandPrefix::CommandPrefixEnum::AI);
-    std::string enabledString = Switch::SwitchToString(enabled);
+    std::string enabledString = Switch::SwitchToBoolString(enabled);
     int bufferLength = CommandPrefix::COMMAND_LENGTH + Switch::MAX_SWITCH_LENGTH + Command::COMMAND_TERMINATOR_LENGTH + 1;
 
     return Command::CreateCommand(bufferLength, command, enabledString);
