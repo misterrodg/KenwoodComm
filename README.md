@@ -28,6 +28,8 @@ When running the program for the first time, it will prompt you for your callsig
 
 - `AI`: Parameters `ON` or `OFF`.
 - `AT`: Parameters `NONE` (ignores any additional characters).
+- `DN`: Parameters `NONE` (ignores any additional characters).
+- `UP`: Parameters `NONE` (ignores any additional characters).
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command.`.

@@ -60,9 +60,23 @@ void Session::SendCommand(std::string command)
     case (CommandPrefix::CommandPrefixEnum::AT):
         if (parameter != "")
         {
-            printf("AT has accepts no parameters. Ignoring \"%s\" and sending standard AT command.\n", parameter.c_str());
+            parameterWarning(commandPrefixString, parameter);
         }
         printf("Sending: %s\n", AntennaTuner::ToCommand().c_str());
+        break;
+    case (CommandPrefix::CommandPrefixEnum::DN):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", DnUp(CommandPrefix::CommandPrefixEnum::DN).ToCommand().c_str());
+        break;
+    case (CommandPrefix::CommandPrefixEnum::UP):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", DnUp(CommandPrefix::CommandPrefixEnum::UP).ToCommand().c_str());
         break;
     default:
         printf("Command \"%s\" Not Implemented.\n", command.c_str());
