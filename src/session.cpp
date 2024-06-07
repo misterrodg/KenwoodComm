@@ -51,6 +51,12 @@ void Session::SendCommand(std::string command)
 
     switch (commandPrefixEnum)
     {
+    case (CommandPrefix::CommandPrefixEnum::AI):
+        if (autoInformation.SetAutoInformation(parameter))
+        {
+            printf("Sending: %s\n", autoInformation.ToCommand().c_str());
+        }
+        break;
     default:
         printf("Command \"%s\" Not Implemented.\n", command.c_str());
     }

@@ -1,6 +1,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
+#include "auto_information.h"
 #include "command_prefix.h"
 #include "commandset.h"
 #include "helpers.h"
@@ -20,6 +21,7 @@ private:
     std::string getCommand(const std::string &fullCommand);
     std::string getParameter(const std::string &fullCommand);
     Commandset availableCommands = {};
+    AutoInformation autoInformation;
 };
 
 #endif
