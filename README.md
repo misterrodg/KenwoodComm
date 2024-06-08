@@ -26,14 +26,15 @@ When running the program for the first time, it will prompt you for your callsig
 
 ### Control Commands
 
-Any command that expects `NONE` for parameters will ignore anything beyond the command itself.
+Any command that expects only `NONE` for its parameter will ignore anything beyond the command itself.
 
 - `AI`: Parameters `ON` or `OFF`.
 - `AT`: Parameters `NONE`.
 - `DI`: Parameters `NONE`.
+- `DS`: Parameters `ON`, `OFF`, or `NONE`.
 - `DN`: Parameters `NONE`.
 - `UP`: Parameters `NONE`.
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
-Using any command outside of the available list will display `Invalid Command.`.
+Using any command outside of the available list will display `Invalid Command`.
 No data is sent via the planned serial connection.

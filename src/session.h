@@ -5,6 +5,7 @@
 #include "antenna_tuner.h"
 #include "command_prefix.h"
 #include "commandset.h"
+#include "dcs.h"
 #include "dcs_id.h"
 #include "dn_up.h"
 #include "helpers.h"
@@ -26,6 +27,7 @@ private:
     std::string getParameter(const std::string &fullCommand);
     Commandset availableCommands = {};
     AutoInformation autoInformation;
+    Dcs dcs;
 };
 
 #endif

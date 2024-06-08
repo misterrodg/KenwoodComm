@@ -71,6 +71,20 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", DcsId::ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::DS):
+        if (parameter != "")
+        {
+            if (dcs.SetDcs(parameter))
+            {
+                printf("Sending: %s\n", dcs.ToCommand(true).c_str());
+            }
+        }
+        else
+        {
+            printf("Sending: %s\n", dcs.ToCommand().c_str());
+        }
+
+        break;
     case (CommandPrefix::CommandPrefixEnum::DN):
         if (parameter != "")
         {
