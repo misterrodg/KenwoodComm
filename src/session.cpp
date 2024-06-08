@@ -1,7 +1,8 @@
 #include "session.h"
 
-Session::Session(ModelNumber modelNumber)
+Session::Session(ModelNumber modelNumberEnum)
 {
+    modelNumber = modelNumberEnum;
     Commandset commands(modelNumber.getModelNumber());
     availableCommands = commands;
     availableCommands.printAvailableCommands();
@@ -117,6 +118,20 @@ void Session::SendCommand(std::string command)
         else
         {
             printf("Sending: %s\n", vfoB.ToCommand().c_str());
+        }
+        break;
+    case (CommandPrefix::CommandPrefixEnum::FN):
+        if (parameter == "")
+        {
+            printf("Command \"FN\" requires a parameter.\n");
+        }
+        else
+        {
+            Fn fn(modelNumber);
+            if (fn.SetFn(parameter))
+            {
+                printf("Sending: %s\n", fn.ToCommand().c_str());
+            }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::UP):

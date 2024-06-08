@@ -8,6 +8,8 @@
 #include "dcs.h"
 #include "dcs_id.h"
 #include "dn_up.h"
+#include "fn.h"
+#include "function.h"
 #include "helpers.h"
 #include "model_number.h"
 #include "vfo.h"
@@ -26,6 +28,7 @@ private:
     bool startsWithCommand(const std::string &fullCommand);
     std::string getCommand(const std::string &fullCommand);
     std::string getParameter(const std::string &fullCommand);
+    ModelNumber modelNumber;
     Commandset availableCommands = {};
     AutoInformation autoInformation;
     Dcs dcs;
