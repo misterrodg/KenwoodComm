@@ -11,6 +11,7 @@
 #include "fn.h"
 #include "function.h"
 #include "helpers.h"
+#include "hold.h"
 #include "model_number.h"
 #include "vfo.h"
 #include <string>
@@ -32,6 +33,7 @@ private:
     Commandset availableCommands = {};
     AutoInformation autoInformation;
     Dcs dcs;
+    Hold hold;
     VFO vfoA;
     VFO vfoB;
 };

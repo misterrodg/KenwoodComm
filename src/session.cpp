@@ -134,6 +134,19 @@ void Session::SendCommand(std::string command)
             }
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::HD):
+        if (parameter != "")
+        {
+            if (hold.SetHold(parameter))
+            {
+                printf("Sending: %s\n", hold.ToCommand(true).c_str());
+            }
+        }
+        else
+        {
+            printf("Sending: %s\n", hold.ToCommand().c_str());
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {
