@@ -38,6 +38,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 - `FB`: Parameters `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.
 - `FN`: Parameters `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.
 - `HD`: Parameters `ON`, `OFF`, or `NONE`.
+- `ID`: Parameters `ID`.
 - `UP`: Parameters `NONE`.
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
