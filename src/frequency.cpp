@@ -1,14 +1,12 @@
 #include "frequency.h"
-#include "frequency_unit.h"
-#include <regex>
-#include <stdexcept>
-#include <algorithm>
-#include <cctype>
+
+const int Frequency::MAX_FREQUENCY_LENGTH = 11;
 
 Frequency::Frequency() : frequencyInHz(0) {}
 
-void Frequency::setFrequency(const std::string &input)
+bool Frequency::setFrequency(const std::string &input)
 {
+    bool result = false;
     std::regex regex(R"((\d+(\.\d+)?)([a-zA-Z]+))");
     std::smatch match;
 
@@ -18,12 +16,21 @@ void Frequency::setFrequency(const std::string &input)
         std::string unit = match[3].str();
 
         FrequencyUnit::Unit frequencyUnit = FrequencyUnit::parseUnit(unit);
-        frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
+        if (frequencyUnit != FrequencyUnit::UNKNOWN)
+        {
+            frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
+            result = true;
+        }
+        else
+        {
+            printf("Unknown frequency unit. Valid values are Hz, kHz, MHz or GHz.\n");
+        }
     }
     else
     {
-        throw std::invalid_argument("Invalid frequency format");
+        printf("Invalid frequency format.\n");
     }
+    return result;
 }
 
 uint64_t Frequency::getFrequencyInHz() const
@@ -34,7 +41,7 @@ uint64_t Frequency::getFrequencyInHz() const
 std::string Frequency::getFrequencyString()
 {
     char formattedFrequency[12];
-    std::sprintf(formattedFrequency, "%011lu", frequencyInHz);
+    snprintf(formattedFrequency, sizeof(formattedFrequency), "%011llu", frequencyInHz);
 
     return formattedFrequency;
 }

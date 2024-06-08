@@ -1,17 +1,8 @@
 #include "frequency_unit.h"
-#include <algorithm>
-#include <stdexcept>
-
-std::string FrequencyUnit::toLower(const std::string &str)
-{
-    std::string lowerStr = str;
-    std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
-    return lowerStr;
-}
 
 FrequencyUnit::Unit FrequencyUnit::parseUnit(const std::string &unitStr)
 {
-    std::string lowerStr = toLower(unitStr);
+    std::string lowerStr = Helpers::toLower(unitStr);
     if (lowerStr == "hz")
         return HZ;
     if (lowerStr == "khz")
@@ -20,6 +11,7 @@ FrequencyUnit::Unit FrequencyUnit::parseUnit(const std::string &unitStr)
         return MHZ;
     if (lowerStr == "ghz")
         return GHZ;
+    return UNKNOWN;
 }
 
 double FrequencyUnit::toHz(double value, Unit unit)
@@ -35,6 +27,6 @@ double FrequencyUnit::toHz(double value, Unit unit)
     case GHZ:
         return value * 1e9;
     default:
-        throw std::invalid_argument("Unknown frequency unit. Valid values are Hz, kHz, MHz or GHz.");
+        return 0;
     }
 }
