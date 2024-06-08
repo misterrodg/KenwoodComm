@@ -26,6 +26,7 @@ When running the program for the first time, it will prompt you for your callsig
 
 ### Control Commands
 
+All commands are case-insensitive, and will always be translated to all caps.
 Any command that expects only `NONE` for its parameter will ignore anything beyond the command itself.
 
 - `AI`: Parameters `ON` or `OFF`.
