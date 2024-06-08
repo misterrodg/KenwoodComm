@@ -10,6 +10,7 @@
 #include "dn_up.h"
 #include "helpers.h"
 #include "model_number.h"
+#include "vfo.h"
 #include <string>
 
 class Session
@@ -28,6 +29,8 @@ private:
     Commandset availableCommands = {};
     AutoInformation autoInformation;
     Dcs dcs;
+    VFO vfoA;
+    VFO vfoB;
 };
 
 #endif

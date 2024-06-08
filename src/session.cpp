@@ -5,6 +5,8 @@ Session::Session(ModelNumber modelNumber)
     Commandset commands(modelNumber.getModelNumber());
     availableCommands = commands;
     availableCommands.printAvailableCommands();
+    vfoA.SetId(CommandPrefix::CommandPrefixEnum::FA);
+    vfoB.SetId(CommandPrefix::CommandPrefixEnum::FB);
 }
 
 void Session::CheckCommand(std::string command)
@@ -83,7 +85,6 @@ void Session::SendCommand(std::string command)
         {
             printf("Sending: %s\n", dcs.ToCommand().c_str());
         }
-
         break;
     case (CommandPrefix::CommandPrefixEnum::DN):
         if (parameter != "")
@@ -91,6 +92,32 @@ void Session::SendCommand(std::string command)
             parameterWarning(commandPrefixString, parameter);
         }
         printf("Sending: %s\n", DnUp(CommandPrefix::CommandPrefixEnum::DN).ToCommand().c_str());
+        break;
+    case (CommandPrefix::CommandPrefixEnum::FA):
+        if (parameter != "")
+        {
+            if (vfoA.SetFrequency(parameter))
+            {
+                printf("Sending: %s\n", vfoA.ToCommand(true).c_str());
+            }
+        }
+        else
+        {
+            printf("Sending: %s\n", vfoA.ToCommand().c_str());
+        }
+        break;
+    case (CommandPrefix::CommandPrefixEnum::FB):
+        if (parameter != "")
+        {
+            if (vfoB.SetFrequency(parameter))
+            {
+                printf("Sending: %s\n", vfoB.ToCommand(true).c_str());
+            }
+        }
+        else
+        {
+            printf("Sending: %s\n", vfoB.ToCommand().c_str());
+        }
         break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
