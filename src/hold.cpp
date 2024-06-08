@@ -20,7 +20,7 @@ bool Hold::SetHold(std::string &status)
 
 std::string Hold::ToCommand(const bool &hasParam)
 {
-    std::string command = CommandPrefix::CommandToString(CommandPrefix::CommandPrefixEnum::DS);
+    std::string command = CommandPrefix::CommandToString(CommandPrefix::CommandPrefixEnum::HD);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
     if (hasParam)
