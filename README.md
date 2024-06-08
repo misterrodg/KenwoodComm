@@ -29,17 +29,19 @@ When running the program for the first time, it will prompt you for your callsig
 All commands are case-insensitive, and will always be translated to all caps.
 Any command that expects only `NONE` for its parameter will ignore anything beyond the command itself.
 
-- `AI`: Parameters `ON` or `OFF`.
-- `AT`: Parameters `NONE`.
-- `DI`: Parameters `NONE`.
-- `DS`: Parameters `ON`, `OFF`, or `NONE`.
-- `DN`: Parameters `NONE`.
-- `FA`: Parameters `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.
-- `FB`: Parameters `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.
-- `FN`: Parameters `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.
-- `HD`: Parameters `ON`, `OFF`, or `NONE`.
-- `ID`: Parameters `ID`.
-- `UP`: Parameters `NONE`.
+| Command | Parameters                                                                     |
+| ------- | ------------------------------------------------------------------------------ |
+| `AI`    | `ON` or `OFF`.                                                                 |
+| `AT`    | `NONE`.                                                                        |
+| `DI`    | `NONE`.                                                                        |
+| `DS`    | `ON`, `OFF`, or `NONE`.                                                        |
+| `DN`    | `NONE`.                                                                        |
+| `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
+| `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
+| `FN`    | `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.   |
+| `HD`    | `ON`, `OFF`, or `NONE`.                                                        |
+| `ID`    | `ID`.                                                                          |
+| `UP`    | `NONE`.                                                                        |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.
