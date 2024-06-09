@@ -31,17 +31,17 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 
 | Command | Parameters                                                                     |
 | ------- | ------------------------------------------------------------------------------ |
-| `AI`    | `ON` or `OFF`.                                                                 |
-| `AT`    | `NONE`.                                                                        |
-| `DI`    | `NONE`.                                                                        |
-| `DS`    | `ON`, `OFF`, or `NONE`.                                                        |
-| `DN`    | `NONE`.                                                                        |
+| `AI`    | `ON` or `OFF`                                                                  |
+| `AT`    | `NONE`                                                                         |
+| `DI`    | `NONE`                                                                         |
+| `DS`    | `ON`, `OFF`, or `NONE`                                                         |
+| `DN`    | `NONE`                                                                         |
 | `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
 | `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
 | `FN`    | `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.   |
-| `HD`    | `ON`, `OFF`, or `NONE`.                                                        |
-| `ID`    | `ID`.                                                                          |
-| `UP`    | `NONE`.                                                                        |
+| `HD`    | `ON`, `OFF`, or `NONE`                                                         |
+| `ID`    | `NONE`                                                                         |
+| `UP`    | `NONE`                                                                         |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.
