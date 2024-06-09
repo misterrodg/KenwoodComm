@@ -21,10 +21,6 @@ bool Frequency::setFrequency(const std::string &input)
             frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
             result = true;
         }
-        else
-        {
-            printf("Unknown frequency unit. Valid values are Hz, kHz, MHz or GHz.\n");
-        }
     }
     else
     {

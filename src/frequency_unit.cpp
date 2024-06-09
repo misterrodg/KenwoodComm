@@ -11,6 +11,7 @@ FrequencyUnit::Unit FrequencyUnit::parseUnit(const std::string &unitStr)
         return MHZ;
     if (lowerStr == "ghz")
         return GHZ;
+    printf("Unknown frequency unit. Valid values are Hz, kHz, MHz or GHz.\n");
     return UNKNOWN;
 }
 
