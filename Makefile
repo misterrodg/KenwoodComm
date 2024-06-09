@@ -8,7 +8,7 @@ BUILD_DIR = build
 
 # Source files
 # SRC = $(wildcard $(SRC_DIR)/*.cpp)
-SRC = src/main.cpp src/helpers.cpp src/command_base.cpp src/command_switch.cpp src/antenna_tuner.cpp src/auto_information.cpp src/call_sign.cpp src/command.cpp src/command_prefix.cpp src/commandset.cpp src/defaults.cpp src/dcs.cpp src/dcs_id.cpp src/dn.cpp src/fn.cpp src/frequency.cpp src/function.cpp src/frequency_unit.cpp src/hold.cpp src/id.cpp src/if.cpp src/lk.cpp src/lo.cpp src/model_number.cpp src/ms.cpp src/session.cpp src/switch.cpp src/up.cpp src/vfo.cpp
+SRC = src/main.cpp src/helpers.cpp src/command_base.cpp src/command_switch.cpp src/antenna_tuner.cpp src/auto_information.cpp src/call_sign.cpp src/command.cpp src/command_prefix.cpp src/commandset.cpp src/defaults.cpp src/dcs.cpp src/dcs_id.cpp src/dn.cpp src/fn.cpp src/frequency.cpp src/function.cpp src/frequency_unit.cpp src/hold.cpp src/id.cpp src/if.cpp src/lk.cpp src/lo.cpp src/model_number.cpp src/ms.cpp src/rc.cpp src/session.cpp src/switch.cpp src/up.cpp src/vfo.cpp
 
 # Object files (place in the build directory)
 OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC))

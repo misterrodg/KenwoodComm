@@ -17,6 +17,7 @@
 #include "lk.h"
 #include "lo.h"
 #include "ms.h"
+#include "rc.h"
 #include "model_number.h"
 #include "up.h"
 #include "vfo.h"
@@ -48,6 +49,7 @@ private:
     Lk lk;
     Lo lo;
     Ms ms;
+    Rc rc;
     Up up;
     VFO vfoA;
     VFO vfoB;
