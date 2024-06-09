@@ -55,9 +55,16 @@ void Session::SendCommand(std::string command)
     switch (commandPrefixEnum)
     {
     case (CommandPrefix::CommandPrefixEnum::AI):
-        if (autoInformation.SetAutoInformation(parameter))
+        if (parameter == "")
         {
-            printf("Sending: %s\n", autoInformation.ToCommand().c_str());
+            printf("Command \"AI\" requires a parameter.\n");
+        }
+        else
+        {
+            if (autoInformation.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", autoInformation.ToCommand().c_str());
+            }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::AT):
@@ -65,7 +72,7 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", AntennaTuner::ToCommand().c_str());
+        printf("Sending: %s\n", antennaTuner.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
@@ -75,16 +82,16 @@ void Session::SendCommand(std::string command)
         printf("Sending: %s\n", dcsId.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::DS):
-        if (parameter != "")
+        if (parameter == "")
         {
-            if (dcs.SetDcs(parameter))
-            {
-                printf("Sending: %s\n", dcs.ToCommand(true).c_str());
-            }
+            printf("Sending: %s\n", dcs.ToCommand(true).c_str());
         }
         else
         {
-            printf("Sending: %s\n", dcs.ToCommand().c_str());
+            if (dcs.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", dcs.ToCommand().c_str());
+            }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::DN):
@@ -135,16 +142,16 @@ void Session::SendCommand(std::string command)
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::HD):
-        if (parameter != "")
+        if (parameter == "")
         {
-            if (hold.SetHold(parameter))
-            {
-                printf("Sending: %s\n", hold.ToCommand(true).c_str());
-            }
+            printf("Sending: %s\n", hold.ToCommand(true).c_str());
         }
         else
         {
-            printf("Sending: %s\n", hold.ToCommand().c_str());
+            if (hold.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", hold.ToCommand().c_str());
+            }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::ID):
@@ -162,16 +169,16 @@ void Session::SendCommand(std::string command)
         printf("Sending: %s\n", information.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::LK):
-        if (parameter != "")
+        if (parameter == "")
         {
-            if (lk.SetLk(parameter))
-            {
-                printf("Sending: %s\n", lk.ToCommand(true).c_str());
-            }
+            printf("Sending: %s\n", lk.ToCommand(true).c_str());
         }
         else
         {
-            printf("Sending: %s\n", lk.ToCommand().c_str());
+            if (lk.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", lk.ToCommand().c_str());
+            }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::LO):

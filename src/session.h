@@ -36,6 +36,7 @@ private:
     std::string getParameter(const std::string &fullCommand);
     ModelNumber modelNumber;
     Commandset availableCommands = {};
+    AntennaTuner antennaTuner;
     AutoInformation autoInformation;
     DcsId dcsId;
     Dcs dcs;

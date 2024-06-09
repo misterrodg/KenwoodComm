@@ -1,20 +1,12 @@
 #ifndef AUTO_INFORMATION_H
 #define AUTO_INFORMATION_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include "switch.h"
-#include <string>
+#include "command_switch.h"
 
-class AutoInformation
+class AutoInformation : public CommandSwitch
 {
 public:
     AutoInformation();
-    bool SetAutoInformation(std::string &status);
-    std::string ToCommand();
-
-private:
-    Switch::SwitchEnum enabled;
 };
 
 #endif

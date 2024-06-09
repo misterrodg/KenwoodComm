@@ -1,20 +1,12 @@
 #ifndef HOLD_H
 #define HOLD_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include "switch.h"
-#include <string>
+#include "command_switch.h"
 
-class Hold
+class Hold : public CommandSwitch
 {
 public:
     Hold();
-    bool SetHold(std::string &status);
-    std::string ToCommand(const bool &hasParam = false);
-
-private:
-    Switch::SwitchEnum enabled;
 };
 
 #endif

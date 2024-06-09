@@ -1,18 +1,12 @@
 #ifndef ANTENNA_TUNER_H
 #define ANTENNA_TUNER_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include <string>
+#include "command_switch.h"
 
-class AntennaTuner
+class AntennaTuner : public CommandSwitch
 {
 public:
-    static std::string ToCommand();
-
-private:
-    static std::string ANTENNA_TUNER_PARAMETER;
-    static const int ANTENNA_TUNER_PARAMETER_LENGTH;
+    AntennaTuner();
 };
 
 #endif
