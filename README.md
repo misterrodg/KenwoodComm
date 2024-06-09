@@ -53,6 +53,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `SC`    | `ON` or `OFF`                                                                  |
 | `SP`    | `ON` or `OFF`                                                                  |
 | `ST`    | `ON` or `OFF`                                                                  |
+| `TO`    | `ON` or `OFF`                                                                  |
 | `TX`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 

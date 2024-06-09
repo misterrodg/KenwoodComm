@@ -26,6 +26,7 @@
 #include "sp.h"
 #include "st.h"
 #include "model_number.h"
+#include "to.h"
 #include "tx.h"
 #include "up.h"
 #include "vfo.h"
@@ -65,6 +66,7 @@ private:
     Sc sc;
     Sp sp;
     St st;
+    To to;
     Tx tx;
     Up up;
     VFO vfoA;
