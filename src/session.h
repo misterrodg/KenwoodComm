@@ -31,6 +31,7 @@
 #include "up.h"
 #include "vfo.h"
 #include "vr.h"
+#include "xt.h"
 #include <string>
 
 class Session
@@ -71,6 +72,7 @@ private:
     Tx tx;
     Up up;
     Vr vr;
+    Xt xt;
     VFO vfoA;
     VFO vfoB;
 };

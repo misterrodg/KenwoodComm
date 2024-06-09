@@ -315,6 +315,19 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", up.ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::XT):
+        if (parameter == "")
+        {
+            printf("Command \"XT\" requires a parameter.\n");
+        }
+        else
+        {
+            if (xt.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", xt.ToCommand().c_str());
+            }
+        }
+        break;
     default:
         printf("Command \"%s\" Not Implemented.\n", command.c_str());
     }
