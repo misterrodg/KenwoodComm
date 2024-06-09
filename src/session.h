@@ -21,7 +21,9 @@
 #include "rd.h"
 #include "rt.h"
 #include "ru.h"
+#include "rx.h"
 #include "model_number.h"
+#include "tx.h"
 #include "up.h"
 #include "vfo.h"
 #include <string>
@@ -56,6 +58,8 @@ private:
     Rd rd;
     Rt rt;
     Ru ru;
+    Rx rx;
+    Tx tx;
     Up up;
     VFO vfoA;
     VFO vfoB;

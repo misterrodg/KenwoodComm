@@ -47,8 +47,10 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `MS`    | `ON`, `OFF`, or `NONE`                                                         |
 | `RC`    | `NONE`                                                                         |
 | `RD`    | `NONE`                                                                         |
+| `RX`    | `NONE`                                                                         |
 | `RT`    | `ON` or `OFF`                                                                  |
 | `RU`    | `NONE`                                                                         |
+| `TX`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.

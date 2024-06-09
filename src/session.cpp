@@ -235,6 +235,20 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", ru.ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::RX):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", rx.ToCommand().c_str());
+        break;
+    case (CommandPrefix::CommandPrefixEnum::TX):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", tx.ToCommand().c_str());
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {
