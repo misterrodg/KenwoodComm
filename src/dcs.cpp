@@ -11,10 +11,6 @@ bool Dcs::SetDcs(std::string &status)
         enabled = switchEnum;
         result = true;
     }
-    else
-    {
-        printf("Unrecognized option. Options are: ON, or OFF.\n");
-    }
     return result;
 }
 
