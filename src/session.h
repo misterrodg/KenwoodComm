@@ -18,6 +18,8 @@
 #include "lo.h"
 #include "ms.h"
 #include "rc.h"
+#include "rd.h"
+#include "ru.h"
 #include "model_number.h"
 #include "up.h"
 #include "vfo.h"
@@ -50,6 +52,8 @@ private:
     Lo lo;
     Ms ms;
     Rc rc;
+    Rd rd;
+    Ru ru;
     Up up;
     VFO vfoA;
     VFO vfoB;
