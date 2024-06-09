@@ -52,6 +52,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `RU`    | `NONE`                                                                         |
 | `SC`    | `ON` or `OFF`                                                                  |
 | `SP`    | `ON` or `OFF`                                                                  |
+| `ST`    | `ON` or `OFF`                                                                  |
 | `TX`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 

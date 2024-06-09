@@ -24,6 +24,7 @@
 #include "rx.h"
 #include "sc.h"
 #include "sp.h"
+#include "st.h"
 #include "model_number.h"
 #include "tx.h"
 #include "up.h"
@@ -63,6 +64,7 @@ private:
     Rx rx;
     Sc sc;
     Sp sp;
+    St st;
     Tx tx;
     Up up;
     VFO vfoA;
