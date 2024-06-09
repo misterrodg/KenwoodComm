@@ -6,7 +6,9 @@ Switch::SwitchEnum Switch::StringToSwitch(const std::string &switchString)
 {
     static const std::map<std::string, Switch::SwitchEnum> enumMap = {
         {"OFF", Switch::SwitchEnum::OFF},
-        {"ON", Switch::SwitchEnum::ON}};
+        {"0", Switch::SwitchEnum::OFF},
+        {"ON", Switch::SwitchEnum::ON},
+        {"1", Switch::SwitchEnum::ON}};
 
     auto it = enumMap.find(switchString);
     if (it != enumMap.end())
