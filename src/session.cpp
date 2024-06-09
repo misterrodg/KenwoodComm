@@ -174,6 +174,13 @@ void Session::SendCommand(std::string command)
             printf("Sending: %s\n", lk.ToCommand().c_str());
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::LO):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", Lo::ToCommand().c_str());
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {

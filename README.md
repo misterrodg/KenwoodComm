@@ -43,6 +43,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `ID`    | `NONE`                                                                         |
 | `IF`    | `NONE`                                                                         |
 | `LK`    | `ON`, `OFF`, or `NONE`                                                         |
+| `LO`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.

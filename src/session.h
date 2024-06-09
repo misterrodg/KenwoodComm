@@ -15,6 +15,7 @@
 #include "id.h"
 #include "if.h"
 #include "lk.h"
+#include "lo.h"
 #include "model_number.h"
 #include "vfo.h"
 #include <string>
