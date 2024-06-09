@@ -41,6 +41,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `FN`    | `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.   |
 | `HD`    | `ON`, `OFF`, or `NONE`                                                         |
 | `ID`    | `NONE`                                                                         |
+| `IF`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.

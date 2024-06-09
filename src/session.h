@@ -13,6 +13,7 @@
 #include "helpers.h"
 #include "hold.h"
 #include "id.h"
+#include "if.h"
 #include "model_number.h"
 #include "vfo.h"
 #include <string>

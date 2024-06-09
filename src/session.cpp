@@ -154,6 +154,13 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", Id::ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::IF):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", If::ToCommand().c_str());
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {
