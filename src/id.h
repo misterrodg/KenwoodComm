@@ -1,14 +1,12 @@
 #ifndef ID_H
 #define ID_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include <string>
+#include "command_base.h"
 
-class Id
+class Id : public CommandBase
 {
 public:
-    static std::string ToCommand();
+    Id();
 };
 
 #endif

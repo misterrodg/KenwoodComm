@@ -1,14 +1,12 @@
 #ifndef LO_H
 #define LO_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include <string>
+#include "command_base.h"
 
-class Lo
+class Lo : public CommandBase
 {
 public:
-    static std::string ToCommand();
+    Lo();
 };
 
 #endif

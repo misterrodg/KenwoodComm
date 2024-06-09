@@ -7,7 +7,7 @@
 #include "commandset.h"
 #include "dcs.h"
 #include "dcs_id.h"
-#include "dn_up.h"
+#include "dn.h"
 #include "fn.h"
 #include "function.h"
 #include "helpers.h"
@@ -17,6 +17,7 @@
 #include "lk.h"
 #include "lo.h"
 #include "model_number.h"
+#include "up.h"
 #include "vfo.h"
 #include <string>
 
@@ -36,9 +37,15 @@ private:
     ModelNumber modelNumber;
     Commandset availableCommands = {};
     AutoInformation autoInformation;
+    DcsId dcsId;
     Dcs dcs;
+    Dn dn;
     Hold hold;
+    Id id;
+    If information;
     Lk lk;
+    Lo lo;
+    Up up;
     VFO vfoA;
     VFO vfoB;
 };

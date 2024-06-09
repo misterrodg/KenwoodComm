@@ -72,7 +72,7 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", DcsId::ToCommand().c_str());
+        printf("Sending: %s\n", dcsId.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::DS):
         if (parameter != "")
@@ -92,7 +92,7 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", DnUp(CommandPrefix::CommandPrefixEnum::DN).ToCommand().c_str());
+        printf("Sending: %s\n", dn.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::FA):
         if (parameter != "")
@@ -152,14 +152,14 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", Id::ToCommand().c_str());
+        printf("Sending: %s\n", id.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::IF):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", If::ToCommand().c_str());
+        printf("Sending: %s\n", information.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::LK):
         if (parameter != "")
@@ -179,14 +179,14 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", Lo::ToCommand().c_str());
+        printf("Sending: %s\n", lo.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", DnUp(CommandPrefix::CommandPrefixEnum::UP).ToCommand().c_str());
+        printf("Sending: %s\n", up.ToCommand().c_str());
         break;
     default:
         printf("Command \"%s\" Not Implemented.\n", command.c_str());

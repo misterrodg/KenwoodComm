@@ -1,14 +1,12 @@
 #ifndef IF_H
 #define IF_H
 
-#include "command.h"
-#include "command_prefix.h"
-#include <string>
+#include "command_base.h"
 
-class If
+class If : public CommandBase
 {
 public:
-    static std::string ToCommand();
+    If();
 };
 
 #endif
