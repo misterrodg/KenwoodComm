@@ -215,6 +215,19 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", rd.ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::RT):
+        if (parameter == "")
+        {
+            printf("Command \"RT\" requires a parameter.\n");
+        }
+        else
+        {
+            if (rt.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", rt.ToCommand().c_str());
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::RU):
         if (parameter != "")
         {

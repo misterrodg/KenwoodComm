@@ -19,6 +19,7 @@
 #include "ms.h"
 #include "rc.h"
 #include "rd.h"
+#include "rt.h"
 #include "ru.h"
 #include "model_number.h"
 #include "up.h"
@@ -53,6 +54,7 @@ private:
     Ms ms;
     Rc rc;
     Rd rd;
+    Rt rt;
     Ru ru;
     Up up;
     VFO vfoA;

@@ -47,6 +47,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `MS`    | `ON`, `OFF`, or `NONE`                                                         |
 | `RC`    | `NONE`                                                                         |
 | `RD`    | `NONE`                                                                         |
+| `RT`    | `ON` or `OFF`                                                                  |
 | `RU`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
 
