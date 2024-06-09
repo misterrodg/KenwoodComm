@@ -14,6 +14,7 @@
 #include "hold.h"
 #include "id.h"
 #include "if.h"
+#include "lk.h"
 #include "model_number.h"
 #include "vfo.h"
 #include <string>
@@ -36,6 +37,7 @@ private:
     AutoInformation autoInformation;
     Dcs dcs;
     Hold hold;
+    Lk lk;
     VFO vfoA;
     VFO vfoB;
 };

@@ -161,6 +161,19 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", If::ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::LK):
+        if (parameter != "")
+        {
+            if (lk.SetLk(parameter))
+            {
+                printf("Sending: %s\n", lk.ToCommand(true).c_str());
+            }
+        }
+        else
+        {
+            printf("Sending: %s\n", lk.ToCommand().c_str());
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {
