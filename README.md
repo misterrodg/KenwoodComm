@@ -56,6 +56,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `TO`    | `ON` or `OFF`                                                                  |
 | `TX`    | `NONE`                                                                         |
 | `UP`    | `NONE`                                                                         |
+| `VR`    | `NONE`                                                                         |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.

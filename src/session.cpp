@@ -294,6 +294,13 @@ void Session::SendCommand(std::string command)
             }
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::VR):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        printf("Sending: %s\n", vr.ToCommand().c_str());
+        break;
     case (CommandPrefix::CommandPrefixEnum::TX):
         if (parameter != "")
         {
