@@ -188,6 +188,19 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", lo.ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::MS):
+        if (parameter == "")
+        {
+            printf("Sending: %s\n", ms.ToCommand(true).c_str());
+        }
+        else
+        {
+            if (ms.SetSwitch(parameter))
+            {
+                printf("Sending: %s\n", ms.ToCommand().c_str());
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")
         {

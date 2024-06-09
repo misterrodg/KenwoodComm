@@ -16,6 +16,7 @@
 #include "if.h"
 #include "lk.h"
 #include "lo.h"
+#include "ms.h"
 #include "model_number.h"
 #include "up.h"
 #include "vfo.h"
@@ -46,6 +47,7 @@ private:
     If information;
     Lk lk;
     Lo lo;
+    Ms ms;
     Up up;
     VFO vfoA;
     VFO vfoB;
