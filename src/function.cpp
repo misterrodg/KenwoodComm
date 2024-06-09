@@ -16,6 +16,7 @@ Function::FunctionEnum Function::StringToFunction(const std::string &functionStr
     {
         return it->second;
     }
+    printf("Unrecognized option. Options are: VFOA, VFOB, MEMORY, or COM.\n");
     return FunctionEnum::UNKNOWN;
 }
 

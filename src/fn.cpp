@@ -18,10 +18,6 @@ bool Fn::SetFn(std::string &functionString)
         function = functionEnum;
         result = true;
     }
-    else
-    {
-        printf("Unrecognized option. Options are: VFOA, VFOB, MEMORY, or COM.\n");
-    }
     return result;
 }
 
