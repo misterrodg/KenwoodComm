@@ -30,35 +30,35 @@ All commands are case-insensitive, and will always be translated to all caps.
 Any command that accepts `ON` or `OFF` will also accept `1` or `0` as well.
 Any command that expects only `NONE` for its parameter will ignore anything beyond the command itself.
 
-| Command | Parameters                                                                     |
-| ------- | ------------------------------------------------------------------------------ |
-| `AI`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `AT`    | `NONE`                                                                         |
-| `DI`    | `NONE`                                                                         |
-| `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                         |
-| `DN`    | `NONE`                                                                         |
-| `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
-| `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`. |
-| `FN`    | `VFOA`, `VFOB`, `MEMORY`. If using a TS711 or TS811 `COM` is also available.   |
-| `HD`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                         |
-| `ID`    | `NONE`                                                                         |
-| `IF`    | `NONE`                                                                         |
-| `LK`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                         |
-| `LO`    | `NONE`                                                                         |
-| `MS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                         |
-| `RC`    | `NONE`                                                                         |
-| `RD`    | `NONE`                                                                         |
-| `RX`    | `NONE`                                                                         |
-| `RT`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `RU`    | `NONE`                                                                         |
-| `SC`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `SP`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `ST`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `TO`    | `ON` / `OFF` (or `1` / `0`)                                                    |
-| `TX`    | `NONE`                                                                         |
-| `UP`    | `NONE`                                                                         |
-| `VR`    | `NONE`                                                                         |
-| `XT`    | `ON` / `OFF` (or `1` / `0`)                                                    |
+| Command | Parameters                                                                                                                              |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `AI`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `AT`    | `NONE`                                                                                                                                  |
+| `DI`    | `NONE`                                                                                                                                  |
+| `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
+| `DN`    | `NONE`                                                                                                                                  |
+| `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                          |
+| `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                          |
+| `FN`    | `VFOA` / `VFOB` / `MEMORY` (or `A` / `B` / `M`, or `0` / `1` / `2`). If using a TS711 or TS811 `COM` (or `C` or `3`) is also available. |
+| `HD`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
+| `ID`    | `NONE`                                                                                                                                  |
+| `IF`    | `NONE`                                                                                                                                  |
+| `LK`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
+| `LO`    | `NONE`                                                                                                                                  |
+| `MS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
+| `RC`    | `NONE`                                                                                                                                  |
+| `RD`    | `NONE`                                                                                                                                  |
+| `RX`    | `NONE`                                                                                                                                  |
+| `RT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `RU`    | `NONE`                                                                                                                                  |
+| `SC`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `SP`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `ST`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `TO`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| `TX`    | `NONE`                                                                                                                                  |
+| `UP`    | `NONE`                                                                                                                                  |
+| `VR`    | `NONE`                                                                                                                                  |
+| `XT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.
