@@ -29,7 +29,7 @@ unsigned short int Passband::getPassband() const
 std::string Passband::getPassbandString()
 {
     char formattedPassband[3];
-    std::sprintf(formattedPassband, "%02d", passband);
+    snprintf(formattedPassband, sizeof(formattedPassband), "%02d", passband);
 
     return formattedPassband;
 }

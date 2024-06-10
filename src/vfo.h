@@ -3,7 +3,7 @@
 
 #include "command.h"
 #include "command/command_prefix.h"
-#include "frequency.h"
+#include "parameter/frequency.h"
 #include <string>
 
 class VFO

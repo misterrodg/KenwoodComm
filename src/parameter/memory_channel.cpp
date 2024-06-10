@@ -29,7 +29,7 @@ short int MemoryChannel::getMemoryChannel() const
 std::string MemoryChannel::getMemoryChannelString()
 {
     char formattedChannel[3];
-    std::sprintf(formattedChannel, "%02d", memoryChannel);
+    snprintf(formattedChannel, sizeof(formattedChannel), "%02d", memoryChannel);
 
     return formattedChannel;
 }

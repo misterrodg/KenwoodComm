@@ -2,7 +2,7 @@
 #define COMMAND_SWITCH_H
 
 #include "command_base.h"
-#include "../switch.h"
+#include "../parameter/switch.h"
 
 class CommandSwitch : public CommandBase
 {

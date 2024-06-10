@@ -1,8 +1,8 @@
 #ifndef DEFAULTS_H
 #define DEFAULTS_H
 
-#include "call_sign.h"
-#include "model_number.h"
+#include "parameter/call_sign.h"
+#include "parameter/model_number.h"
 #include <iostream>
 #include <fstream>
 #include <string>

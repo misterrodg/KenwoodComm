@@ -29,7 +29,7 @@ unsigned short int ToneFrequency::getToneFrequency() const
 std::string ToneFrequency::getToneFrequencyString()
 {
     char formattedToneFrequency[3];
-    std::sprintf(formattedToneFrequency, "%02d", toneFrequency);
+    snprintf(formattedToneFrequency, sizeof(formattedToneFrequency), "%02d", toneFrequency);
 
     return formattedToneFrequency;
 }

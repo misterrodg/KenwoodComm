@@ -29,7 +29,7 @@ unsigned short int MemoryBank::getMemoryBank() const
 std::string MemoryBank::getMemoryBankString()
 {
     char formattedBank[2];
-    std::sprintf(formattedBank, "%1d", memoryBank);
+    snprintf(formattedBank, sizeof(formattedBank), "%1d", memoryBank);
 
     return formattedBank;
 }

@@ -3,8 +3,8 @@
 
 #include "command.h"
 #include "command/command_prefix.h"
-#include "function.h"
-#include "model_number.h"
+#include "parameter/function.h"
+#include "parameter/model_number.h"
 #include <string>
 
 class Fn

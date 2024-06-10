@@ -3,10 +3,10 @@
 
 #include "commandset.h"
 #include "fn.h"
-#include "function.h"
 #include "helpers.h"
-#include "model_number.h"
 #include "vfo.h"
+#include "parameter/function.h"
+#include "parameter/model_number.h"
 
 #include "command/commands.h"
 #include <string>
