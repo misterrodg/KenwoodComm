@@ -3,10 +3,10 @@
 
 #include "command_base.h"
 
-class Vr : public CommandBase
+class VR : public CommandBase
 {
 public:
-    Vr();
+    VR();
 };
 
 #endif

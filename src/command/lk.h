@@ -3,10 +3,10 @@
 
 #include "command_switch.h"
 
-class Lk : public CommandSwitch
+class LK : public CommandSwitch
 {
 public:
-    Lk();
+    LK();
 };
 
 #endif

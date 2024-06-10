@@ -1,3 +1,3 @@
 #include "up.h"
 
-Up::Up() : CommandBase(CommandPrefix::CommandPrefixEnum::UP) {}
+UP::UP() : CommandBase(CommandPrefix::CommandPrefixEnum::UP) {}

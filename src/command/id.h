@@ -3,10 +3,10 @@
 
 #include "command_base.h"
 
-class Id : public CommandBase
+class ID : public CommandBase
 {
 public:
-    Id();
+    ID();
 };
 
 #endif

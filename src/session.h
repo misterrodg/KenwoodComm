@@ -1,15 +1,10 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include "auto_information.h"
-#include "antenna_tuner.h"
 #include "commandset.h"
-#include "dcs.h"
-#include "dcs_id.h"
 #include "fn.h"
 #include "function.h"
 #include "helpers.h"
-#include "hold.h"
 #include "model_number.h"
 #include "vfo.h"
 
@@ -31,30 +26,30 @@ private:
     std::string getParameter(const std::string &fullCommand);
     ModelNumber modelNumber;
     Commandset availableCommands;
-    AntennaTuner antennaTuner;
-    AutoInformation autoInformation;
-    DcsId dcsId;
-    Dcs dcs;
-    Dn dn;
-    Hold hold;
-    Id id;
-    If information;
-    Lk lk;
-    Lo lo;
-    Ms ms;
-    Rc rc;
-    Rd rd;
-    Rt rt;
-    Ru ru;
-    Rx rx;
-    Sc sc;
-    Sp sp;
-    St st;
-    To to;
-    Tx tx;
-    Up up;
-    Vr vr;
-    Xt xt;
+    AI at;
+    AI ai;
+    DI di;
+    DS ds;
+    DN dn;
+    HD hd;
+    ID id;
+    IF information;
+    LK lk;
+    LO lo;
+    MS ms;
+    RC rc;
+    RD rd;
+    RT rt;
+    RU ru;
+    RX rx;
+    SC sc;
+    SP sp;
+    ST st;
+    TO to;
+    TX tx;
+    UP up;
+    VR vr;
+    XT xt;
     VFO vfoA;
     VFO vfoB;
 };

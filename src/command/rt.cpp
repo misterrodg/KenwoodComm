@@ -1,3 +1,3 @@
 #include "rt.h"
 
-Rt::Rt() : CommandSwitch(CommandPrefix::CommandPrefixEnum::RT) {}
+RT::RT() : CommandSwitch(CommandPrefix::CommandPrefixEnum::RT) {}

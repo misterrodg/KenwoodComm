@@ -3,10 +3,10 @@
 
 #include "command_base.h"
 
-class If : public CommandBase
+class IF : public CommandBase
 {
 public:
-    If();
+    IF();
 };
 
 #endif

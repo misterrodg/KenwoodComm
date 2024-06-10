@@ -1,3 +1,3 @@
 #include "sp.h"
 
-Sp::Sp() : CommandSwitch(CommandPrefix::CommandPrefixEnum::SP) {}
+SP::SP() : CommandSwitch(CommandPrefix::CommandPrefixEnum::SP) {}

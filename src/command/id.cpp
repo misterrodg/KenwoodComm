@@ -1,3 +1,3 @@
 #include "id.h"
 
-Id::Id() : CommandBase(CommandPrefix::CommandPrefixEnum::ID) {}
+ID::ID() : CommandBase(CommandPrefix::CommandPrefixEnum::ID) {}

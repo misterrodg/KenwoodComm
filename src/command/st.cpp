@@ -1,3 +1,3 @@
 #include "st.h"
 
-St::St() : CommandSwitch(CommandPrefix::CommandPrefixEnum::ST) {}
+ST::ST() : CommandSwitch(CommandPrefix::CommandPrefixEnum::ST) {}

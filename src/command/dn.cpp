@@ -1,3 +1,3 @@
 #include "dn.h"
 
-Dn::Dn() : CommandBase(CommandPrefix::CommandPrefixEnum::DN) {}
+DN::DN() : CommandBase(CommandPrefix::CommandPrefixEnum::DN) {}

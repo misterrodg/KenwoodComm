@@ -1,3 +1,3 @@
 #include "rx.h"
 
-Rx::Rx() : CommandBase(CommandPrefix::CommandPrefixEnum::RX) {}
+RX::RX() : CommandBase(CommandPrefix::CommandPrefixEnum::RX) {}

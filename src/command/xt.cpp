@@ -1,3 +1,3 @@
 #include "xt.h"
 
-Xt::Xt() : CommandSwitch(CommandPrefix::CommandPrefixEnum::XT) {}
+XT::XT() : CommandSwitch(CommandPrefix::CommandPrefixEnum::XT) {}

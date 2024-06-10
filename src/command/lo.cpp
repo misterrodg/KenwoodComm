@@ -1,3 +1,3 @@
 #include "lo.h"
 
-Lo::Lo() : CommandBase(CommandPrefix::CommandPrefixEnum::LO) {}
+LO::LO() : CommandBase(CommandPrefix::CommandPrefixEnum::LO) {}

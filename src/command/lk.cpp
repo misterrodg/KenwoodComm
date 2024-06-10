@@ -1,3 +1,3 @@
 #include "lk.h"
 
-Lk::Lk() : CommandSwitch(CommandPrefix::CommandPrefixEnum::LK) {}
+LK::LK() : CommandSwitch(CommandPrefix::CommandPrefixEnum::LK) {}

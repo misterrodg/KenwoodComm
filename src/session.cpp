@@ -62,9 +62,9 @@ void Session::SendCommand(std::string command)
         }
         else
         {
-            if (autoInformation.SetSwitch(parameter))
+            if (ai.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", autoInformation.ToCommand().c_str());
+                printf("Sending: %s\n", ai.ToCommand().c_str());
             }
         }
         break;
@@ -73,25 +73,25 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", antennaTuner.ToCommand().c_str());
+        printf("Sending: %s\n", at.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", dcsId.ToCommand().c_str());
+        printf("Sending: %s\n", di.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::DS):
         if (parameter == "")
         {
-            printf("Sending: %s\n", dcs.ToCommand(true).c_str());
+            printf("Sending: %s\n", ds.ToCommand(true).c_str());
         }
         else
         {
-            if (dcs.SetSwitch(parameter))
+            if (ds.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", dcs.ToCommand().c_str());
+                printf("Sending: %s\n", ds.ToCommand().c_str());
             }
         }
         break;
@@ -145,13 +145,13 @@ void Session::SendCommand(std::string command)
     case (CommandPrefix::CommandPrefixEnum::HD):
         if (parameter == "")
         {
-            printf("Sending: %s\n", hold.ToCommand(true).c_str());
+            printf("Sending: %s\n", hd.ToCommand(true).c_str());
         }
         else
         {
-            if (hold.SetSwitch(parameter))
+            if (hd.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", hold.ToCommand().c_str());
+                printf("Sending: %s\n", hd.ToCommand().c_str());
             }
         }
         break;

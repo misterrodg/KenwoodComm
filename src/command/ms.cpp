@@ -1,3 +1,3 @@
 #include "ms.h"
 
-Ms::Ms() : CommandSwitch(CommandPrefix::CommandPrefixEnum::MS) {}
+MS::MS() : CommandSwitch(CommandPrefix::CommandPrefixEnum::MS) {}
