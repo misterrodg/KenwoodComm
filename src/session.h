@@ -2,13 +2,10 @@
 #define SESSION_H
 
 #include "commandset.h"
-#include "fn.h"
 #include "helpers.h"
-#include "vfo.h"
+#include "command/commands.h"
 #include "parameter/function.h"
 #include "parameter/model_number.h"
-
-#include "command/commands.h"
 #include <string>
 
 class Session
@@ -31,6 +28,8 @@ private:
     DI di;
     DS ds;
     DN dn;
+    FA fa;
+    FB fb;
     FN fn;
     HD hd;
     ID id;
@@ -52,8 +51,6 @@ private:
     UP up;
     VR vr;
     XT xt;
-    VFO vfoA;
-    VFO vfoB;
 };
 
 #endif
