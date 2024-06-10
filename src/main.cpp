@@ -30,7 +30,7 @@ Defaults initialize()
 
     if (!modelNumber.empty() && modelNumber != "UNRECOGNIZED")
     {
-        std::cout << "Setting up for a " << modelNumber << std::endl;
+        std::cout << "Setting up for a " << modelNumber << "." << std::endl;
     }
     else
     {
