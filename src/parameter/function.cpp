@@ -6,9 +6,17 @@ Function::FunctionEnum Function::StringToFunction(const std::string &functionStr
 {
     static const std::map<std::string, Function::FunctionEnum> enumMap = {
         {"VFOA", Function::FunctionEnum::VFOA},
+        {"0", Function::FunctionEnum::VFOA},
+        {"A", Function::FunctionEnum::VFOA},
         {"VFOB", Function::FunctionEnum::VFOB},
+        {"1", Function::FunctionEnum::VFOB},
+        {"B", Function::FunctionEnum::VFOB},
         {"MEMORY", Function::FunctionEnum::MEMORY},
+        {"2", Function::FunctionEnum::MEMORY},
+        {"M", Function::FunctionEnum::MEMORY},
         {"COM", Function::FunctionEnum::COM},
+        {"3", Function::FunctionEnum::COM},
+        {"C", Function::FunctionEnum::COM},
     };
 
     auto it = enumMap.find(functionString);

@@ -135,8 +135,7 @@ void Session::SendCommand(std::string command)
         }
         else
         {
-            Fn fn(modelNumber);
-            if (fn.SetFn(parameter))
+            if (fn.SetFunction(modelNumber, parameter))
             {
                 printf("Sending: %s\n", fn.ToCommand().c_str());
             }

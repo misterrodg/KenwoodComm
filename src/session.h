@@ -31,6 +31,7 @@ private:
     DI di;
     DS ds;
     DN dn;
+    FN fn;
     HD hd;
     ID id;
     IF information;

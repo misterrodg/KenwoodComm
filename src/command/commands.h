@@ -9,6 +9,7 @@
 #include "di.h"
 #include "dn.h"
 #include "ds.h"
+#include "fn.h"
 #include "hd.h"
 #include "id.h"
 #include "if.h"
