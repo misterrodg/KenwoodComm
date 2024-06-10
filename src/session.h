@@ -26,8 +26,8 @@ private:
     std::string getParameter(const std::string &fullCommand);
     ModelNumber modelNumber;
     Commandset availableCommands;
-    AI at;
     AI ai;
+    AT at;
     DI di;
     DS ds;
     DN dn;
