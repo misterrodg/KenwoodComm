@@ -15,7 +15,7 @@ BUILD_DIR = build
 TARGET = $(BUILD_DIR)/KenwoodComm
 
 # Source files
-SRC_FILES = $(SRC_DIR)/main.cpp $(SRC_DIR)/command.cpp $(SRC_DIR)/commandset.cpp $(SRC_DIR)/defaults.cpp $(SRC_DIR)/helpers.cpp $(SRC_DIR)/session.cpp $(SRC_DIR)/vfo.cpp
+SRC_FILES = $(SRC_DIR)/main.cpp $(SRC_DIR)/command.cpp $(SRC_DIR)/commandset.cpp $(SRC_DIR)/defaults.cpp $(SRC_DIR)/helpers.cpp $(SRC_DIR)/session.cpp
 COMMAND_FILES = $(wildcard $(COMMAND_DIR)/*.cpp)
 PARAMETER_FILES = $(wildcard $(PARAMETER_DIR)/*.cpp)
 

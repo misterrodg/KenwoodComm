@@ -9,6 +9,8 @@
 #include "di.h"
 #include "dn.h"
 #include "ds.h"
+#include "fa.h"
+#include "fb.h"
 #include "fn.h"
 #include "hd.h"
 #include "id.h"
