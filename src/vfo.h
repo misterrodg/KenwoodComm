@@ -2,7 +2,7 @@
 #define VFO_H
 
 #include "command.h"
-#include "command_prefix.h"
+#include "command/command_prefix.h"
 #include "frequency.h"
 #include <string>
 

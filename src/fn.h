@@ -2,7 +2,7 @@
 #define FN_H
 
 #include "command.h"
-#include "command_prefix.h"
+#include "command/command_prefix.h"
 #include "function.h"
 #include "model_number.h"
 #include <string>
