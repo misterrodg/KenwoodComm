@@ -2,6 +2,7 @@
 
 Session::Session(ModelNumber modelNumberEnum)
 {
+    sessionOpen = true;
     modelNumber = modelNumberEnum;
     Commandset commands(modelNumber.getModelNumber());
     availableCommands = commands;

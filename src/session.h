@@ -40,7 +40,7 @@ public:
     Session(ModelNumber modelNumber);
     void CheckCommand(std::string command);
     void SendCommand(std::string command);
-    bool sessionOpen = true;
+    bool sessionOpen;
 
 private:
     void parameterWarning(const std::string &commandPrefixString, const std::string &parameter);
@@ -48,7 +48,7 @@ private:
     std::string getCommand(const std::string &fullCommand);
     std::string getParameter(const std::string &fullCommand);
     ModelNumber modelNumber;
-    Commandset availableCommands = {};
+    Commandset availableCommands;
     AntennaTuner antennaTuner;
     AutoInformation autoInformation;
     DcsId dcsId;
