@@ -1,24 +1,26 @@
 #include "memory_bank.h"
-#include <regex>
-#include <stdexcept>
+
+const int MemoryBank::MAX_MEMORY_BANK_LENGTH = 1;
 
 MemoryBank::MemoryBank() : memoryBank(0) {}
 
-void MemoryBank::setMemoryBank(const std::string &input)
+bool MemoryBank::setMemoryBank(const std::string &input)
 {
+    bool result = false;
     std::regex regex(R"([1-4])");
     std::smatch match;
 
     if (std::regex_match(input, regex))
     {
         int value = std::stoi(input);
-
         memoryBank = value;
+        result = true;
     }
     else
     {
-        throw std::invalid_argument("Invalid channel format");
+        printf("Invalid bank format: ");
     }
+    return result;
 }
 
 unsigned short int MemoryBank::getMemoryBank() const

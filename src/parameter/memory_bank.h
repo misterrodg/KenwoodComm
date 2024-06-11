@@ -3,14 +3,16 @@
 
 #include <string>
 #include <cstdint>
+#include <regex>
 
 class MemoryBank
 {
 public:
     MemoryBank();
-    void setMemoryBank(const std::string &input);
+    bool setMemoryBank(const std::string &input);
     unsigned short int getMemoryBank() const;
     std::string getMemoryBankString();
+    static const int MAX_MEMORY_BANK_LENGTH;
 
 private:
     unsigned short int memoryBank;
