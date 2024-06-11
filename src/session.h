@@ -11,9 +11,10 @@
 class Session
 {
 public:
-    Session(ModelNumber modelNumber);
+    Session(bool inSafeMode, ModelNumber modelNumber);
     void CheckCommand(std::string command);
     void SendCommand(std::string command);
+    bool safeMode;
     bool sessionOpen;
 
 private:

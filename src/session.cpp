@@ -1,7 +1,8 @@
 #include "session.h"
 
-Session::Session(ModelNumber modelNumberEnum)
+Session::Session(bool inSafeMode, ModelNumber modelNumberEnum)
 {
+    safeMode = inSafeMode;
     sessionOpen = true;
     modelNumber = modelNumberEnum;
     Commandset commands(modelNumber.getModelNumber());
@@ -330,7 +331,14 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", tx.ToCommand().c_str());
+        if (safeMode)
+        {
+            printf("Command \"TX\" disabled in SAFE MODE.\n");
+        }
+        else
+        {
+            printf("Sending: %s\n", tx.ToCommand().c_str());
+        }
         break;
     case (CommandPrefix::CommandPrefixEnum::UP):
         if (parameter != "")

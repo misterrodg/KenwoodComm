@@ -49,15 +49,24 @@ Defaults initialize()
     return defaults;
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    bool safeMode = false;
+    if (argc > 1 && strcmp(argv[1], "safe") == 0)
+    {
+        safeMode = true;
+    }
     Defaults defaults = initialize();
-    Session session(defaults.getModelNumber());
+    Session session(safeMode, defaults.getModelNumber());
 
     std::string command = "";
 
     while (session.sessionOpen)
     {
+        if (session.safeMode)
+        {
+            std::cout << "SAFE ";
+        }
         std::cout << ":: ";
         std::getline(std::cin, command);
         session.CheckCommand(command);

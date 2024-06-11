@@ -2,6 +2,28 @@
 
 A command line interface for Kenwood radios using IF-10A/B/C modules.
 
+## Running the Program
+
+Run the program from the command line with:
+
+```
+KenwoodComm
+```
+
+### Safe Mode
+
+An optional `safe` argument can be passed to set the program in safe mode. This disables the `TX` command so that you can test using the commands with your radio, without worrying about accidentally transmitting in the process.
+
+```
+KenwoodComm safe
+```
+
+You can confirm that you are in safe mode by looking for the `SAFE` at the beginning of the command line:
+
+```
+SAFE ::
+```
+
 ## Initial Run
 
 When running the program for the first time, it will prompt you for your callsign and radio model. The prompts are case-insensitive, and will always store/use the values in all caps.
