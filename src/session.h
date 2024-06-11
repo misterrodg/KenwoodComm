@@ -36,6 +36,7 @@ private:
     IF information;
     LK lk;
     LO lo;
+    MC mc;
     MD md;
     MS ms;
     RC rc;

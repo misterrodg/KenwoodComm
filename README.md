@@ -45,6 +45,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `IF`    | `NONE`                                                                                                                                  |
 | `LK`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
 | `LO`    | `NONE`                                                                                                                                  |
+| `MC`    | `MEMORY CHANNEL` as an integer (with a leading zero). If using a TS940, `MEMORY BANK` is also required before the channel.              |
 | `MD`    | `LSB` / `USB` / `CW` / `FM` / `AM` / `FSK` / `CWN` (or `1` / `2` / `3` / `4` / `5` / `6` / `7`), depending on your radio capabilities.  |
 | `MS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
 | `RC`    | `NONE`                                                                                                                                  |

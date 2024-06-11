@@ -186,6 +186,19 @@ void Session::SendCommand(std::string command)
         }
         printf("Sending: %s\n", lo.ToCommand().c_str());
         break;
+    case (CommandPrefix::CommandPrefixEnum::MC):
+        if (parameter == "")
+        {
+            printf("Command \"MC\" requires a parameter.\n");
+        }
+        else
+        {
+            if (mc.SetMemory(modelNumber, parameter))
+            {
+                printf("Sending: %s\n", mc.ToCommand().c_str());
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::MD):
         if (parameter == "")
         {
