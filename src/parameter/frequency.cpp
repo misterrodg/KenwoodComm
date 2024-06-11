@@ -37,7 +37,7 @@ uint64_t Frequency::getFrequencyInHz() const
 std::string Frequency::getFrequencyString()
 {
     char formattedFrequency[12];
-    snprintf(formattedFrequency, sizeof(formattedFrequency), "%011llu", frequencyInHz);
+    snprintf(formattedFrequency, sizeof(formattedFrequency), "%011lu", frequencyInHz);
 
     return formattedFrequency;
 }

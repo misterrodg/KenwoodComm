@@ -31,7 +31,7 @@ Function::FunctionEnum Function::StringToFunction(const std::string &functionStr
 std::string Function::FunctionToIntString(const FunctionEnum &functionEnum)
 {
     char result[2];
-    snprintf(result, sizeof(result), "%i", functionEnum);
+    snprintf(result, sizeof(result), "%i", static_cast<int>(functionEnum));
     return result;
 }
 

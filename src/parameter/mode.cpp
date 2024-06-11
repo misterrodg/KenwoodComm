@@ -33,7 +33,7 @@ Mode::ModeEnum Mode::StringToMode(const std::string &modeString)
 std::string Mode::ModeToIntString(const ModeEnum &modeEnum)
 {
     char result[2];
-    snprintf(result, sizeof(result), "%i", modeEnum);
+    snprintf(result, sizeof(result), "%i", static_cast<int>(modeEnum));
     return result;
 }
 
