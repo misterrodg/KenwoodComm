@@ -93,7 +93,7 @@ void Serial::Write(const std::string &command, bool expectsResponse)
 
 void Serial::Read()
 {
-    int readin, readinTot = 0;
+    int readin = 0;
     char buffer[256];
     char *bufptr;
 
@@ -101,7 +101,6 @@ void Serial::Read()
     while ((readin = read(fdPort, bufptr, buffer + sizeof(buffer) - bufptr - 1)) > 0)
     {
         bufptr += readin;
-        readinTot += readin;
         if (bufptr[-1] == ';')
         {
             break;
