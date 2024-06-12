@@ -3,6 +3,7 @@
 
 #include "commandset.h"
 #include "helpers.h"
+#include "serial.h"
 #include "command/commands.h"
 #include "parameter/function.h"
 #include "parameter/model_number.h"
@@ -11,10 +12,11 @@
 class Session
 {
 public:
-    Session(bool inSafeMode, ModelNumber modelNumber);
+    Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
     void CheckCommand(std::string command);
     void SendCommand(std::string command);
     bool safeMode;
+    bool localMode;
     bool sessionOpen;
 
 private:
@@ -22,6 +24,8 @@ private:
     bool startsWithCommand(const std::string &fullCommand);
     std::string getCommand(const std::string &fullCommand);
     std::string getParameter(const std::string &fullCommand);
+    void write(const std::string &command, bool expectsResponse = false);
+    Serial serialConnection;
     ModelNumber modelNumber;
     Commandset availableCommands;
     AI ai;

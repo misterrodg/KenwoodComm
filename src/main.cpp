@@ -51,13 +51,24 @@ Defaults initialize()
 
 int main(int argc, char **argv)
 {
+    bool localMode = false;
     bool safeMode = false;
-    if (argc > 1 && strcmp(argv[1], "safe") == 0)
+    if (argc > 1)
     {
-        safeMode = true;
+        for (int i = 1; i < argc; ++i)
+        {
+            if (strcmp(argv[i], "local") == 0)
+            {
+                localMode = true;
+            }
+            else if (strcmp(argv[i], "safe") == 0)
+            {
+                safeMode = true;
+            }
+        }
     }
     Defaults defaults = initialize();
-    Session session(safeMode, defaults.getModelNumber());
+    Session session(safeMode, localMode, defaults.getModelNumber());
 
     std::string command = "";
 

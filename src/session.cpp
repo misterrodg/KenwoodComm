@@ -1,13 +1,19 @@
 #include "session.h"
 
-Session::Session(bool inSafeMode, ModelNumber modelNumberEnum)
+Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
 {
     safeMode = inSafeMode;
+    localMode = inLocalMode;
     sessionOpen = true;
     modelNumber = modelNumberEnum;
     Commandset commands(modelNumber.getModelNumber());
     availableCommands = commands;
     availableCommands.printAvailableCommands();
+
+    if (localMode == false)
+    {
+        serialConnection.Open();
+    }
 }
 
 void Session::CheckCommand(std::string command)
@@ -35,6 +41,7 @@ void Session::CheckCommand(std::string command)
 
     if (commandUpper == "EXIT")
     {
+        serialConnection.Close();
         printf("Closing the session.\n");
         validCommand = true;
         sessionOpen = false;
@@ -51,6 +58,7 @@ void Session::SendCommand(std::string command)
     std::string commandPrefixString = getCommand(command);
     CommandPrefix::CommandPrefixEnum commandPrefixEnum = CommandPrefix::StringToCommandPrefix(commandPrefixString);
     std::string parameter = getParameter(command);
+    std::string commandString = "";
 
     switch (commandPrefixEnum)
     {
@@ -63,7 +71,8 @@ void Session::SendCommand(std::string command)
         {
             if (ai.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", ai.ToCommand().c_str());
+                commandString = ai.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -72,25 +81,29 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", at.ToCommand().c_str());
+        commandString = at.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", di.ToCommand().c_str());
+        commandString = di.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::DS):
         if (parameter == "")
         {
-            printf("Sending: %s\n", ds.ToCommand(true).c_str());
+            commandString = ds.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (ds.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", ds.ToCommand().c_str());
+                commandString = ds.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -99,31 +112,36 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", dn.ToCommand().c_str());
+        commandString = dn.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::FA):
         if (parameter == "")
         {
-            printf("Sending: %s\n", fa.ToCommand(true).c_str());
+            commandString = fa.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (fa.SetFrequency(parameter))
             {
-                printf("Sending: %s\n", fa.ToCommand().c_str());
+                commandString = fa.ToCommand();
+                write(commandString);
             }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::FB):
         if (parameter == "")
         {
-            printf("Sending: %s\n", fb.ToCommand(true).c_str());
+            commandString = fb.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (fb.SetFrequency(parameter))
             {
-                printf("Sending: %s\n", fb.ToCommand().c_str());
+                commandString = fb.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -136,20 +154,23 @@ void Session::SendCommand(std::string command)
         {
             if (fn.SetFunction(modelNumber, parameter))
             {
-                printf("Sending: %s\n", fn.ToCommand().c_str());
+                commandString = fn.ToCommand();
+                write(commandString);
             }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::HD):
         if (parameter == "")
         {
-            printf("Sending: %s\n", hd.ToCommand(true).c_str());
+            commandString = hd.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (hd.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", hd.ToCommand().c_str());
+                commandString = hd.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -158,25 +179,29 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", id.ToCommand().c_str());
+        commandString = id.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::IF):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", information.ToCommand().c_str());
+        commandString = information.ToCommand();
+        write(commandString, true);
         break;
     case (CommandPrefix::CommandPrefixEnum::LK):
         if (parameter == "")
         {
-            printf("Sending: %s\n", lk.ToCommand(true).c_str());
+            commandString = lk.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (lk.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", lk.ToCommand().c_str());
+                commandString = lk.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -185,7 +210,8 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", lo.ToCommand().c_str());
+        commandString = lo.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::MC):
         if (parameter == "")
@@ -196,7 +222,8 @@ void Session::SendCommand(std::string command)
         {
             if (mc.SetMemory(modelNumber, parameter))
             {
-                printf("Sending: %s\n", mc.ToCommand().c_str());
+                commandString = mc.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -209,20 +236,23 @@ void Session::SendCommand(std::string command)
         {
             if (md.SetMode(modelNumber, parameter))
             {
-                printf("Sending: %s\n", md.ToCommand().c_str());
+                commandString = md.ToCommand();
+                write(commandString);
             }
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::MS):
         if (parameter == "")
         {
-            printf("Sending: %s\n", ms.ToCommand(true).c_str());
+            commandString = ms.ToCommand(true);
+            write(commandString, true);
         }
         else
         {
             if (ms.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", ms.ToCommand().c_str());
+                commandString = ms.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -231,14 +261,16 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", rc.ToCommand().c_str());
+        commandString = rc.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::RD):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", rd.ToCommand().c_str());
+        commandString = rd.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::RT):
         if (parameter == "")
@@ -249,7 +281,8 @@ void Session::SendCommand(std::string command)
         {
             if (rt.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", rt.ToCommand().c_str());
+                commandString = rt.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -258,13 +291,16 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", ru.ToCommand().c_str());
+        commandString = ru.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::RX):
         if (parameter != "")
         {
             parameterWarning(commandPrefixString, parameter);
         }
+        commandString = rx.ToCommand();
+        write(commandString);
         printf("Sending: %s\n", rx.ToCommand().c_str());
         break;
     case (CommandPrefix::CommandPrefixEnum::SC):
@@ -276,7 +312,8 @@ void Session::SendCommand(std::string command)
         {
             if (sc.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", sc.ToCommand().c_str());
+                commandString = sc.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -289,7 +326,8 @@ void Session::SendCommand(std::string command)
         {
             if (sp.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", sp.ToCommand().c_str());
+                commandString = sp.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -302,7 +340,8 @@ void Session::SendCommand(std::string command)
         {
             if (st.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", st.ToCommand().c_str());
+                commandString = st.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -315,7 +354,8 @@ void Session::SendCommand(std::string command)
         {
             if (to.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", to.ToCommand().c_str());
+                commandString = to.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -324,7 +364,8 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", vr.ToCommand().c_str());
+        commandString = vr.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::TX):
         if (parameter != "")
@@ -337,7 +378,8 @@ void Session::SendCommand(std::string command)
         }
         else
         {
-            printf("Sending: %s\n", tx.ToCommand().c_str());
+            commandString = tx.ToCommand();
+            write(commandString);
         }
         break;
     case (CommandPrefix::CommandPrefixEnum::UP):
@@ -345,7 +387,8 @@ void Session::SendCommand(std::string command)
         {
             parameterWarning(commandPrefixString, parameter);
         }
-        printf("Sending: %s\n", up.ToCommand().c_str());
+        commandString = up.ToCommand();
+        write(commandString);
         break;
     case (CommandPrefix::CommandPrefixEnum::XT):
         if (parameter == "")
@@ -356,7 +399,8 @@ void Session::SendCommand(std::string command)
         {
             if (xt.SetSwitch(parameter))
             {
-                printf("Sending: %s\n", xt.ToCommand().c_str());
+                commandString = xt.ToCommand();
+                write(commandString);
             }
         }
         break;
@@ -384,4 +428,10 @@ std::string Session::getCommand(const std::string &fullCommand)
 std::string Session::getParameter(const std::string &fullCommand)
 {
     return fullCommand.substr(CommandPrefix::COMMAND_LENGTH);
+}
+
+void Session::write(const std::string &command, bool expectsResponse)
+{
+    printf("Sending: %s\n", command.c_str());
+    serialConnection.Write(command, expectsResponse);
 }

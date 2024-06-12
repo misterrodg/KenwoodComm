@@ -10,6 +10,10 @@ Run the program from the command line with:
 KenwoodComm
 ```
 
+### Local Mode
+
+An optional `local` argument can be passed to set the program in local mode. This skips establishing a serial connection for test purposes.
+
 ### Safe Mode
 
 An optional `safe` argument can be passed to set the program in safe mode. This disables the `TX` command so that you can test using the commands with your radio, without worrying about accidentally transmitting in the process.
