@@ -11,6 +11,10 @@ public:
     {
         AI, // Auto Information
         AT, // Antenna Tuner
+        BY, // Busy
+        CN, // CTCSS Number
+        CT, // CTCSS
+        DC, // Destination Code
         DI, // DCS ID
         DN, // Down
         DS, // DCS
@@ -22,10 +26,12 @@ public:
         IF, // Information
         LK, // Lock
         LO, // Local
+        LT, // Auto Lock Tone
         MC, // Memory Channel
         MD, // Mode
         MR, // Memory Read
         MS, // Memory Scan
+        MT, // Mute
         MW, // Memory Write
         OS, // Offset
         RC, // RIT Clear
@@ -36,6 +42,7 @@ public:
         SC, // Scan
         SH, // Slope Tune High
         SL, // Slope Tune Low
+        SM, // S-Meter (Sub)
         SP, // Split
         ST, // Step
         TN, // Tone Number
