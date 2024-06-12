@@ -345,6 +345,20 @@ void Session::SendCommand(std::string command)
             }
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::TN):
+        if (parameter == "")
+        {
+            printf("Command \"TN\" requires a parameter.\n");
+        }
+        else
+        {
+            if (tn.SetTone(parameter))
+            {
+                commandString = tn.ToCommand();
+                write(commandString);
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::TO):
         if (parameter == "")
         {

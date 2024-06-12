@@ -52,6 +52,7 @@ private:
     SC sc;
     SP sp;
     ST st;
+    TN tn;
     TO to;
     TX tx;
     UP up;
