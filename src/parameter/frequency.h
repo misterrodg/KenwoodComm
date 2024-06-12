@@ -3,7 +3,7 @@
 
 #include "frequency_unit.h"
 #include <string>
-#include <cstdint>
+#include <cinttypes>
 #include <regex>
 
 class Frequency
