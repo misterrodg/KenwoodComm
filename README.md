@@ -44,6 +44,7 @@ When running the program for the first time, it will prompt you for your callsig
   - TS711A
   - TS711E
   - TS790A
+  - TS790E
   - TS811A
   - TS811B
   - TS811E
