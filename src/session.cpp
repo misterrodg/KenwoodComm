@@ -217,7 +217,7 @@ void Session::SendCommand(std::string command)
             parameterWarning(commandPrefixString, parameter);
         }
         commandString = id.ToCommand();
-        write(commandString);
+        write(commandString, true);
         break;
     case (CommandPrefix::CommandPrefixEnum::IF):
         if (parameter != "")
