@@ -92,6 +92,20 @@ void Session::SendCommand(std::string command)
         commandString = by.ToCommand();
         write(commandString, true);
         break;
+    case (CommandPrefix::CommandPrefixEnum::CN):
+        if (parameter == "")
+        {
+            printf("Command \"CN\" requires a parameter.\n");
+        }
+        else
+        {
+            if (cn.SetTone(parameter))
+            {
+                commandString = cn.ToCommand();
+                write(commandString);
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
         {

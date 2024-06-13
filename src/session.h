@@ -31,6 +31,7 @@ private:
     AI ai;
     AT at;
     BY by;
+    CN cn;
     DI di;
     DS ds;
     DN dn;

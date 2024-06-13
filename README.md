@@ -61,39 +61,40 @@ All commands are case-insensitive, and will always be translated to all caps.
 Any command that accepts `ON` or `OFF` will also accept `1` or `0` as well.
 Any command that expects only `NONE` for its parameter will ignore anything beyond the command itself.
 
-| Command | Parameters                                                                                                                              |
-| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `AI`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `AT`    | `NONE`                                                                                                                                  |
-| `BY`    | `NONE`                                                                                                                                  |
-| `DI`    | `NONE`                                                                                                                                  |
-| `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
-| `DN`    | `NONE`                                                                                                                                  |
-| `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                          |
-| `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                          |
-| `FN`    | `VFOA` / `VFOB` / `MEMORY` (or `A` / `B` / `M`, or `0` / `1` / `2`). If using a TS711 or TS811 `COM` (or `C` or `3`) is also available. |
-| `HD`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
-| `ID`    | `NONE`                                                                                                                                  |
-| `IF`    | `NONE`                                                                                                                                  |
-| `LK`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
-| `LO`    | `NONE`                                                                                                                                  |
-| `MC`    | `MEMORY CHANNEL` as an integer (with a leading zero). If using a TS940, `MEMORY BANK` is also required before the channel.              |
-| `MD`    | `LSB` / `USB` / `CW` / `FM` / `AM` / `FSK` / `CWN` (or `1` / `2` / `3` / `4` / `5` / `6` / `7`), depending on your radio capabilities.  |
-| `MS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
-| `RC`    | `NONE`                                                                                                                                  |
-| `RD`    | `NONE`                                                                                                                                  |
-| `RX`    | `NONE`                                                                                                                                  |
-| `RT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `RU`    | `NONE`                                                                                                                                  |
-| `SC`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `SP`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `ST`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `TN`    | `TONE NUMBER` as an integer between `01` and `38` (with a leading zero, as necessary), or the `TONE FREQUENCY` as a double (`100.0`).\* |
-| `TO`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
-| `TX`    | `NONE`                                                                                                                                  |
-| `UP`    | `NONE`                                                                                                                                  |
-| `VR`    | `NONE`                                                                                                                                  |
-| `XT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
+| Command | Parameters                                                                                                                                |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `AI`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `AT`    | `NONE`                                                                                                                                    |
+| `BY`    | `NONE`                                                                                                                                    |
+| `CN`    | `CTCSS NUMBER` as an integer between `01` and `38` (with a leading zero, as necessary), or the `CTCSS FREQUENCY` as a double (`100.0`).\* |
+| `DI`    | `NONE`                                                                                                                                    |
+| `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
+| `DN`    | `NONE`                                                                                                                                    |
+| `FA`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                            |
+| `FB`    | `FREQUENCY` as an integer or double, followed by `HZ`, `KHZ`, `MHZ`, or `GHZ`.                                                            |
+| `FN`    | `VFOA` / `VFOB` / `MEMORY` (or `A` / `B` / `M`, or `0` / `1` / `2`). If using a TS711 or TS811 `COM` (or `C` or `3`) is also available.   |
+| `HD`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
+| `ID`    | `NONE`                                                                                                                                    |
+| `IF`    | `NONE`                                                                                                                                    |
+| `LK`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
+| `LO`    | `NONE`                                                                                                                                    |
+| `MC`    | `MEMORY CHANNEL` as an integer (with a leading zero). If using a TS940, `MEMORY BANK` is also required before the channel.                |
+| `MD`    | `LSB` / `USB` / `CW` / `FM` / `AM` / `FSK` / `CWN` (or `1` / `2` / `3` / `4` / `5` / `6` / `7`), depending on your radio capabilities.    |
+| `MS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
+| `RC`    | `NONE`                                                                                                                                    |
+| `RD`    | `NONE`                                                                                                                                    |
+| `RX`    | `NONE`                                                                                                                                    |
+| `RT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `RU`    | `NONE`                                                                                                                                    |
+| `SC`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `SP`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `ST`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `TN`    | `TONE NUMBER` as an integer between `01` and `38` (with a leading zero, as necessary), or the `TONE FREQUENCY` as a double (`100.0`).\*   |
+| `TO`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
+| `TX`    | `NONE`                                                                                                                                    |
+| `UP`    | `NONE`                                                                                                                                    |
+| `VR`    | `NONE`                                                                                                                                    |
+| `XT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
 
 \*Note: Kenwood defines this parameter in the IF-10 documents as an integer value between 01 and 37, but their list of frequencies in their radio manuals contains 38 entries (or simply lists the min and max value: `67.0` - `250.3`). I have not yet found any list directly mapping the tone number to the associated frequency.
 
