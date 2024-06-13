@@ -38,7 +38,7 @@ Defaults initialize()
         while (!properModelNumber)
         {
             std::cout << "What is the model number of your radio?" << std::endl;
-            std::cout << "TS140S / TS680S / TS711A / TS711E / TS811A / TS811B / TS811E / TS940S" << std::endl;
+            std::cout << defaults.getModelNumber().getAll() << std::endl;
             std::getline(std::cin, modelNumber);
             properModelNumber = defaults.setModelNumber(modelNumber);
         }

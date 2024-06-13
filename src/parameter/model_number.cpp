@@ -114,3 +114,8 @@ std::string ModelNumber::getGeneric()
         return "UNRECOGNIZED";
     }
 }
+
+std::string ModelNumber::getAll()
+{
+    return "TS140S / TS680S / TS711A / TS711E / TS790A / TS790E / TS811A / TS811B / TS811E / TS940S";
+}

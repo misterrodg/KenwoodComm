@@ -13,6 +13,7 @@ public:
     Radios getModelNumber();
     std::string getModelNumberString();
     std::string getGeneric();
+    std::string getAll();
 
 private:
     static Radios parseUnit(const std::string &unitStr);
