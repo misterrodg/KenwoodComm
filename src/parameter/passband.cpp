@@ -1,6 +1,4 @@
 #include "passband.h"
-#include <regex>
-#include <stdexcept>
 
 Passband::Passband() : passband(0) {}
 
@@ -17,7 +15,7 @@ void Passband::setPassband(const std::string &input)
     }
     else
     {
-        throw std::invalid_argument("Invalid passband format");
+        printf("Invalid passband format");
     }
 }
 

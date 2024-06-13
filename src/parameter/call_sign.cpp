@@ -1,5 +1,4 @@
 #include "call_sign.h"
-#include <regex>
 
 CallSign::CallSign() : callSign("") {}
 

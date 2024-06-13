@@ -1,6 +1,4 @@
 #include "rit_frequency.h"
-#include <regex>
-#include <stdexcept>
 
 RITFrequency::RITFrequency() : frequencyInHz(0) {}
 
@@ -17,7 +15,7 @@ void RITFrequency::setRITFrequency(const std::string &input)
     }
     else
     {
-        throw std::invalid_argument("Invalid frequency format");
+        printf("Invalid frequency format");
     }
 }
 

@@ -1,8 +1,9 @@
 #ifndef StepFREQUENCY_H
 #define StepFREQUENCY_H
 
-#include <string>
 #include <cstdint>
+#include <regex>
+#include <string>
 
 class StepFrequency
 {

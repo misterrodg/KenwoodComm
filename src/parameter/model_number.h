@@ -3,6 +3,7 @@
 
 #include "helpers.h"
 #include "radios.h"
+#include <regex>
 #include <string>
 
 class ModelNumber

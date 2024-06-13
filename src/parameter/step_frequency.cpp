@@ -1,6 +1,4 @@
 #include "step_frequency.h"
-#include <regex>
-#include <stdexcept>
 
 StepFrequency::StepFrequency() : frequencyInHz(0) {}
 
@@ -17,7 +15,7 @@ void StepFrequency::setStepFrequency(const std::string &input)
     }
     else
     {
-        throw std::invalid_argument("Invalid frequency format");
+        printf("Invalid frequency format");
     }
 }
 

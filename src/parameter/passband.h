@@ -1,8 +1,9 @@
 #ifndef PASSBAND_H
 #define PASSBAND_H
 
-#include <string>
 #include <cstdint>
+#include <regex>
+#include <string>
 
 class Passband
 {

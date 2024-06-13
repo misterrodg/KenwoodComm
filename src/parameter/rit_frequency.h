@@ -1,8 +1,9 @@
 #ifndef RITFREQUENCY_H
 #define RITFREQUENCY_H
 
-#include <string>
 #include <cstdint>
+#include <regex>
+#include <string>
 
 class RITFrequency
 {

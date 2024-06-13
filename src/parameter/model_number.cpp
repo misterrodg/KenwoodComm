@@ -1,5 +1,4 @@
 #include "model_number.h"
-#include <regex>
 
 ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {}
 
