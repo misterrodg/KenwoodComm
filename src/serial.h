@@ -16,14 +16,18 @@
 #include <unistd.h>  // write(), read(), close(), usleep()
 #include <iomanip>
 
+#include "command.h"
+#include "response.h"
+
 class Serial
 {
 public:
     Serial(const std::string &portOverride = "");
     void Open();
     void Close();
-    void Write(const std::string &command, bool expectsResponse = false);
-    void Read();
+    void Write(const std::string &command);
+    std::string Read();
+    bool GetEstablished();
 
 private:
     bool established = false;

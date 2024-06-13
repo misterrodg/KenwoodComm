@@ -447,5 +447,13 @@ std::string Session::getParameter(const std::string &fullCommand)
 void Session::write(const std::string &command, bool expectsResponse)
 {
     printf("Sending: %s\n", command.c_str());
-    serialConnection.Write(command, expectsResponse);
+    if (serialConnection.GetEstablished())
+    {
+        serialConnection.Write(command);
+        if (expectsResponse)
+        {
+            std::string response = serialConnection.Read();
+            printf("%s\n", response.c_str());
+        }
+    }
 }

@@ -60,53 +60,50 @@ void Serial::Close()
     }
 }
 
-void Serial::Write(const std::string &command, bool expectsResponse)
+void Serial::Write(const std::string &command)
 {
-    if (established)
+    const int maxSize = Command::MAX_COMMAND_LENGTH + 1;
+    uint8_t outBuffer[maxSize] = {0};
+
+    int i = 0;
+    for (char c : command)
     {
-        const int maxSize = 32;
-        uint8_t outBuffer[maxSize] = {""};
-
-        int i = 0;
-        for (char c : command)
+        if (i >= maxSize)
         {
-            if (i >= maxSize)
-            {
-                break;
-            }
-            outBuffer[i++] = static_cast<uint8_t>(c);
+            break;
         }
-        int bytesWritten = write(fdPort, &outBuffer, sizeof(outBuffer));
-        if (bytesWritten == -1)
-        {
-            printf("Error writing to serial connection.\n");
-            return;
-        }
-
-        if (expectsResponse)
-        {
-            Read();
-        }
+        outBuffer[i++] = static_cast<uint8_t>(c);
+    }
+    int bytesWritten = write(fdPort, &outBuffer, sizeof(outBuffer));
+    if (bytesWritten == -1)
+    {
+        printf("Error writing to serial connection.\n");
+        return;
     }
     return;
 }
 
-void Serial::Read()
+std::string Serial::Read()
 {
-    int readin = 0;
-    char buffer[256];
-    char *bufptr;
+    const int maxSize = Response::MAX_RESPONSE_LENGTH + 1;
+    int readIn = 0;
+    char buffer[maxSize];
+    char *bufPtr;
 
-    bufptr = buffer;
-    while ((readin = read(fdPort, bufptr, buffer + sizeof(buffer) - bufptr - 1)) > 0)
+    bufPtr = buffer;
+    while ((readIn = read(fdPort, bufPtr, buffer + sizeof(buffer) - bufPtr - 1)) > 0)
     {
-        bufptr += readin;
-        if (bufptr[-1] == ';')
+        bufPtr += readIn;
+        if (bufPtr[-1] == ';')
         {
             break;
         }
     }
-    *bufptr = '\0';
-    printf("Received message: %s\n", buffer);
-    return;
+    *bufPtr = '\0';
+    return buffer;
+}
+
+bool Serial::GetEstablished()
+{
+    return established;
 }
