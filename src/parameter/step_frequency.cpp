@@ -2,21 +2,40 @@
 
 StepFrequency::StepFrequency() : frequencyInHz(0) {}
 
-void StepFrequency::setStepFrequency(const std::string &input)
+bool StepFrequency::setStepFrequency(const std::string &input)
 {
-    std::regex regex(R"((\d{1,5}))");
+    bool result = false;
+    std::regex regex(R"((\d+(\.\d+)?)([a-zA-Z]+))");
     std::smatch match;
 
-    if (std::regex_match(input, regex))
+    if (std::regex_match(input, match, regex))
     {
-        int value = std::stoi(input);
+        double value = std::stod(match[1].str());
+        std::string unit = match[3].str();
 
-        frequencyInHz = value;
+        FrequencyUnit::Unit frequencyUnit = FrequencyUnit::parseUnit(unit);
+        if (frequencyUnit != FrequencyUnit::UNKNOWN && frequencyUnit != FrequencyUnit::MHZ && frequencyUnit != FrequencyUnit::GHZ)
+        {
+            frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
+            if (frequencyInHz <= MAX_STEP_FREQUENCY_VALUE)
+            {
+                result = true;
+            }
+            else
+            {
+                printf("Step frequency must be between 0 and %dHz.\n", MAX_STEP_FREQUENCY_VALUE);
+            }
+        }
+        else
+        {
+            printf("Step frequency unit must be kHz or Hz.\n");
+        }
     }
     else
     {
-        printf("Invalid frequency format");
+        printf("Invalid Step frequency format.\n");
     }
+    return result;
 }
 
 unsigned short int StepFrequency::getStepFrequencyInHz() const
