@@ -520,7 +520,7 @@ void Session::write(const std::string &command, bool expectsResponse)
         if (expectsResponse)
         {
             std::string response = serialConnection.Read();
-            printf("%s\n", response.c_str());
+            Response(response).ToConsole();
         }
     }
 }

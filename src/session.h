@@ -3,6 +3,7 @@
 
 #include "commandset.h"
 #include "helpers.h"
+#include "response.h"
 #include "serial.h"
 #include "command/commands.h"
 #include "parameter/function.h"
