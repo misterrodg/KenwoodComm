@@ -7,6 +7,8 @@ enum class Radios
     TS680S,
     TS711A,
     TS711E,
+    TS790A,
+    TS790E,
     TS811A,
     TS811B,
     TS811E,

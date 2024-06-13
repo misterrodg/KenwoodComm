@@ -43,6 +43,7 @@ When running the program for the first time, it will prompt you for your callsig
   - TS680S
   - TS711A
   - TS711E
+  - TS790A
   - TS811A
   - TS811B
   - TS811E

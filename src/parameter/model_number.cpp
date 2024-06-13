@@ -14,6 +14,10 @@ Radios ModelNumber::parseUnit(const std::string &modelStr)
         return Radios::TS711A;
     if (lowerStr == "ts711e")
         return Radios::TS711E;
+    if (lowerStr == "ts790a")
+        return Radios::TS790A;
+    if (lowerStr == "ts790e")
+        return Radios::TS790E;
     if (lowerStr == "ts811a")
         return Radios::TS811A;
     if (lowerStr == "ts811B")
@@ -65,6 +69,10 @@ std::string ModelNumber::getModelNumberString()
         return "TS711A";
     case Radios::TS711E:
         return "TS711E";
+    case Radios::TS790A:
+        return "TS790A";
+    case Radios::TS790E:
+        return "TS790E";
     case Radios::TS811A:
         return "TS811A";
     case Radios::TS811B:
@@ -90,6 +98,10 @@ std::string ModelNumber::getGeneric()
         return "711";
     case Radios::TS711E:
         return "711";
+    case Radios::TS790A:
+        return "790";
+    case Radios::TS790E:
+        return "790";
     case Radios::TS811A:
         return "811";
     case Radios::TS811B:
