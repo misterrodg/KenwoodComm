@@ -250,6 +250,21 @@ void Session::SendCommand(std::string command)
         commandString = lo.ToCommand();
         write(commandString);
         break;
+    case (CommandPrefix::CommandPrefixEnum::LT):
+        if (parameter == "")
+        {
+            commandString = lt.ToCommand(true);
+            write(commandString, true);
+        }
+        else
+        {
+            if (lt.SetSwitch(parameter))
+            {
+                commandString = lt.ToCommand();
+                write(commandString);
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::MC):
         if (parameter == "")
         {

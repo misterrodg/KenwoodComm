@@ -44,6 +44,7 @@ private:
     IF information;
     LK lk;
     LO lo;
+    LT lt;
     MC mc;
     MD md;
     MS ms;

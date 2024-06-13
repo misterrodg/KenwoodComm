@@ -20,6 +20,7 @@
 #include "if.h"
 #include "lk.h"
 #include "lo.h"
+#include "lt.h"
 #include "mc.h"
 #include "md.h"
 #include "ms.h"
