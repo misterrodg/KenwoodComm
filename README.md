@@ -67,6 +67,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `AT`    | `NONE`                                                                                                                                    |
 | `BY`    | `NONE`                                                                                                                                    |
 | `CN`    | `CTCSS NUMBER` as an integer between `01` and `38` (with a leading zero, as necessary), or the `CTCSS FREQUENCY` as a double (`100.0`).\* |
+| `CT`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
 | `DI`    | `NONE`                                                                                                                                    |
 | `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
 | `DN`    | `NONE`                                                                                                                                    |

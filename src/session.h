@@ -32,6 +32,7 @@ private:
     AT at;
     BY by;
     CN cn;
+    CT ct;
     DI di;
     DS ds;
     DN dn;

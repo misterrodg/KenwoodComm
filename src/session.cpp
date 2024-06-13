@@ -106,6 +106,21 @@ void Session::SendCommand(std::string command)
             }
         }
         break;
+    case (CommandPrefix::CommandPrefixEnum::CT):
+        if (parameter == "")
+        {
+            commandString = ct.ToCommand(true);
+            write(commandString, true);
+        }
+        else
+        {
+            if (ct.SetSwitch(parameter))
+            {
+                commandString = ct.ToCommand();
+                write(commandString);
+            }
+        }
+        break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
         {
