@@ -8,6 +8,7 @@ enum class ModelNumberResponse
     TS811 = 2,
     TS940 = 3,
     TS140TS680 = 6,
+    TS790 = 7,
 };
 
 #endif
