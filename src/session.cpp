@@ -84,6 +84,14 @@ void Session::SendCommand(std::string command)
         commandString = at.ToCommand();
         write(commandString);
         break;
+    case (CommandPrefix::CommandPrefixEnum::BY):
+        if (parameter != "")
+        {
+            parameterWarning(commandPrefixString, parameter);
+        }
+        commandString = by.ToCommand();
+        write(commandString, true);
+        break;
     case (CommandPrefix::CommandPrefixEnum::DI):
         if (parameter != "")
         {

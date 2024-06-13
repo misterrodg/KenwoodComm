@@ -6,6 +6,7 @@
 #include "command_switch.h"
 #include "ai.h"
 #include "at.h"
+#include "by.h"
 #include "di.h"
 #include "dn.h"
 #include "ds.h"

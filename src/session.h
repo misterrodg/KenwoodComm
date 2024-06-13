@@ -30,6 +30,7 @@ private:
     Commandset availableCommands;
     AI ai;
     AT at;
+    BY by;
     DI di;
     DS ds;
     DN dn;

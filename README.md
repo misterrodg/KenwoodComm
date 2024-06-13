@@ -65,6 +65,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | `AI`    | `ON` / `OFF` (or `1` / `0`)                                                                                                             |
 | `AT`    | `NONE`                                                                                                                                  |
+| `BY`    | `NONE`                                                                                                                                  |
 | `DI`    | `NONE`                                                                                                                                  |
 | `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                  |
 | `DN`    | `NONE`                                                                                                                                  |
