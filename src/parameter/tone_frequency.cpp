@@ -81,6 +81,8 @@ ToneFrequency::ToneFrequencyEnum ToneFrequency::StringToToneFrequency(const std:
         {"241.8", ToneFrequency::ToneFrequencyEnum::TN37},
         {"38", ToneFrequency::ToneFrequencyEnum::TN38},
         {"250.3", ToneFrequency::ToneFrequencyEnum::TN38},
+        {"399", ToneFrequency::ToneFrequencyEnum::TN39},
+        {"1750.0", ToneFrequency::ToneFrequencyEnum::TN39},
     };
 
     auto it = enumMap.find(toneString);
@@ -140,6 +142,7 @@ std::string ToneFrequency::ToneFrequencyToFreqString(const ToneFrequencyEnum &to
         {ToneFrequency::ToneFrequencyEnum::TN36, "233.6"},
         {ToneFrequency::ToneFrequencyEnum::TN37, "241.8"},
         {ToneFrequency::ToneFrequencyEnum::TN38, "250.3"},
+        {ToneFrequency::ToneFrequencyEnum::TN39, "1750.0"},
     };
 
     auto it = enumMap.find(toneEnum);

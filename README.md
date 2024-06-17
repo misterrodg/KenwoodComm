@@ -67,7 +67,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `AI`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
 | `AT`    | `NONE`                                                                                                                                    |
 | `BY`    | `NONE`                                                                                                                                    |
-| `CN`    | `CTCSS NUMBER` as an integer between `01` and `38` (with a leading zero, as necessary), or the `CTCSS FREQUENCY` as a double (`100.0`).\* |
+| `CN`    | `CTCSS NUMBER` as an integer between `01` and `39` (with a leading zero, as necessary), or the `CTCSS FREQUENCY` as a double (`100.0`).\* |
 | `CT`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
 | `DI`    | `NONE`                                                                                                                                    |
 | `DS`    | `ON` / `OFF` (or `1` / `0`), or `NONE`                                                                                                    |
@@ -100,7 +100,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `VR`    | `NONE`                                                                                                                                    |
 | `XT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
 
-\*Note: Kenwood defines this parameter in the IF-10 documents as an integer value between 01 and 37, but their list of frequencies in their radio manuals contains 38 entries (or simply lists the min and max value: `67.0` - `250.3`). I have not yet found any list directly mapping the tone number to the associated frequency.
+\*Note: Kenwood defines this parameter in the IF-10 documents as an integer value between 01 and 37, but their list of frequencies in various radio manuals contains 39 entries (or simply lists the min and max value: `67.0` - `1750.0`). The current mapping is based on the TS-870 manual, which lists them on page 85.
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.

@@ -47,7 +47,8 @@ public:
         TN36,
         TN37,
         TN38,
-        UNKNOWN
+        TN39,
+        UNKNOWN,
     };
     static ToneFrequencyEnum StringToToneFrequency(const std::string &toneString);
     static std::string ToneFrequencyToFreqString(const ToneFrequencyEnum &toneEnum);
