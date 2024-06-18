@@ -3,6 +3,8 @@
 
 enum class Radios
 {
+    TS50S,
+    TS60S,
     TS140S,
     TS680S,
     TS711A,

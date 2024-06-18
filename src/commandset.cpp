@@ -4,6 +4,30 @@ Commandset::Commandset(Radios radioType)
 {
     switch (radioType)
     {
+    case Radios::TS50S:
+        availableCommands = {
+            CommandPrefix::CommandPrefixEnum::FA,
+            CommandPrefix::CommandPrefixEnum::FB,
+            CommandPrefix::CommandPrefixEnum::FN,
+            CommandPrefix::CommandPrefixEnum::ID,
+            CommandPrefix::CommandPrefixEnum::IF,
+            CommandPrefix::CommandPrefixEnum::MD,
+            CommandPrefix::CommandPrefixEnum::RX,
+            CommandPrefix::CommandPrefixEnum::SP,
+            CommandPrefix::CommandPrefixEnum::TX};
+        break;
+    case Radios::TS60S:
+        availableCommands = {
+            CommandPrefix::CommandPrefixEnum::FA,
+            CommandPrefix::CommandPrefixEnum::FB,
+            CommandPrefix::CommandPrefixEnum::FN,
+            CommandPrefix::CommandPrefixEnum::ID,
+            CommandPrefix::CommandPrefixEnum::IF,
+            CommandPrefix::CommandPrefixEnum::MD,
+            CommandPrefix::CommandPrefixEnum::RX,
+            CommandPrefix::CommandPrefixEnum::SP,
+            CommandPrefix::CommandPrefixEnum::TX};
+        break;
     case Radios::TS140S:
         availableCommands = {
             CommandPrefix::CommandPrefixEnum::AI,

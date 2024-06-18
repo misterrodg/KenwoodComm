@@ -1,6 +1,6 @@
 # KenwoodComm
 
-A command line interface for Kenwood radios using IF-10A/B/C modules.
+A command line interface for Kenwood radios using IF-10A/B/C/D modules.
 
 ## Running the Program
 
@@ -39,6 +39,8 @@ When running the program for the first time, it will prompt you for your callsig
 - Callsign: Any string between 3 and 6 alphanumeric characters. Only certain radios use this, but it is also used in the welcome lines when the program runs.
 
 - Radio: This controls which commands are available, based on what the radio will accept. Must be one of the following:
+  - TS50S
+  - TS60S
   - TS140S
   - TS680S
   - TS711A
@@ -100,7 +102,7 @@ Any command that expects only `NONE` for its parameter will ignore anything beyo
 | `VR`    | `NONE`                                                                                                                                    |
 | `XT`    | `ON` / `OFF` (or `1` / `0`)                                                                                                               |
 
-\*Note: Kenwood defines this parameter in the IF-10 documents as an integer value between 01 and 37, but their list of frequencies in various radio manuals contains 39 entries (or simply lists the min and max value: `67.0` - `1750.0`). The current mapping is based on the TS-870 manual, which lists them on page 85.
+\*Note: Kenwood defines this parameter in the IF-10 documents as an integer value between 01 and 37, but their list of frequencies in various radio manuals contains 39 entries (or simply lists the min and max value: `67.0` - `1750.0`). The current mapping is based on the IF-10D manual, which lists them on page 16.
 
 At the moment, using any other available commands will display `Command "XX" Not Implemented.`, where `XX` is the command.
 Using any command outside of the available list will display `Invalid Command`.

@@ -5,6 +5,10 @@ ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {}
 Radios ModelNumber::parseUnit(const std::string &modelStr)
 {
     std::string lowerStr = Helpers::toLower(modelStr);
+    if (lowerStr == "ts50s")
+        return Radios::TS50S;
+    if (lowerStr == "ts60s")
+        return Radios::TS60S;
     if (lowerStr == "ts140s")
         return Radios::TS140S;
     if (lowerStr == "ts680s")
@@ -60,6 +64,10 @@ std::string ModelNumber::getModelNumberString()
 {
     switch (modelNumber)
     {
+    case Radios::TS50S:
+        return "TS50S";
+    case Radios::TS60S:
+        return "TS60S";
     case Radios::TS140S:
         return "TS140S";
     case Radios::TS680S:
@@ -89,6 +97,10 @@ std::string ModelNumber::getGeneric()
 {
     switch (modelNumber)
     {
+    case Radios::TS50S:
+        return "50";
+    case Radios::TS60S:
+        return "60";
     case Radios::TS140S:
         return "140";
     case Radios::TS680S:
@@ -116,5 +128,5 @@ std::string ModelNumber::getGeneric()
 
 std::string ModelNumber::getAll()
 {
-    return "TS140S / TS680S / TS711A / TS711E / TS790A / TS790E / TS811A / TS811B / TS811E / TS940S";
+    return "TS50S / TS60S / TS140S / TS680S / TS711A / TS711E / TS790A / TS790E / TS811A / TS811B / TS811E / TS940S";
 }

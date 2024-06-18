@@ -50,7 +50,7 @@ bool CommandMode::allowedForModelNumber(ModelNumber &modelNumber, Mode::ModeEnum
         result = true;
         break;
     case Mode::ModeEnum::AM:
-        if (radioEnum == Radios::TS140S || radioEnum == Radios::TS680S || radioEnum == Radios::TS940S)
+        if (radioEnum == Radios::TS50S || radioEnum == Radios::TS60S || radioEnum == Radios::TS140S || radioEnum == Radios::TS680S || radioEnum == Radios::TS940S)
         {
             result = true;
         }
