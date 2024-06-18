@@ -14,10 +14,10 @@ public:
     unsigned short int getStepFrequencyInHz() const;
     std::string getStepFrequencyString();
     static const int MAX_STEP_FREQUENCY_LENGTH = 5;
-    static const int MAX_STEP_FREQUENCY_VALUE = 99999;
+    static const unsigned int MAX_STEP_FREQUENCY_VALUE = 99999;
 
 private:
-    unsigned short int frequencyInHz;
+    unsigned int frequencyInHz;
 };
 
 #endif
