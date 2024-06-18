@@ -1,10 +1,10 @@
 #include "response.h"
 
-Response::Response(const std::string &response) : commandPrefix(CommandPrefix::CommandPrefixEnum::ZZ), parameters("")
+Response::Response(const std::string &response) : commandPrefixEnum(CommandPrefix::CommandPrefixEnum::ZZ), parameters("")
 {
     if (response.length() >= 3 && response.back() == ';')
     {
-        commandPrefix = CommandPrefix::StringToCommandPrefix(response.substr(0, CommandPrefix::COMMAND_LENGTH));
+        commandPrefixEnum = CommandPrefix::StringToCommandPrefix(response.substr(0, CommandPrefix::COMMAND_LENGTH));
         size_t endPos = response.find(';', CommandPrefix::COMMAND_LENGTH);
         if (endPos != std::string::npos)
         {
@@ -19,5 +19,5 @@ Response::Response(const std::string &response) : commandPrefix(CommandPrefix::C
 
 void Response::ToConsole()
 {
-    printf("Response: %s\nParameters: %s\n", CommandPrefix::CommandToStringExpanded(commandPrefix).c_str(), parameters.c_str());
+    printf("Response: %s\nParameters: %s\n", CommandPrefix::CommandToStringExpanded(commandPrefixEnum).c_str(), parameters.c_str());
 }

@@ -12,7 +12,7 @@ public:
     static const int MAX_RESPONSE_LENGTH = 39;
 
 private:
-    CommandPrefix::CommandPrefixEnum commandPrefix;
+    CommandPrefix::CommandPrefixEnum commandPrefixEnum;
     std::string parameters;
 };
 
