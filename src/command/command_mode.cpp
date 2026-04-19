@@ -1,27 +1,22 @@
 #include "command_mode.h"
 
-bool CommandMode::SetMode(ModelNumber &modelNumber, const std::string &modeString)
-{
-    bool result = false;
+CommandResult CommandMode::SetMode(ModelNumber& modelNumber,
+                                   const std::string& modeString) {
     Mode::ModeEnum modeEnum = Mode::StringToMode(modeString);
-    if (modeEnum != Mode::ModeEnum::UNKNOWN)
-    {
-        if (allowedForModelNumber(modelNumber, modeEnum))
-        {
+    if (modeEnum != Mode::ModeEnum::UNKNOWN) {
+        if (allowedForModelNumber(modelNumber, modeEnum)) {
             mode = modeEnum;
-            result = true;
-        }
-        else
-        {
-            std::string modeString = Mode::ModeToString(modeEnum);
-            printf("%s not available for the %s.\n", modeString.c_str(), modelNumber.getModelNumberString().c_str());
+            return OK();
+        } else {
+            std::string modeStr = Mode::ModeToString(modeEnum);
+            return Error(modeStr + " not available for the " +
+                         modelNumber.getModelNumberString());
         }
     }
-    return result;
+    return Error("Invalid mode: " + modeString);
 }
 
-std::string CommandMode::ToCommand()
-{
+std::string CommandMode::ToCommand() {
     std::string command = CommandPrefix::CommandToString(commandPrefix);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
@@ -31,12 +26,11 @@ std::string CommandMode::ToCommand()
     return Command(bufferLength, command, modeString).ToString();
 }
 
-bool CommandMode::allowedForModelNumber(ModelNumber &modelNumber, Mode::ModeEnum &modeEnum)
-{
+bool CommandMode::allowedForModelNumber(ModelNumber& modelNumber,
+                                        Mode::ModeEnum& modeEnum) {
     bool result = false;
     Radios radioEnum = modelNumber.getModelNumber();
-    switch (modeEnum)
-    {
+    switch (modeEnum) {
     case Mode::ModeEnum::LSB:
         result = true;
         break;
@@ -50,20 +44,19 @@ bool CommandMode::allowedForModelNumber(ModelNumber &modelNumber, Mode::ModeEnum
         result = true;
         break;
     case Mode::ModeEnum::AM:
-        if (radioEnum == Radios::TS50S || radioEnum == Radios::TS60S || radioEnum == Radios::TS140S || radioEnum == Radios::TS680S || radioEnum == Radios::TS940S)
-        {
+        if (radioEnum == Radios::TS50S || radioEnum == Radios::TS60S ||
+            radioEnum == Radios::TS140S || radioEnum == Radios::TS680S ||
+            radioEnum == Radios::TS940S) {
             result = true;
         }
         break;
     case Mode::ModeEnum::FSK:
-        if (radioEnum == Radios::TS940S)
-        {
+        if (radioEnum == Radios::TS940S) {
             result = true;
         }
         break;
     case Mode::ModeEnum::CWN:
-        if (radioEnum == Radios::TS140S || radioEnum == Radios::TS680S)
-        {
+        if (radioEnum == Radios::TS140S || radioEnum == Radios::TS680S) {
             result = true;
         }
         break;
