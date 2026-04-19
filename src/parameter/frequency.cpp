@@ -7,7 +7,7 @@ Frequency::Frequency() : frequencyInHz(0) {}
 bool Frequency::setFrequency(const std::string &input)
 {
     bool result = false;
-    std::regex regex(R"((\d+(\.\d+)?)([a-zA-Z]+))");
+    std::regex regex(R"((\d+(\.\d+)?)\s*([a-zA-Z]+))");
     std::smatch match;
 
     if (std::regex_match(input, match, regex))
