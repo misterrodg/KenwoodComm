@@ -1,22 +1,18 @@
 #include "command_frequency.h"
 
-bool CommandFrequency::SetFrequency(const std::string &frequencyString)
-{
-    bool result = false;
-    if (frequency.setFrequency(frequencyString))
-    {
-        result = true;
+CommandResult
+CommandFrequency::SetFrequency(const std::string& frequencyString) {
+    if (frequency.setFrequency(frequencyString)) {
+        return OK();
     }
-    return result;
+    return Error("Invalid frequency: " + frequencyString);
 }
 
-std::string CommandFrequency::ToCommand(bool readStatus)
-{
+std::string CommandFrequency::ToCommand(bool readStatus) {
     std::string command = CommandPrefix::CommandToString(commandPrefix);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
-    if (readStatus)
-    {
+    if (readStatus) {
         return Command(bufferLength, command).ToString();
     }
 

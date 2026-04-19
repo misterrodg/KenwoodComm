@@ -1,24 +1,19 @@
 #include "command_switch.h"
 
-bool CommandSwitch::SetSwitch(const std::string &status)
-{
-    bool result = false;
+CommandResult CommandSwitch::SetSwitch(const std::string& status) {
     Switch::SwitchEnum switchEnum = Switch::StringToSwitch(status);
-    if (switchEnum != Switch::SwitchEnum::UNKNOWN)
-    {
+    if (switchEnum != Switch::SwitchEnum::UNKNOWN) {
         enabled = switchEnum;
-        result = true;
+        return OK();
     }
-    return result;
+    return Error("Invalid switch parameter: " + status);
 }
 
-std::string CommandSwitch::ToCommand(bool readStatus)
-{
+std::string CommandSwitch::ToCommand(bool readStatus) {
     std::string command = CommandPrefix::CommandToString(commandPrefix);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
-    if (readStatus)
-    {
+    if (readStatus) {
         return Command(bufferLength, command).ToString();
     }
 
