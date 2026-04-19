@@ -1,20 +1,16 @@
 #include "session.h"
 
-Session::Session(bool inSafeMode, bool inLocalMode,
-                 ModelNumber modelNumberEnum) {
-    safeMode = inSafeMode;
-    localMode = inLocalMode;
-    sessionOpen = true;
-    modelNumber = modelNumberEnum;
-    Commandset commands(modelNumber.getModelNumber());
-    availableCommands = commands;
-    availableCommands.printAvailableCommands();
+Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
+    : safeMode(inSafeMode), localMode(inLocalMode), sessionOpen(true) {
+
+    radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
+    radioProfile->PrintAvailableCommands();
 
     if (localMode == false) {
         serialConnection.Open();
     }
 
-    dispatcher = std::make_unique<CommandDispatcher>(this);
+    dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
 }
 
 void Session::CheckCommand(std::string command) {
@@ -22,12 +18,12 @@ void Session::CheckCommand(std::string command) {
     std::string commandUpper = Helpers::toUpper(command);
 
     if (commandUpper == "COMMANDS") {
-        availableCommands.printAvailableCommands();
+        radioProfile->PrintAvailableCommands();
         validCommand = true;
     }
 
     if (commandUpper == "COMMANDHELP") {
-        availableCommands.printAvailableCommands(true);
+        radioProfile->PrintAvailableCommands(true);
         validCommand = true;
     }
 
@@ -61,16 +57,16 @@ void Session::SendCommand(std::string command) {
     }
 }
 
-bool Session::startsWithCommand(const std::string& fullCommand) {
+bool Session::startsWithCommand(const std::string& fullCommand) const {
     std::string commandChars = getCommand(fullCommand);
-    return availableCommands.verifyCommand(commandChars);
+    return radioProfile->VerifyCommand(commandChars);
 }
 
-std::string Session::getCommand(const std::string& fullCommand) {
+std::string Session::getCommand(const std::string& fullCommand) const {
     return fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH);
 }
 
-std::string Session::getParameter(const std::string& fullCommand) {
+std::string Session::getParameter(const std::string& fullCommand) const {
     std::string param = fullCommand.substr(CommandPrefix::COMMAND_LENGTH);
     size_t start = param.find_first_not_of(" \t\n\r\f\v");
     return (start == std::string::npos) ? "" : param.substr(start);

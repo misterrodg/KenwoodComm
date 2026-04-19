@@ -9,14 +9,14 @@
 class CommandMode : public CommandBase {
 protected:
     Mode::ModeEnum mode = Mode::ModeEnum::LSB;
-    bool allowedForModelNumber(ModelNumber& modelNumber,
+    bool allowedForModelNumber(const ModelNumber& modelNumber,
                                Mode::ModeEnum& modeEnum);
 
 public:
     CommandMode(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
     std::string ToCommand();
-    CommandResult SetMode(ModelNumber& modelNumber,
+    CommandResult SetMode(const ModelNumber& modelNumber,
                           const std::string& modeString);
 };
 

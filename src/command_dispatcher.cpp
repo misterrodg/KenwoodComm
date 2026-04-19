@@ -1,8 +1,11 @@
 #include "command_dispatcher.h"
 #include "command/command_prefix.h"
+#include "radio_profile.h"
 #include "session.h"
 
-CommandDispatcher::CommandDispatcher(Session* session) : session(session) {
+CommandDispatcher::CommandDispatcher(Session* session,
+                                     RadioProfile* radioProfile)
+    : session(session), radioProfile(radioProfile) {
     // AI: Auto Information - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::AI] = {
         CommandMetaData::REQUIRED_PARAMETER, false, false,
@@ -121,8 +124,8 @@ CommandDispatcher::CommandDispatcher(Session* session) : session(session) {
     registry[CommandPrefix::CommandPrefixEnum::FN] = {
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
-            CommandResult result =
-                s->fn.SetFunction(s->modelNumber, s->lastParameter);
+            CommandResult result = s->fn.SetFunction(
+                s->radioProfile->GetModelNumber(), s->lastParameter);
             if (result)
                 return result;
             s->write(s->fn.ToCommand());
@@ -202,8 +205,8 @@ CommandDispatcher::CommandDispatcher(Session* session) : session(session) {
     registry[CommandPrefix::CommandPrefixEnum::MC] = {
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
-            CommandResult result =
-                s->mc.SetMemory(s->modelNumber, s->lastParameter);
+            CommandResult result = s->mc.SetMemory(
+                s->radioProfile->GetModelNumber(), s->lastParameter);
             if (result)
                 return result;
             s->write(s->mc.ToCommand());
@@ -214,8 +217,8 @@ CommandDispatcher::CommandDispatcher(Session* session) : session(session) {
     registry[CommandPrefix::CommandPrefixEnum::MD] = {
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
-            CommandResult result =
-                s->md.SetMode(s->modelNumber, s->lastParameter);
+            CommandResult result = s->md.SetMode(
+                s->radioProfile->GetModelNumber(), s->lastParameter);
             if (result)
                 return result;
             s->write(s->md.ToCommand());
@@ -390,6 +393,12 @@ CommandDispatcher::CommandDispatcher(Session* session) : session(session) {
 CommandResult
 CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
                             const std::string& param) {
+    if (!radioProfile->IsCommandAvailable(command)) {
+        std::string commandString = CommandPrefix::CommandToString(command);
+        return Error("Command \"" + commandString +
+                     "\" not available on this model");
+    }
+
     auto it = registry.find(command);
 
     if (it == registry.end()) {

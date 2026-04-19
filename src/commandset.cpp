@@ -13,11 +13,11 @@ Commandset::Commandset(Radios radioType) {
 }
 
 std::vector<CommandPrefix::CommandPrefixEnum>
-Commandset::getAvailableCommands() {
+Commandset::getAvailableCommands() const {
     return availableCommands;
 }
 
-void Commandset::printAvailableCommands(bool expand) {
+void Commandset::printAvailableCommands(bool expand) const {
     printf("Available commands are: ");
     if (expand) {
         printf("\n");
@@ -36,7 +36,7 @@ void Commandset::printAvailableCommands(bool expand) {
     printf("\n");
 }
 
-bool Commandset::verifyCommand(std::string command) {
+bool Commandset::verifyCommand(std::string command) const {
     bool result = false;
     std::string upperCommand = Helpers::toUpper(command);
     CommandPrefix::CommandPrefixEnum commandValue =

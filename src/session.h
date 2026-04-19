@@ -3,10 +3,8 @@
 
 #include "command/commands.h"
 #include "command_dispatcher.h"
-#include "commandset.h"
 #include "helpers.h"
-#include "parameter/function.h"
-#include "parameter/model_number.h"
+#include "radio_profile.h"
 #include "response.h"
 #include "serial.h"
 #include <memory>
@@ -18,21 +16,22 @@ class Session {
 public:
     Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
     void CheckCommand(std::string command);
-    void SendCommand(std::string command);
     bool safeMode;
     bool localMode;
     bool sessionOpen;
 
 private:
-    bool startsWithCommand(const std::string& fullCommand);
-    std::string getCommand(const std::string& fullCommand);
-    std::string getParameter(const std::string& fullCommand);
+    void SendCommand(std::string command);
+    bool startsWithCommand(const std::string& fullCommand) const;
+    std::string getCommand(const std::string& fullCommand) const;
+    std::string getParameter(const std::string& fullCommand) const;
     void write(const std::string& command, bool expectsResponse = false);
+
     Serial serialConnection;
-    ModelNumber modelNumber;
-    Commandset availableCommands;
+    std::unique_ptr<RadioProfile> radioProfile;
     std::unique_ptr<CommandDispatcher> dispatcher;
     std::string lastParameter;
+
     AI ai;
     AT at;
     BY by;
