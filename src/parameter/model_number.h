@@ -1,7 +1,7 @@
 #ifndef MODEL_NUMBER_H
 #define MODEL_NUMBER_H
 
-#include "helpers.h"
+#include "../helpers.h"
 #include "radios.h"
 #include <regex>
 #include <string>
