@@ -1,171 +1,37 @@
 #include "command_prefix.h"
+#include <map>
 
-const int CommandPrefix::COMMAND_LENGTH = 2;
-
-CommandPrefix::CommandPrefixEnum CommandPrefix::StringToCommandPrefix(const std::string &commandString)
-{
-    static const std::map<std::string, CommandPrefix::CommandPrefixEnum> enumMap = {
-        {"AI", CommandPrefix::CommandPrefixEnum::AI},
-        {"AT", CommandPrefix::CommandPrefixEnum::AT},
-        {"BY", CommandPrefix::CommandPrefixEnum::BY},
-        {"CN", CommandPrefix::CommandPrefixEnum::CN},
-        {"CT", CommandPrefix::CommandPrefixEnum::CT},
-        {"DC", CommandPrefix::CommandPrefixEnum::DC},
-        {"DI", CommandPrefix::CommandPrefixEnum::DI},
-        {"DN", CommandPrefix::CommandPrefixEnum::DN},
-        {"DS", CommandPrefix::CommandPrefixEnum::DS},
-        {"FA", CommandPrefix::CommandPrefixEnum::FA},
-        {"FB", CommandPrefix::CommandPrefixEnum::FB},
-        {"FN", CommandPrefix::CommandPrefixEnum::FN},
-        {"HD", CommandPrefix::CommandPrefixEnum::HD},
-        {"ID", CommandPrefix::CommandPrefixEnum::ID},
-        {"IF", CommandPrefix::CommandPrefixEnum::IF},
-        {"LK", CommandPrefix::CommandPrefixEnum::LK},
-        {"LO", CommandPrefix::CommandPrefixEnum::LO},
-        {"LT", CommandPrefix::CommandPrefixEnum::LT},
-        {"MC", CommandPrefix::CommandPrefixEnum::MC},
-        {"MD", CommandPrefix::CommandPrefixEnum::MD},
-        {"MR", CommandPrefix::CommandPrefixEnum::MR},
-        {"MS", CommandPrefix::CommandPrefixEnum::MS},
-        {"MT", CommandPrefix::CommandPrefixEnum::MT},
-        {"MW", CommandPrefix::CommandPrefixEnum::MW},
-        {"OS", CommandPrefix::CommandPrefixEnum::OS},
-        {"RC", CommandPrefix::CommandPrefixEnum::RC},
-        {"RD", CommandPrefix::CommandPrefixEnum::RD},
-        {"RU", CommandPrefix::CommandPrefixEnum::RU},
-        {"RT", CommandPrefix::CommandPrefixEnum::RT},
-        {"RX", CommandPrefix::CommandPrefixEnum::RX},
-        {"SC", CommandPrefix::CommandPrefixEnum::SC},
-        {"SH", CommandPrefix::CommandPrefixEnum::SH},
-        {"SL", CommandPrefix::CommandPrefixEnum::SL},
-        {"SM", CommandPrefix::CommandPrefixEnum::SM},
-        {"SP", CommandPrefix::CommandPrefixEnum::SP},
-        {"ST", CommandPrefix::CommandPrefixEnum::ST},
-        {"TN", CommandPrefix::CommandPrefixEnum::TN},
-        {"TO", CommandPrefix::CommandPrefixEnum::TO},
-        {"TX", CommandPrefix::CommandPrefixEnum::TX},
-        {"UP", CommandPrefix::CommandPrefixEnum::UP},
-        {"VB", CommandPrefix::CommandPrefixEnum::VB},
-        {"VR", CommandPrefix::CommandPrefixEnum::VR},
-        {"XT", CommandPrefix::CommandPrefixEnum::XT},
-    };
+CommandPrefix::CommandPrefixEnum
+CommandPrefix::StringToCommandPrefix(const std::string_view commandString) {
+    static const std::map<std::string_view, CommandPrefixEnum> enumMap = [] {
+        std::map<std::string_view, CommandPrefixEnum> map;
+        for (size_t i = 0; i < COMMAND_REGISTRY.size(); ++i) {
+            map[COMMAND_REGISTRY[i].abbreviation] =
+                static_cast<CommandPrefixEnum>(i);
+        }
+        return map;
+    }();
 
     auto it = enumMap.find(commandString);
-    if (it != enumMap.end())
-    {
+    if (it != enumMap.end()) {
         return it->second;
     }
     return CommandPrefixEnum::ZZ;
 }
 
-std::string CommandPrefix::CommandToString(const CommandPrefix::CommandPrefixEnum &command)
-{
-    static const std::map<CommandPrefix::CommandPrefixEnum, std::string> enumMap = {
-        {CommandPrefix::CommandPrefixEnum::AI, "AI"},
-        {CommandPrefix::CommandPrefixEnum::AT, "AT"},
-        {CommandPrefix::CommandPrefixEnum::BY, "BY"},
-        {CommandPrefix::CommandPrefixEnum::CN, "CN"},
-        {CommandPrefix::CommandPrefixEnum::CT, "CT"},
-        {CommandPrefix::CommandPrefixEnum::DC, "DC"},
-        {CommandPrefix::CommandPrefixEnum::DI, "DI"},
-        {CommandPrefix::CommandPrefixEnum::DN, "DN"},
-        {CommandPrefix::CommandPrefixEnum::DS, "DS"},
-        {CommandPrefix::CommandPrefixEnum::FA, "FA"},
-        {CommandPrefix::CommandPrefixEnum::FB, "FB"},
-        {CommandPrefix::CommandPrefixEnum::FN, "FN"},
-        {CommandPrefix::CommandPrefixEnum::HD, "HD"},
-        {CommandPrefix::CommandPrefixEnum::ID, "ID"},
-        {CommandPrefix::CommandPrefixEnum::IF, "IF"},
-        {CommandPrefix::CommandPrefixEnum::LK, "LK"},
-        {CommandPrefix::CommandPrefixEnum::LO, "LO"},
-        {CommandPrefix::CommandPrefixEnum::LT, "LT"},
-        {CommandPrefix::CommandPrefixEnum::MC, "MC"},
-        {CommandPrefix::CommandPrefixEnum::MD, "MD"},
-        {CommandPrefix::CommandPrefixEnum::MR, "MR"},
-        {CommandPrefix::CommandPrefixEnum::MS, "MS"},
-        {CommandPrefix::CommandPrefixEnum::MT, "MT"},
-        {CommandPrefix::CommandPrefixEnum::MW, "MW"},
-        {CommandPrefix::CommandPrefixEnum::OS, "OS"},
-        {CommandPrefix::CommandPrefixEnum::RC, "RC"},
-        {CommandPrefix::CommandPrefixEnum::RD, "RD"},
-        {CommandPrefix::CommandPrefixEnum::RU, "RU"},
-        {CommandPrefix::CommandPrefixEnum::RT, "RT"},
-        {CommandPrefix::CommandPrefixEnum::RX, "RX"},
-        {CommandPrefix::CommandPrefixEnum::SC, "SC"},
-        {CommandPrefix::CommandPrefixEnum::SH, "SH"},
-        {CommandPrefix::CommandPrefixEnum::SL, "SL"},
-        {CommandPrefix::CommandPrefixEnum::SM, "SM"},
-        {CommandPrefix::CommandPrefixEnum::SP, "SP"},
-        {CommandPrefix::CommandPrefixEnum::ST, "ST"},
-        {CommandPrefix::CommandPrefixEnum::TN, "TN"},
-        {CommandPrefix::CommandPrefixEnum::TO, "TO"},
-        {CommandPrefix::CommandPrefixEnum::TX, "TX"},
-        {CommandPrefix::CommandPrefixEnum::UP, "UP"},
-        {CommandPrefix::CommandPrefixEnum::VB, "VB"},
-        {CommandPrefix::CommandPrefixEnum::VR, "VR"},
-        {CommandPrefix::CommandPrefixEnum::XT, "XT"},
-    };
-
-    auto it = enumMap.find(command);
-    if (it != enumMap.end())
-    {
-        return it->second;
+std::string CommandPrefix::CommandToString(const CommandPrefixEnum& command) {
+    size_t i = static_cast<size_t>(command);
+    if (i < COMMAND_REGISTRY.size()) {
+        return std::string(COMMAND_REGISTRY[i].abbreviation);
     }
     return "";
 }
 
-std::string CommandPrefix::CommandToStringExpanded(const CommandPrefix::CommandPrefixEnum &command)
-{
-    static const std::map<CommandPrefix::CommandPrefixEnum, std::string> enumMap = {
-        {CommandPrefix::CommandPrefixEnum::AI, "AUTO INFORMATION"},
-        {CommandPrefix::CommandPrefixEnum::AT, "ANTENNA TUNER"},
-        {CommandPrefix::CommandPrefixEnum::BY, "BUSY"},
-        {CommandPrefix::CommandPrefixEnum::CN, "CTCSS NUMBER"},
-        {CommandPrefix::CommandPrefixEnum::CT, "CTCSS"},
-        {CommandPrefix::CommandPrefixEnum::DC, "DESTINATION CODE"},
-        {CommandPrefix::CommandPrefixEnum::DI, "DCS ID"},
-        {CommandPrefix::CommandPrefixEnum::DN, "DOWN"},
-        {CommandPrefix::CommandPrefixEnum::DS, "DCS"},
-        {CommandPrefix::CommandPrefixEnum::FA, "FREQUENCY VFO A"},
-        {CommandPrefix::CommandPrefixEnum::FB, "FREQUENCY VFO B"},
-        {CommandPrefix::CommandPrefixEnum::FN, "FUNCTION"},
-        {CommandPrefix::CommandPrefixEnum::HD, "SCAN HOLD"},
-        {CommandPrefix::CommandPrefixEnum::ID, "ID"},
-        {CommandPrefix::CommandPrefixEnum::IF, "INFORMATION"},
-        {CommandPrefix::CommandPrefixEnum::LK, "LOCK"},
-        {CommandPrefix::CommandPrefixEnum::LO, "LOCAL"},
-        {CommandPrefix::CommandPrefixEnum::LT, "AUTO LOCK TUNE"},
-        {CommandPrefix::CommandPrefixEnum::MC, "MEMORY CHANNEL"},
-        {CommandPrefix::CommandPrefixEnum::MD, "MODE"},
-        {CommandPrefix::CommandPrefixEnum::MR, "MEMORY READ"},
-        {CommandPrefix::CommandPrefixEnum::MS, "MEMORY SCAN"},
-        {CommandPrefix::CommandPrefixEnum::MT, "MUTE"},
-        {CommandPrefix::CommandPrefixEnum::MW, "MEMORY WRITE"},
-        {CommandPrefix::CommandPrefixEnum::OS, "OFFSET"},
-        {CommandPrefix::CommandPrefixEnum::RC, "RIT CLEAR"},
-        {CommandPrefix::CommandPrefixEnum::RD, "RIT DOWN"},
-        {CommandPrefix::CommandPrefixEnum::RU, "RIT UP"},
-        {CommandPrefix::CommandPrefixEnum::RT, "RIT"},
-        {CommandPrefix::CommandPrefixEnum::RX, "RX"},
-        {CommandPrefix::CommandPrefixEnum::SC, "SCAN"},
-        {CommandPrefix::CommandPrefixEnum::SH, "SLOPE TUNE HIGH"},
-        {CommandPrefix::CommandPrefixEnum::SL, "SLOPE TUNE LOW"},
-        {CommandPrefix::CommandPrefixEnum::SM, "S-METER (SUB)"},
-        {CommandPrefix::CommandPrefixEnum::SP, "SPLIT"},
-        {CommandPrefix::CommandPrefixEnum::ST, "STEP"},
-        {CommandPrefix::CommandPrefixEnum::TN, "TONE NUMBER"},
-        {CommandPrefix::CommandPrefixEnum::TO, "TONE"},
-        {CommandPrefix::CommandPrefixEnum::TX, "TX"},
-        {CommandPrefix::CommandPrefixEnum::UP, "UP"},
-        {CommandPrefix::CommandPrefixEnum::VB, "VBT"},
-        {CommandPrefix::CommandPrefixEnum::VR, "VOICE RECALL"},
-        {CommandPrefix::CommandPrefixEnum::XT, "XIT"},
-    };
-
-    auto it = enumMap.find(command);
-    if (it != enumMap.end())
-    {
-        return it->second;
+std::string
+CommandPrefix::CommandToStringExpanded(const CommandPrefixEnum& command) {
+    size_t i = static_cast<size_t>(command);
+    if (i < COMMAND_REGISTRY.size()) {
+        return std::string(COMMAND_REGISTRY[i].expanded);
     }
     return "";
 }
