@@ -1,5 +1,5 @@
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef COMMAND_RESULT_H
+#define COMMAND_RESULT_H
 
 #include <optional>
 #include <string>
