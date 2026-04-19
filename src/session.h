@@ -1,17 +1,20 @@
 #ifndef SESSION_H
 #define SESSION_H
 
+#include "command/commands.h"
+#include "command_dispatcher.h"
 #include "commandset.h"
 #include "helpers.h"
-#include "response.h"
-#include "serial.h"
-#include "command/commands.h"
 #include "parameter/function.h"
 #include "parameter/model_number.h"
+#include "response.h"
+#include "serial.h"
+#include <memory>
 #include <string>
 
-class Session
-{
+class Session {
+    friend class CommandDispatcher;
+
 public:
     Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
     void CheckCommand(std::string command);
@@ -21,14 +24,15 @@ public:
     bool sessionOpen;
 
 private:
-    void parameterWarning(const std::string &commandPrefixString, const std::string &parameter);
-    bool startsWithCommand(const std::string &fullCommand);
-    std::string getCommand(const std::string &fullCommand);
-    std::string getParameter(const std::string &fullCommand);
-    void write(const std::string &command, bool expectsResponse = false);
+    bool startsWithCommand(const std::string& fullCommand);
+    std::string getCommand(const std::string& fullCommand);
+    std::string getParameter(const std::string& fullCommand);
+    void write(const std::string& command, bool expectsResponse = false);
     Serial serialConnection;
     ModelNumber modelNumber;
     Commandset availableCommands;
+    std::unique_ptr<CommandDispatcher> dispatcher;
+    std::string lastParameter;
     AI ai;
     AT at;
     BY by;
