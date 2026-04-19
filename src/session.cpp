@@ -81,8 +81,16 @@ void Session::write(const std::string& command, bool expectsResponse) {
     if (serialConnection.GetEstablished()) {
         serialConnection.Write(command);
         if (expectsResponse) {
-            std::string response = serialConnection.Read();
-            Response(response).ToConsole();
+            std::string rawResponse = serialConnection.Read();
+            Response response(rawResponse);
+
+            if (response.IsValid()) {
+                response.ToConsole();
+            } else {
+                printf(
+                    "Error parsing response: %s\n",
+                    response.GetValidationResult().GetErrorMessage().c_str());
+            }
         }
     }
 }
