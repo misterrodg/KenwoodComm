@@ -1,6 +1,6 @@
 #include "command_function.h"
 
-CommandResult CommandFunction::SetFunction(ModelNumber& modelNumber,
+CommandResult CommandFunction::SetFunction(const ModelNumber& modelNumber,
                                            const std::string& functionString) {
     Function::FunctionEnum functionEnum =
         Function::StringToFunction(functionString);
@@ -27,7 +27,7 @@ std::string CommandFunction::ToCommand() {
 }
 
 bool CommandFunction::allowedForModelNumber(
-    ModelNumber& modelNumber, Function::FunctionEnum& functionEnum) {
+    const ModelNumber& modelNumber, Function::FunctionEnum& functionEnum) {
     Radios radioEnum = modelNumber.getModelNumber();
     if ((radioEnum == Radios::TS711A || radioEnum == Radios::TS711E ||
          radioEnum == Radios::TS790A || radioEnum == Radios::TS790E ||

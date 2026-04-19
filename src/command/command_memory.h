@@ -17,7 +17,7 @@ public:
     CommandMemory(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
     std::string ToCommand();
-    CommandResult SetMemory(ModelNumber& modelNumberParam,
+    CommandResult SetMemory(const ModelNumber& modelNumberParam,
                             const std::string& parameter);
 };
 

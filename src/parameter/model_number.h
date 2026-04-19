@@ -6,18 +6,17 @@
 #include <regex>
 #include <string>
 
-class ModelNumber
-{
+class ModelNumber {
 public:
     ModelNumber();
-    bool setModelNumber(const std::string &input);
-    Radios getModelNumber();
-    std::string getModelNumberString();
+    bool setModelNumber(const std::string& input);
+    Radios getModelNumber() const;
+    std::string getModelNumberString() const;
     std::string getGeneric();
     std::string getAll();
 
 private:
-    static Radios parseUnit(const std::string &unitStr);
+    static Radios parseUnit(const std::string& unitStr);
 
     Radios modelNumber = Radios::UNRECOGNIZED;
 };

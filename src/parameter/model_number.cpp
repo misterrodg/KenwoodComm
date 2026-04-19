@@ -1,9 +1,9 @@
 #include "model_number.h"
 
-ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {}
+ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {
+}
 
-Radios ModelNumber::parseUnit(const std::string &modelStr)
-{
+Radios ModelNumber::parseUnit(const std::string& modelStr) {
     std::string lowerStr = Helpers::toLower(modelStr);
     if (lowerStr == "ts50s")
         return Radios::TS50S;
@@ -32,38 +32,30 @@ Radios ModelNumber::parseUnit(const std::string &modelStr)
     return Radios::UNRECOGNIZED;
 }
 
-bool ModelNumber::setModelNumber(const std::string &input)
-{
+bool ModelNumber::setModelNumber(const std::string& input) {
     bool result = false;
 
     std::regex regex(R"(TS\d{3}[ABES])", std::regex_constants::icase);
     std::smatch match;
 
-    if (std::regex_match(input, regex))
-    {
+    if (std::regex_match(input, regex)) {
         modelNumber = parseUnit(input);
-        if (modelNumber != Radios::UNRECOGNIZED)
-        {
+        if (modelNumber != Radios::UNRECOGNIZED) {
             result = true;
         }
-    }
-    else
-    {
+    } else {
         printf("Unrecognized model number.\n");
     }
 
     return result;
 }
 
-Radios ModelNumber::getModelNumber()
-{
+Radios ModelNumber::getModelNumber() const {
     return modelNumber;
 }
 
-std::string ModelNumber::getModelNumberString()
-{
-    switch (modelNumber)
-    {
+std::string ModelNumber::getModelNumberString() const {
+    switch (modelNumber) {
     case Radios::TS50S:
         return "TS50S";
     case Radios::TS60S:
@@ -93,10 +85,8 @@ std::string ModelNumber::getModelNumberString()
     }
 }
 
-std::string ModelNumber::getGeneric()
-{
-    switch (modelNumber)
-    {
+std::string ModelNumber::getGeneric() {
+    switch (modelNumber) {
     case Radios::TS50S:
         return "50";
     case Radios::TS60S:
@@ -126,7 +116,7 @@ std::string ModelNumber::getGeneric()
     }
 }
 
-std::string ModelNumber::getAll()
-{
-    return "TS50S / TS60S / TS140S / TS680S / TS711A / TS711E / TS790A / TS790E / TS811A / TS811B / TS811E / TS940S";
+std::string ModelNumber::getAll() {
+    return "TS50S / TS60S / TS140S / TS680S / TS711A / TS711E / TS790A / "
+           "TS790E / TS811A / TS811B / TS811E / TS940S";
 }

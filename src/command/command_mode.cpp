@@ -1,6 +1,6 @@
 #include "command_mode.h"
 
-CommandResult CommandMode::SetMode(ModelNumber& modelNumber,
+CommandResult CommandMode::SetMode(const ModelNumber& modelNumber,
                                    const std::string& modeString) {
     Mode::ModeEnum modeEnum = Mode::StringToMode(modeString);
     if (modeEnum != Mode::ModeEnum::UNKNOWN) {
@@ -26,7 +26,7 @@ std::string CommandMode::ToCommand() {
     return Command(bufferLength, command, modeString).ToString();
 }
 
-bool CommandMode::allowedForModelNumber(ModelNumber& modelNumber,
+bool CommandMode::allowedForModelNumber(const ModelNumber& modelNumber,
                                         Mode::ModeEnum& modeEnum) {
     bool result = false;
     Radios radioEnum = modelNumber.getModelNumber();

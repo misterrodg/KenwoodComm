@@ -3,11 +3,10 @@
 
 #include "command_function.h"
 
-class FN : public CommandFunction
-{
+class FN : public CommandFunction {
 public:
     FN();
-    FN(ModelNumber &modelNumberEnum, const std::string &parameter);
+    FN(const ModelNumber& modelNumberEnum, const std::string& parameter);
 };
 
 #endif

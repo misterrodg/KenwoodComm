@@ -1,6 +1,6 @@
 #include "command_memory.h"
 
-CommandResult CommandMemory::SetMemory(ModelNumber& modelNumberParam,
+CommandResult CommandMemory::SetMemory(const ModelNumber& modelNumberParam,
                                        const std::string& parameter) {
     modelNumber = modelNumberParam;
     if (modelNumber.getModelNumber() == Radios::TS940S) {

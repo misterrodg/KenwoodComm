@@ -3,13 +3,16 @@
 
 #include "command/command_prefix.h"
 #include "command_result.h"
+#include "radio_profile.h"
 
 #include <functional>
 #include <map>
+#include <memory>
 #include <string>
 
-// Forward declaration to avoid circular dependency
+// Forward declaration
 class Session;
+class RadioProfile;
 
 class CommandDispatcher {
 private:
@@ -28,9 +31,10 @@ private:
 
     std::map<CommandPrefix::CommandPrefixEnum, CommandMetaData> registry;
     Session* session;
+    RadioProfile* radioProfile;
 
 public:
-    CommandDispatcher(Session* session);
+    CommandDispatcher(Session* session, RadioProfile* radioProfile);
     CommandResult Dispatch(CommandPrefix::CommandPrefixEnum cmd,
                            const std::string& parameter);
 };
