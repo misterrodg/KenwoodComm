@@ -5,7 +5,7 @@ CommandFrequency::SetFrequency(const std::string& frequencyString) {
     if (frequency.setFrequency(frequencyString)) {
         return OK();
     }
-    return Error("Invalid frequency: " + frequencyString);
+    return Error("INVALID_FREQUENCY", "Invalid frequency: " + frequencyString);
 }
 
 std::string CommandFrequency::ToCommand(bool readStatus) {

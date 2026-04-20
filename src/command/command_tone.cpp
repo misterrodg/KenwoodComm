@@ -7,7 +7,8 @@ CommandResult CommandTone::SetTone(const std::string& toneFrequencyString) {
         toneFrequency = toneEnum;
         return OK();
     }
-    return Error("Invalid tone frequency: " + toneFrequencyString);
+    return Error("INVALID_TONE_FREQUENCY",
+                 "Invalid tone frequency: " + toneFrequencyString);
 }
 
 std::string CommandTone::ToCommand() {

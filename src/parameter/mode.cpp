@@ -26,7 +26,6 @@ Mode::ModeEnum Mode::StringToMode(const std::string &modeString)
     {
         return it->second;
     }
-    printf("Unrecognized option. Options are: LSB, USB, CW, FM, AM, FSK, or CWN.\n");
     return ModeEnum::UNKNOWN;
 }
 
