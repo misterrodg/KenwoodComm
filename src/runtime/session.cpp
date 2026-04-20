@@ -98,7 +98,7 @@ void Session::write(const std::string& command, bool expectsResponse) {
             } else {
                 printf(
                     "Error parsing response: %s\n",
-                    response.GetValidationResult().GetErrorMessage().c_str());
+                    response.GetValidationResult().error().message.c_str());
             }
         }
     }

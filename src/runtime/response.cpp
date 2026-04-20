@@ -1,26 +1,24 @@
 #include "response.h"
+#include "core/result.h"
 #include <cstring>
 
 Response::Response(const std::string& responseString)
     : commandPrefixEnum(CommandPrefix::CommandPrefixEnum::ZZ), parameters(""),
-      validationResult(ResponseError::EMPTY_RESPONSE, "Empty response") {
+      validationResult(core::Error{"EMPTY_RESPONSE", "Empty response"}) {
     validationResult = Parse(responseString);
 }
 
-ResponseResult Response::Parse(const std::string& responseString) {
+core::Result<void> Response::Parse(const std::string& responseString) {
     if (responseString.empty()) {
-        return ResponseResult::Error(ResponseError::EMPTY_RESPONSE,
-                                     "Response is empty");
+        return core::Error{"EMPTY_RESPONSE", "Response is empty"};
     }
 
     if (responseString.length() < MIN_RESPONSE_LENGTH) {
-        return ResponseResult::Error(ResponseError::INVALID_FORMAT,
-                                     "Response too short");
+        return core::Error{"INVALID_FORMAT", "Response too short"};
     }
 
     if (responseString.back() != ';') {
-        return ResponseResult::Error(ResponseError::MISSING_TERMINATOR,
-                                     "Response missing terminator");
+        return core::Error{"MISSING_TERMINATOR", "Response missing terminator"};
     }
 
     std::string prefixStr =
@@ -29,22 +27,21 @@ ResponseResult Response::Parse(const std::string& responseString) {
         CommandPrefix::StringToCommandPrefix(prefixStr);
 
     if (prefix == CommandPrefix::CommandPrefixEnum::ZZ) {
-        return ResponseResult::Error(ResponseError::INVALID_COMMAND_PREFIX,
-                                     "Unknown command prefix: " + prefixStr);
+        return core::Error{"INVALID_COMMAND_PREFIX",
+                           "Unknown command prefix: " + prefixStr};
     }
 
     size_t endPos = responseString.find(';');
     if (endPos == std::string::npos) {
-        return ResponseResult::Error(
-            ResponseError::MISSING_TERMINATOR,
-            "Malformed response: terminator not found");
+        return core::Error{"MISSING_TERMINATOR",
+                           "Malformed response: terminator not found"};
     }
 
     commandPrefixEnum = prefix;
     parameters = responseString.substr(CommandPrefix::COMMAND_LENGTH,
                                        endPos - CommandPrefix::COMMAND_LENGTH);
 
-    return ResponseResult::OK();
+    return core::Result<void>();
 }
 
 CommandPrefix::CommandPrefixEnum Response::GetCommandPrefix() const {
@@ -56,10 +53,10 @@ std::string Response::GetParameters() const {
 }
 
 bool Response::IsValid() const {
-    return validationResult.IsSuccess();
+    return validationResult.OK();
 }
 
-ResponseResult Response::GetValidationResult() const {
+core::Result<void> Response::GetValidationResult() const {
     return validationResult;
 }
 
@@ -71,7 +68,7 @@ void Response::ToConsole() const {
             parameters.c_str());
     } else {
         printf("Invalid Response: %s\n",
-               validationResult.GetErrorMessage().c_str());
+               validationResult.error().message.c_str());
     }
 }
 
