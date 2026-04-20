@@ -10,6 +10,16 @@ Run the program from the command line with:
 KenwoodComm
 ```
 
+### Profiles
+
+An optional `profile=<radio_model>` argument can be passed to load the program using a given profile. This checks for an existing profile, and if it is not found, will walk you through creating a new profile. This is helpful for people who have multiple radios that they wish to use via the command line.
+
+The first time the program runs, it will set up a default profile for you. See [Initial Run](#initial-run) for details.
+
+```
+KenwoodComm profile=TS940S
+```
+
 ### Local Mode
 
 An optional `local` argument can be passed to set the program in local mode. This skips establishing a serial connection for test purposes.
@@ -51,6 +61,10 @@ When running the program for the first time, it will prompt you for your callsig
   - TS811B
   - TS811E
   - TS940S
+
+- Serial Port: This is the serial port being used to communicate with the radio. You will need to find this information for your specific setup, but it will be similar to:
+  - Windows: `COM3` (or `COM4`, etc.)
+  - Linux: `/dev/ttyUSB0` (or `/dev/ttyACM0`)
 
 ## Available Commands
 
