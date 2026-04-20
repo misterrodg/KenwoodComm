@@ -23,7 +23,7 @@ Radios ModelNumber::parseUnit(const std::string& modelStr) {
         return Radios::TS790E;
     if (lowerStr == "ts811a")
         return Radios::TS811A;
-    if (lowerStr == "ts811B")
+    if (lowerStr == "ts811b")
         return Radios::TS811B;
     if (lowerStr == "ts811e")
         return Radios::TS811E;
