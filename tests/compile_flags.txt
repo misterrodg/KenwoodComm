@@ -4,4 +4,6 @@
 -I../src/config
 -I../src/core
 -I../src/parameter
+-I../src/runtime
+-I../src/ui
 -I.
