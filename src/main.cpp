@@ -1,4 +1,5 @@
 #include "config/config_manager.h"
+#include "core/error_reporter.h"
 #include "parameter/call_sign.h"
 #include "parameter/model_number.h"
 #include "session.h"
@@ -51,10 +52,13 @@ ConfigManager initialize(const std::string& requestedProfile) {
             ModelNumber mn;
             std::cout << mn.getAll() << std::endl;
             std::getline(std::cin, modelNumber);
-            if (mn.setModelNumber(modelNumber)) {
+            core::Result<void> result = mn.setModelNumber(modelNumber);
+            if (result.OK()) {
                 modelNumber = mn.getModelNumberString();
                 profileName = modelNumber;
                 properModelNumber = true;
+            } else {
+                printError(result.error());
             }
         }
     }
@@ -105,7 +109,10 @@ int main(int argc, char** argv) {
         modelNumberStr = config.getFromSection("DEFAULT", "MODEL_NUMBER");
     }
     ModelNumber modelNumber;
-    modelNumber.setModelNumber(modelNumberStr);
+    core::Result<void> modelResult = modelNumber.setModelNumber(modelNumberStr);
+    if (!modelResult.OK()) {
+        printError(modelResult.error());
+    }
 
     Session session(safeMode, localMode, modelNumber);
 
