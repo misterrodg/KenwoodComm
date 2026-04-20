@@ -9,11 +9,12 @@ CommandResult CommandFunction::SetFunction(const ModelNumber& modelNumber,
             function = functionEnum;
             return OK();
         } else {
-            return Error("COM function not available for the " +
-                         modelNumber.getModelNumberString());
+            return Error("FUNCTION_NOT_AVAILABLE",
+                         "COM function not available for the " +
+                             modelNumber.getModelNumberString());
         }
     }
-    return Error("Invalid function: " + functionString);
+    return Error("INVALID_FUNCTION", "Invalid function: " + functionString);
 }
 
 std::string CommandFunction::ToCommand() {

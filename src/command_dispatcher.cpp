@@ -1,5 +1,6 @@
 #include "command_dispatcher.h"
 #include "command/command_prefix.h"
+#include "core/parameter_validator.h"
 #include "radio_profile.h"
 #include "session.h"
 
@@ -11,7 +12,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->ai.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->ai.ToCommand());
             return OK();
@@ -38,7 +39,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->cn.SetTone(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->cn.ToCommand());
             return OK();
@@ -52,7 +53,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->ct.ToCommand(true), true);
             } else {
                 CommandResult result = s->ct.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->ct.ToCommand());
             }
@@ -75,7 +76,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->ds.ToCommand(true), true);
             } else {
                 CommandResult result = s->ds.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->ds.ToCommand());
             }
@@ -98,7 +99,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->fa.ToCommand(true), true);
             } else {
                 CommandResult result = s->fa.SetFrequency(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->fa.ToCommand());
             }
@@ -113,7 +114,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->fb.ToCommand(true), true);
             } else {
                 CommandResult result = s->fb.SetFrequency(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->fb.ToCommand());
             }
@@ -126,7 +127,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         [](Session* s) -> CommandResult {
             CommandResult result = s->fn.SetFunction(
                 s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->fn.ToCommand());
             return OK();
@@ -140,7 +141,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->hd.ToCommand(true), true);
             } else {
                 CommandResult result = s->hd.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->hd.ToCommand());
             }
@@ -171,7 +172,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->lk.ToCommand(true), true);
             } else {
                 CommandResult result = s->lk.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->lk.ToCommand());
             }
@@ -194,7 +195,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->lt.ToCommand(true), true);
             } else {
                 CommandResult result = s->lt.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->lt.ToCommand());
             }
@@ -207,7 +208,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         [](Session* s) -> CommandResult {
             CommandResult result = s->mc.SetMemory(
                 s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->mc.ToCommand());
             return OK();
@@ -219,7 +220,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         [](Session* s) -> CommandResult {
             CommandResult result = s->md.SetMode(
                 s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->md.ToCommand());
             return OK();
@@ -233,7 +234,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->ms.ToCommand(true), true);
             } else {
                 CommandResult result = s->ms.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->ms.ToCommand());
             }
@@ -248,7 +249,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
                 s->write(s->mt.ToCommand(true), true);
             } else {
                 CommandResult result = s->mt.SetSwitch(s->lastParameter);
-                if (result)
+                if (!result.OK())
                     return result;
                 s->write(s->mt.ToCommand());
             }
@@ -276,7 +277,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->rt.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->rt.ToCommand());
             return OK();
@@ -295,7 +296,6 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::NO_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             s->write(s->rx.ToCommand());
-            printf("Sending: %s\n", s->rx.ToCommand().c_str());
             return OK();
         }};
 
@@ -304,7 +304,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->sc.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->sc.ToCommand());
             return OK();
@@ -315,7 +315,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->sp.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->sp.ToCommand());
             return OK();
@@ -326,7 +326,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->st.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->st.ToCommand());
             return OK();
@@ -337,7 +337,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->tn.SetTone(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->tn.ToCommand());
             return OK();
@@ -348,7 +348,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->to.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->to.ToCommand());
             return OK();
@@ -383,7 +383,7 @@ CommandDispatcher::CommandDispatcher(Session* session,
         CommandMetaData::REQUIRED_PARAMETER, false, false,
         [](Session* s) -> CommandResult {
             CommandResult result = s->xt.SetSwitch(s->lastParameter);
-            if (result)
+            if (!result.OK())
                 return result;
             s->write(s->xt.ToCommand());
             return OK();
@@ -395,35 +395,43 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
                             const std::string& param) {
     if (!radioProfile->IsCommandAvailable(command)) {
         std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("Command \"" + commandString +
-                     "\" not available on this model");
+        return Error("CMD_NOT_AVAILABLE", "Command \"" + commandString +
+                                              "\" not available on this model");
     }
 
     auto it = registry.find(command);
 
     if (it == registry.end()) {
-        return Error("Command not implemented");
+        return Error("CMD_NOT_IMPLEMENTED", "Command not implemented");
     }
 
     const CommandMetaData& metadata = it->second;
 
     if (metadata.disabledInSafeMode && session->safeMode) {
         std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("Command \"" + commandString + "\" disabled in SAFE MODE");
+        return Error("CMD_DISABLED_SAFE_MODE",
+                     "Command \"" + commandString + "\" disabled in SAFE MODE");
     }
 
-    if (metadata.parameterMode == CommandMetaData::REQUIRED_PARAMETER &&
-        param.empty()) {
-        std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("Command \"" + commandString + "\" requires a parameter");
+    if (metadata.parameterMode == CommandMetaData::REQUIRED_PARAMETER) {
+        core::Result<void> validation =
+            ParameterValidator::validateNotEmpty(param, "parameter");
+        if (!validation.OK()) {
+            std::string commandString = CommandPrefix::CommandToString(command);
+            return Error(validation.error().code,
+                         "Command \"" + commandString +
+                             "\" requires a parameter");
+        }
     }
 
     if (metadata.parameterMode == CommandMetaData::NO_PARAMETER &&
         !param.empty()) {
         std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("Command \"" + commandString +
-                     "\" accepts no parameters. Ignoring \"" + param +
-                     "\" and sending standard " + commandString + " command");
+        return Error("CMD_NO_PARAMETER_ALLOWED",
+                     "Command \"" + commandString +
+                         "\" accepts no parameters. Ignoring \"" + param +
+                         "\" and sending standard " + commandString +
+                         " command");
     }
 
     session->lastParameter = param;

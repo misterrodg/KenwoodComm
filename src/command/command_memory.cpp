@@ -12,17 +12,20 @@ CommandResult CommandMemory::SetMemory(const ModelNumber& modelNumberParam,
         bool channelSet = memoryChannel.setMemoryChannel(channel);
 
         if (!bankSet) {
-            return Error("Unrecognized memory bank: " + bank);
+            return Error("INVALID_MEMORY_BANK",
+                         "Unrecognized memory bank: " + bank);
         }
         if (!channelSet) {
-            return Error("Unrecognized memory channel: " + channel);
+            return Error("INVALID_MEMORY_CHANNEL",
+                         "Unrecognized memory channel: " + channel);
         }
         return OK();
     } else {
         if (memoryChannel.setMemoryChannel(parameter)) {
             return OK();
         }
-        return Error("Unrecognized channel: " + parameter);
+        return Error("INVALID_MEMORY_CHANNEL",
+                     "Unrecognized channel: " + parameter);
     }
 }
 

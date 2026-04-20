@@ -1,19 +1,23 @@
 #ifndef COMMAND_RESULT_H
 #define COMMAND_RESULT_H
 
-#include <optional>
+#include "core/result.h"
+
 #include <string>
 
-// std::nullopt = success
-// std::optional<std::string> = error message
-using CommandResult = std::optional<std::string>;
+using CommandResult = core::Result<void>;
+
+inline CommandResult Error(const std::string& code,
+                           const std::string& message) {
+    return core::Error{code, message};
+}
 
 inline CommandResult Error(const std::string& message) {
-    return std::make_optional(message);
+    return core::Error{"COMMAND_ERROR", message};
 }
 
 inline CommandResult OK() {
-    return std::nullopt;
+    return CommandResult();
 }
 
 #endif

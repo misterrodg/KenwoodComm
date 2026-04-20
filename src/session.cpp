@@ -1,5 +1,7 @@
 #include "session.h"
 
+#include "core/error_reporter.h"
+
 Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
     : safeMode(inSafeMode), localMode(inLocalMode), sessionOpen(true) {
 
@@ -52,8 +54,8 @@ void Session::SendCommand(std::string command) {
 
     CommandResult result = dispatcher->Dispatch(commandPrefixEnum, parameter);
 
-    if (result) {
-        printf("Error: %s\n", result.value().c_str());
+    if (!result.OK()) {
+        printError(result.error());
     }
 }
 
