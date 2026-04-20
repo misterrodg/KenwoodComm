@@ -1,81 +1,118 @@
-#include "defaults.h"
+#include "config/config_manager.h"
+#include "parameter/call_sign.h"
+#include "parameter/model_number.h"
 #include "session.h"
 
 #include <iostream>
 #include <string>
 
-Defaults initialize()
-{
-    std::string filepath = "./DEFAULTS.txt";
-    Defaults defaults(filepath);
+ConfigManager initialize(const std::string& requestedProfile) {
+    std::string filepath = "./kenwoodcomm.ini";
+    ConfigManager config;
+    config.load(filepath);
 
-    std::string callSign = defaults.getCallSign();
-    std::string modelNumber = defaults.getModelNumberString();
-
-    if (!callSign.empty())
-    {
-        std::cout << "Hello, " << callSign << "!" << std::endl;
+    std::string callSign = config.getFromSection("DEFAULT", "CALLSIGN");
+    std::string profileName = requestedProfile;
+    if (profileName.empty()) {
+        profileName = config.getFromSection("DEFAULT", "PROFILE");
     }
-    else
-    {
+
+    std::string modelNumber = "";
+    if (!profileName.empty()) {
+        modelNumber = config.getFromSection(profileName, "MODEL_NUMBER");
+    }
+
+    if (!callSign.empty()) {
+        std::cout << "Hello, " << callSign << "!" << std::endl;
+    } else {
         bool properCallsign = false;
-        while (!properCallsign)
-        {
+        while (!properCallsign) {
             std::cout << "What is your callsign?" << std::endl;
             std::getline(std::cin, callSign);
-            properCallsign = defaults.setCallSign(callSign);
+            // Validate callsign using CallSign parameter class
+            CallSign cs;
+            if (cs.setCallSign(callSign)) {
+                config.setInSection("DEFAULT", "CALLSIGN",
+                                    cs.getCallSignString());
+                callSign = cs.getCallSignString();
+                properCallsign = true;
+            }
         }
         std::cout << "Hello, " << callSign << "!" << std::endl;
     }
 
-    if (!modelNumber.empty() && modelNumber != "UNRECOGNIZED")
-    {
+    if (!modelNumber.empty() && modelNumber != "UNRECOGNIZED") {
+        profileName = modelNumber;
         std::cout << "Setting up for a " << modelNumber << "." << std::endl;
-    }
-    else
-    {
+    } else {
         bool properModelNumber = false;
-        while (!properModelNumber)
-        {
+        while (!properModelNumber) {
             std::cout << "What is the model number of your radio?" << std::endl;
-            std::cout << defaults.getModelNumber().getAll() << std::endl;
+            ModelNumber mn;
+            std::cout << mn.getAll() << std::endl;
             std::getline(std::cin, modelNumber);
-            properModelNumber = defaults.setModelNumber(modelNumber);
+            if (mn.setModelNumber(modelNumber)) {
+                modelNumber = mn.getModelNumberString();
+                profileName = modelNumber;
+                properModelNumber = true;
+            }
         }
     }
 
-    defaults.save();
+    std::string serialPort = config.getFromSection(profileName, "SERIAL_PORT");
+    if (serialPort.empty()) {
+        while (serialPort.empty()) {
+            std::cout << "What is the serial port for your radio?" << std::endl;
+            std::getline(std::cin, serialPort);
+            if (serialPort.empty()) {
+                std::cout << "Serial port cannot be blank." << std::endl;
+            }
+        }
+    }
 
-    return defaults;
+    config.setInSection("DEFAULT", "PROFILE", profileName);
+    config.setInSection(profileName, "MODEL_NUMBER", modelNumber);
+    config.setInSection(profileName, "SERIAL_PORT", serialPort);
+    config.setProfile(profileName);
+
+    config.save();
+
+    return config;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char** argv) {
     bool localMode = false;
     bool safeMode = false;
-    if (argc > 1)
-    {
-        for (int i = 1; i < argc; ++i)
-        {
-            if (strcmp(argv[i], "local") == 0)
-            {
+    std::string requestedProfile = "";
+    if (argc > 1) {
+        for (int i = 1; i < argc; ++i) {
+            std::string arg = argv[i];
+            if (arg == "local") {
                 localMode = true;
-            }
-            else if (strcmp(argv[i], "safe") == 0)
-            {
+            } else if (arg == "safe") {
                 safeMode = true;
+            } else if (arg.rfind("profile=", 0) == 0 && arg.size() > 8) {
+                requestedProfile = arg.substr(8);
             }
         }
     }
-    Defaults defaults = initialize();
-    Session session(safeMode, localMode, defaults.getModelNumber());
+    ConfigManager config = initialize(requestedProfile);
+
+    // Get model number from config and create ModelNumber object
+    std::string modelNumberStr =
+        config.getFromSection(config.getCurrentProfile(), "MODEL_NUMBER");
+    if (modelNumberStr.empty()) {
+        modelNumberStr = config.getFromSection("DEFAULT", "MODEL_NUMBER");
+    }
+    ModelNumber modelNumber;
+    modelNumber.setModelNumber(modelNumberStr);
+
+    Session session(safeMode, localMode, modelNumber);
 
     std::string command = "";
 
-    while (session.sessionOpen)
-    {
-        if (session.safeMode)
-        {
+    while (session.sessionOpen) {
+        if (session.safeMode) {
             std::cout << "SAFE ";
         }
         std::cout << ":: ";
