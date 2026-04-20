@@ -3,12 +3,13 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17
 
 # Include directories
-INCLUDES = -I$(SRC_DIR) -I$(COMMAND_DIR) -I$(CONFIG_DIR) -I$(PARAMETER_DIR)
+INCLUDES = -I$(SRC_DIR) -I$(COMMAND_DIR) -I$(CONFIG_DIR) -I$(CORE_DIR) -I$(PARAMETER_DIR)
 
 # Source and build directories
 SRC_DIR = src
 COMMAND_DIR = $(SRC_DIR)/command
 CONFIG_DIR = $(SRC_DIR)/config
+CORE_DIR = $(SRC_DIR)/core
 PARAMETER_DIR = $(SRC_DIR)/parameter
 BUILD_DIR = build
 
@@ -19,14 +20,16 @@ TARGET = $(BUILD_DIR)/KenwoodComm
 SRC_FILES = $(SRC_DIR)/main.cpp $(SRC_DIR)/command.cpp $(SRC_DIR)/command_dispatcher.cpp $(SRC_DIR)/commandset.cpp $(SRC_DIR)/helpers.cpp ${SRC_DIR}/radio_profile.cpp $(SRC_DIR)/response.cpp ${SRC_DIR}/response_result.cpp $(SRC_DIR)/serial.cpp $(SRC_DIR)/session.cpp
 COMMAND_FILES = $(wildcard $(COMMAND_DIR)/*.cpp)
 CONFIG_FILES = $(wildcard $(CONFIG_DIR)/*.cpp)
+CORE_FILES = $(wildcard $(CORE_DIR)/*.cpp)
 PARAMETER_FILES = $(wildcard $(PARAMETER_DIR)/*.cpp)
 
 # Object files
 SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES))
 COMMAND_OBJ_FILES = $(patsubst $(COMMAND_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(COMMAND_FILES))
 CONFIG_OBJ_FILES = $(patsubst $(CONFIG_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(CONFIG_FILES))
+CORE_OBJ_FILES = $(patsubst $(CORE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(CORE_FILES))
 PARAMETER_OBJ_FILES = $(patsubst $(PARAMETER_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(PARAMETER_FILES))
-OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(PARAMETER_OBJ_FILES)
+OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(CORE_OBJ_FILES) $(PARAMETER_OBJ_FILES)
 
 # Default target
 all: $(TARGET)
@@ -51,6 +54,11 @@ $(BUILD_DIR)/%.o: $(CONFIG_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
+# Compile core directory files
+$(BUILD_DIR)/%.o: $(CORE_DIR)/%.cpp
+	@mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+
 # Compile parameter directory files
 $(BUILD_DIR)/%.o: $(PARAMETER_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
@@ -69,10 +77,13 @@ clean-command:
 clean-config:
 	rm -f $(CONFIG_OBJ_FILES)
 
+clean-core:
+	rm -f $(CORE_OBJ_FILES)
+
 clean-parameter:
 	rm -f $(PARAMETER_OBJ_FILES)
 
 clean-target:
 	rm -f $(TARGET)
 
-.PHONY: all clean clean-src clean-command clean-config clean-parameter clean-target
+.PHONY: all clean clean-src clean-command clean-config clean-core clean-parameter clean-target
