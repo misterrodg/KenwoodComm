@@ -1,0 +1,7 @@
+-std=c++17
+-I../src
+-I../src/command
+-I../src/config
+-I../src/core
+-I../src/parameter
+-I.

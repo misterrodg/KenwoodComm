@@ -6,7 +6,7 @@
 #include "helpers.h"
 #include "radio_profile.h"
 #include "response.h"
-#include "serial.h"
+#include "serial_interface.h"
 #include <memory>
 #include <string>
 
@@ -15,6 +15,8 @@ class Session {
 
 public:
     Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
+    Session(bool inSafeMode, ModelNumber modelNumber,
+            std::unique_ptr<ISerialPort> serial);
     void CheckCommand(std::string command);
     bool safeMode;
     bool localMode;
@@ -27,7 +29,7 @@ private:
     std::string getParameter(const std::string& fullCommand) const;
     void write(const std::string& command, bool expectsResponse = false);
 
-    Serial serialConnection;
+    std::unique_ptr<ISerialPort> serialConnection;
     std::unique_ptr<RadioProfile> radioProfile;
     std::unique_ptr<CommandDispatcher> dispatcher;
     std::string lastParameter;

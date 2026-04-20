@@ -1,6 +1,7 @@
 #include "session.h"
 
 #include "core/error_reporter.h"
+#include "serial.h"
 
 Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
     : safeMode(inSafeMode), localMode(inLocalMode), sessionOpen(true) {
@@ -8,10 +9,20 @@ Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
     radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
     radioProfile->PrintAvailableCommands();
 
-    if (localMode == false) {
-        serialConnection.Open();
+    serialConnection = std::make_unique<Serial>();
+    if (!localMode) {
+        serialConnection->Open();
     }
 
+    dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
+}
+
+Session::Session(bool inSafeMode, ModelNumber modelNumberEnum,
+                 std::unique_ptr<ISerialPort> serial)
+    : safeMode(inSafeMode), localMode(true), sessionOpen(true),
+      serialConnection(std::move(serial)) {
+
+    radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
     dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
 }
 
@@ -35,7 +46,7 @@ void Session::CheckCommand(std::string command) {
     }
 
     if (commandUpper == "EXIT") {
-        serialConnection.Close();
+        serialConnection->Close();
         printf("Closing the session.\n");
         validCommand = true;
         sessionOpen = false;
@@ -76,10 +87,10 @@ std::string Session::getParameter(const std::string& fullCommand) const {
 
 void Session::write(const std::string& command, bool expectsResponse) {
     printf("Sending: %s\n", command.c_str());
-    if (serialConnection.GetEstablished()) {
-        serialConnection.Write(command);
+    if (serialConnection->GetEstablished()) {
+        serialConnection->Write(command);
         if (expectsResponse) {
-            std::string rawResponse = serialConnection.Read();
+            std::string rawResponse = serialConnection->Read();
             Response response(rawResponse);
 
             if (response.IsValid()) {
