@@ -6,17 +6,13 @@ const int Command::NULL_TERMINATOR_LENGTH = 1;
 Command::Command(int &bufferLength, std::string &commandPrefix) : commandString("")
 {
     bufferLength += COMMAND_TERMINATOR_LENGTH + NULL_TERMINATOR_LENGTH;
-    char result[bufferLength];
-    snprintf(result, sizeof(result), "%s;", commandPrefix.c_str());
-    commandString = result;
+    commandString = commandPrefix + ";";
 }
 
 Command::Command(int &bufferLength, std::string &commandPrefix, std::string &parameter) : commandString("")
 {
     bufferLength += COMMAND_TERMINATOR_LENGTH + NULL_TERMINATOR_LENGTH;
-    char result[bufferLength];
-    snprintf(result, sizeof(result), "%s%s;", commandPrefix.c_str(), parameter.c_str());
-    commandString = result;
+    commandString = commandPrefix + parameter + ";";
 }
 
 std::string Command::ToString()

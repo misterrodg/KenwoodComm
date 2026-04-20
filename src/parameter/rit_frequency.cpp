@@ -46,7 +46,7 @@ short int RITFrequency::getRITFrequencyInHz() const
 
 std::string RITFrequency::getRITFrequencyString()
 {
-    char formattedFrequency[6];
+    char formattedFrequency[7];
     snprintf(formattedFrequency, sizeof(formattedFrequency), "%+05d", frequencyInHz);
 
     return formattedFrequency;
