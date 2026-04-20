@@ -58,6 +58,21 @@ $(BUILD_DIR)/%.o: $(PARAMETER_DIR)/%.cpp
 
 # Clean target
 clean:
-	rm -f $(BUILD_DIR)/*.o $(TARGET)
+	rm -f $(OBJ_FILES) $(TARGET)
 
-.PHONY: all clean
+clean-src:
+	rm -f $(SRC_OBJ_FILES)
+
+clean-command:
+	rm -f $(COMMAND_OBJ_FILES)
+
+clean-config:
+	rm -f $(CONFIG_OBJ_FILES)
+
+clean-parameter:
+	rm -f $(PARAMETER_OBJ_FILES)
+
+clean-target:
+	rm -f $(TARGET)
+
+.PHONY: all clean clean-src clean-command clean-config clean-parameter clean-target
