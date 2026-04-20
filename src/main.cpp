@@ -3,6 +3,7 @@
 #include "parameter/call_sign.h"
 #include "parameter/model_number.h"
 #include "session.h"
+#include "ui/console_ui.h"
 
 #include <iostream>
 #include <string>
@@ -115,17 +116,7 @@ int main(int argc, char** argv) {
     }
 
     Session session(safeMode, localMode, modelNumber);
-
-    std::string command = "";
-
-    while (session.sessionOpen) {
-        if (session.safeMode) {
-            std::cout << "SAFE ";
-        }
-        std::cout << ":: ";
-        std::getline(std::cin, command);
-        session.CheckCommand(command);
-    }
+    ui::RunSessionLoop(session);
 
     return 0;
 }

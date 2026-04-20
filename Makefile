@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17
 
 # Include directories
-INCLUDES = -I$(SRC_DIR) -I$(COMMAND_DIR) -I$(CONFIG_DIR) -I$(CORE_DIR) -I$(PARAMETER_DIR)
+INCLUDES = -I$(SRC_DIR) -I$(COMMAND_DIR) -I$(CONFIG_DIR) -I$(CORE_DIR) -I$(PARAMETER_DIR) -I$(UI_DIR)
 
 # Source and build directories
 SRC_DIR = src
@@ -11,6 +11,7 @@ COMMAND_DIR = $(SRC_DIR)/command
 CONFIG_DIR = $(SRC_DIR)/config
 CORE_DIR = $(SRC_DIR)/core
 PARAMETER_DIR = $(SRC_DIR)/parameter
+UI_DIR = $(SRC_DIR)/ui
 BUILD_DIR = build
 
 # Executable name
@@ -22,6 +23,7 @@ COMMAND_FILES = $(wildcard $(COMMAND_DIR)/*.cpp)
 CONFIG_FILES = $(wildcard $(CONFIG_DIR)/*.cpp)
 CORE_FILES = $(wildcard $(CORE_DIR)/*.cpp)
 PARAMETER_FILES = $(wildcard $(PARAMETER_DIR)/*.cpp)
+UI_FILES = $(wildcard $(UI_DIR)/*.cpp)
 
 # Object files
 SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES))
@@ -29,7 +31,8 @@ COMMAND_OBJ_FILES = $(patsubst $(COMMAND_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(COMMAND
 CONFIG_OBJ_FILES = $(patsubst $(CONFIG_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(CONFIG_FILES))
 CORE_OBJ_FILES = $(patsubst $(CORE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(CORE_FILES))
 PARAMETER_OBJ_FILES = $(patsubst $(PARAMETER_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(PARAMETER_FILES))
-OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(CORE_OBJ_FILES) $(PARAMETER_OBJ_FILES)
+UI_OBJ_FILES = $(patsubst $(UI_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(UI_FILES))
+OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(CORE_OBJ_FILES) $(PARAMETER_OBJ_FILES) $(UI_OBJ_FILES)
 
 # Default target
 all: $(TARGET)
@@ -46,7 +49,7 @@ TEST_SRC_FILES = $(shell find $(TEST_DIR) -name '*.cpp')
 
 # Production sources without main.cpp (shared with test binary)
 PROD_SRC_NO_MAIN = $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)) \
-                   $(COMMAND_FILES) $(CONFIG_FILES) $(CORE_FILES) $(PARAMETER_FILES)
+                   $(COMMAND_FILES) $(CONFIG_FILES) $(CORE_FILES) $(PARAMETER_FILES) $(UI_FILES)
 
 test: $(TEST_TARGET)
 	@./$(TEST_TARGET)
@@ -85,6 +88,11 @@ $(BUILD_DIR)/%.o: $(PARAMETER_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
+# Compile ui directory files
+$(BUILD_DIR)/%.o: $(UI_DIR)/%.cpp
+	@mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+
 # Clean target
 clean:
 	rm -f $(OBJ_FILES) $(TARGET)
@@ -104,8 +112,11 @@ clean-core:
 clean-parameter:
 	rm -f $(PARAMETER_OBJ_FILES)
 
+clean-ui:
+	rm -f $(UI_OBJ_FILES)
+
 clean-target:
 	rm -f $(TARGET)
 
-.PHONY: all clean clean-src clean-command clean-config clean-core clean-parameter clean-target
+.PHONY: all clean clean-src clean-command clean-config clean-core clean-parameter clean-ui clean-target
 .PHONY: test
