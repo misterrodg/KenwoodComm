@@ -32,22 +32,13 @@ Radios ModelNumber::parseUnit(const std::string& modelStr) {
     return Radios::UNRECOGNIZED;
 }
 
-bool ModelNumber::setModelNumber(const std::string& input) {
-    bool result = false;
-
-    std::regex regex(R"(TS\d{3}[ABES])", std::regex_constants::icase);
-    std::smatch match;
-
-    if (std::regex_match(input, regex)) {
-        modelNumber = parseUnit(input);
-        if (modelNumber != Radios::UNRECOGNIZED) {
-            result = true;
-        }
-    } else {
-        printf("Unrecognized model number.\n");
+core::Result<void> ModelNumber::setModelNumber(const std::string& input) {
+    modelNumber = parseUnit(input);
+    if (modelNumber == Radios::UNRECOGNIZED) {
+        return core::Error{"PARAM_INVALID",
+                           "Unrecognized model number: " + input};
     }
-
-    return result;
+    return {};
 }
 
 Radios ModelNumber::getModelNumber() const {
