@@ -2,8 +2,8 @@
 #define COMMAND_MODE_H
 
 #include "command_result.h"
-#include "../parameter/mode.h"
-#include "../parameter/model_number.h"
+#include "parameter/mode.h"
+#include "parameter/model_number.h"
 #include "command_base.h"
 
 class CommandMode : public CommandBase {
