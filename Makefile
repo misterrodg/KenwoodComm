@@ -34,6 +34,27 @@ OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(CORE_OBJ
 # Default target
 all: $(TARGET)
 
+# ---------------------------------------------------------------------------
+# Test target
+# ---------------------------------------------------------------------------
+TEST_DIR = tests
+TEST_TARGET = $(BUILD_DIR)/KenwoodCommTests
+TEST_INCLUDES = $(INCLUDES) -I$(TEST_DIR)
+
+# All test .cpp files (main + parameter/ + command/ + integration/)
+TEST_SRC_FILES = $(shell find $(TEST_DIR) -name '*.cpp')
+
+# Production sources without main.cpp (shared with test binary)
+PROD_SRC_NO_MAIN = $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)) \
+                   $(COMMAND_FILES) $(CONFIG_FILES) $(CORE_FILES) $(PARAMETER_FILES)
+
+test: $(TEST_TARGET)
+	@./$(TEST_TARGET)
+
+$(TEST_TARGET): $(TEST_SRC_FILES) $(PROD_SRC_NO_MAIN)
+	@mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(TEST_INCLUDES) -o $@ $^
+
 # Linking
 $(TARGET): $(OBJ_FILES)
 	@mkdir -p $(BUILD_DIR)
@@ -87,3 +108,4 @@ clean-target:
 	rm -f $(TARGET)
 
 .PHONY: all clean clean-src clean-command clean-config clean-core clean-parameter clean-target
+.PHONY: test
