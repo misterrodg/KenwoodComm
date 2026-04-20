@@ -19,7 +19,7 @@ BUILD_DIR = build
 TARGET = $(BUILD_DIR)/KenwoodComm
 
 # Source files
-SRC_FILES = $(SRC_DIR)/main.cpp $(SRC_DIR)/serial_command.cpp $(SRC_DIR)/helpers.cpp
+SRC_FILES = $(SRC_DIR)/main.cpp $(SRC_DIR)/helpers.cpp
 COMMAND_FILES = $(wildcard $(COMMAND_DIR)/*.cpp)
 CONFIG_FILES = $(wildcard $(CONFIG_DIR)/*.cpp)
 CORE_FILES = $(wildcard $(CORE_DIR)/*.cpp)

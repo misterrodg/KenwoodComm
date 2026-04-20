@@ -2,7 +2,7 @@
 #define COMMAND_DISPATCHER_H
 
 #include "command/command_prefix.h"
-#include "command_result.h"
+#include "command/command_result.h"
 #include "radio_profile.h"
 
 #include <functional>

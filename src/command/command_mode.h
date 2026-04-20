@@ -1,7 +1,7 @@
 #ifndef COMMAND_MODE_H
 #define COMMAND_MODE_H
 
-#include "../command_result.h"
+#include "command_result.h"
 #include "../parameter/mode.h"
 #include "../parameter/model_number.h"
 #include "command_base.h"

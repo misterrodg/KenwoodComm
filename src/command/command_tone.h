@@ -1,7 +1,7 @@
 #ifndef COMMAND_TONE_H
 #define COMMAND_TONE_H
 
-#include "../command_result.h"
+#include "command_result.h"
 #include "../parameter/tone_frequency.h"
 #include "command_base.h"
 

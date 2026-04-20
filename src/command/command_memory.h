@@ -1,7 +1,7 @@
 #ifndef COMMAND_MEMORY_H
 #define COMMAND_MEMORY_H
 
-#include "../command_result.h"
+#include "command_result.h"
 #include "../parameter/memory_bank.h"
 #include "../parameter/memory_channel.h"
 #include "../parameter/model_number.h"

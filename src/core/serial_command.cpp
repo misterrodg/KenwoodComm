@@ -1,4 +1,4 @@
-#include "serial_command.h"
+#include "core/serial_command.h"
 
 const int Command::COMMAND_TERMINATOR_LENGTH = 1;
 const int Command::NULL_TERMINATOR_LENGTH = 1;

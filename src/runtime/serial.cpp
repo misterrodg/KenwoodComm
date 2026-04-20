@@ -1,6 +1,6 @@
 #include "serial.h"
 
-#include "serial_command.h"
+#include "core/serial_command.h"
 #include "response.h"
 #include <errno.h>
 #include <fcntl.h>

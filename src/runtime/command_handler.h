@@ -2,7 +2,7 @@
 #define COMMAND_HANDLER_H
 
 #include "command/command_prefix.h"
-#include "command_result.h"
+#include "command/command_result.h"
 #include <string>
 
 // Forward declaration
