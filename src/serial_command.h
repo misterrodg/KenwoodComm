@@ -1,13 +1,13 @@
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef SERIAL_COMMAND_H
+#define SERIAL_COMMAND_H
 
 #include <string>
 
-class Command
-{
+class Command {
 public:
-    Command(int &bufferLength, std::string &commandPrefix);
-    Command(int &bufferLength, std::string &commandPrefix, std::string &parameter);
+    Command(int& bufferLength, std::string& commandPrefix);
+    Command(int& bufferLength, std::string& commandPrefix,
+            std::string& parameter);
     std::string ToString();
     static const int MAX_COMMAND_LENGTH = 26;
 
