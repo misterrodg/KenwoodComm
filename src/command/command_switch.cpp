@@ -15,11 +15,11 @@ std::string CommandSwitch::ToCommand(bool readStatus) {
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
     if (readStatus) {
-        return Command(bufferLength, command).ToString();
+        return SerialCommand(bufferLength, command).ToString();
     }
 
     std::string enabledString = Switch::SwitchToBoolString(enabled);
     bufferLength += Switch::MAX_SWITCH_LENGTH;
 
-    return Command(bufferLength, command, enabledString).ToString();
+    return SerialCommand(bufferLength, command, enabledString).ToString();
 }

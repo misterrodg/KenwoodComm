@@ -19,5 +19,5 @@ std::string CommandTone::ToCommand() {
         ToneFrequency::ToneFrequencyToIntString(toneFrequency);
     bufferLength += ToneFrequency::MAX_TONE_LENGTH;
 
-    return Command(bufferLength, command, toneString).ToString();
+    return SerialCommand(bufferLength, command, toneString).ToString();
 }

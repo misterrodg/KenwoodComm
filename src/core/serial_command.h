@@ -3,11 +3,11 @@
 
 #include <string>
 
-class Command {
+class SerialCommand {
 public:
-    Command(int& bufferLength, std::string& commandPrefix);
-    Command(int& bufferLength, std::string& commandPrefix,
-            std::string& parameter);
+    SerialCommand(int& bufferLength, std::string& commandPrefix);
+    SerialCommand(int& bufferLength, std::string& commandPrefix,
+                  std::string& parameter);
     std::string ToString();
     static const int MAX_COMMAND_LENGTH = 26;
 

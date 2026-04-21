@@ -24,7 +24,7 @@ std::string CommandFunction::ToCommand() {
     std::string functionString = Function::FunctionToIntString(function);
     bufferLength += Function::MAX_FUNCTION_LENGTH;
 
-    return Command(bufferLength, command, functionString).ToString();
+    return SerialCommand(bufferLength, command, functionString).ToString();
 }
 
 bool CommandFunction::allowedForModelNumber(

@@ -70,7 +70,7 @@ void Serial::Close() {
 }
 
 void Serial::Write(const std::string& command) {
-    const int maxSize = Command::MAX_COMMAND_LENGTH + 1;
+    const int maxSize = SerialCommand::MAX_COMMAND_LENGTH + 1;
     uint8_t outBuffer[maxSize] = {0};
 
     int i = 0;

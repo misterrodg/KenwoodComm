@@ -13,11 +13,11 @@ std::string CommandFrequency::ToCommand(bool readStatus) {
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
     if (readStatus) {
-        return Command(bufferLength, command).ToString();
+        return SerialCommand(bufferLength, command).ToString();
     }
 
     std::string frequencyString = frequency.getFrequencyString();
     bufferLength += Frequency::MAX_FREQUENCY_LENGTH;
 
-    return Command(bufferLength, command, frequencyString).ToString();
+    return SerialCommand(bufferLength, command, frequencyString).ToString();
 }

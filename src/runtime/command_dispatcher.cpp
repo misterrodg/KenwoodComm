@@ -395,22 +395,23 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
                             const std::string& param) {
     if (!radioProfile->IsCommandAvailable(command)) {
         std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("CMD_NOT_AVAILABLE", "Command \"" + commandString +
+        return Error("CMD_NOT_AVAILABLE", "SerialCommand \"" + commandString +
                                               "\" not available on this model");
     }
 
     auto it = registry.find(command);
 
     if (it == registry.end()) {
-        return Error("CMD_NOT_IMPLEMENTED", "Command not implemented");
+        return Error("CMD_NOT_IMPLEMENTED", "SerialCommand not implemented");
     }
 
     const CommandMetaData& metadata = it->second;
 
     if (metadata.disabledInSafeMode && session->safeMode) {
         std::string commandString = CommandPrefix::CommandToString(command);
-        return Error("CMD_DISABLED_SAFE_MODE",
-                     "Command \"" + commandString + "\" disabled in SAFE MODE");
+        return Error("CMD_DISABLED_SAFE_MODE", "SerialCommand \"" +
+                                                   commandString +
+                                                   "\" disabled in SAFE MODE");
     }
 
     if (metadata.parameterMode == CommandMetaData::REQUIRED_PARAMETER) {
@@ -419,7 +420,7 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
         if (!validation.OK()) {
             std::string commandString = CommandPrefix::CommandToString(command);
             return Error(validation.error().code,
-                         "Command \"" + commandString +
+                         "SerialCommand \"" + commandString +
                              "\" requires a parameter");
         }
     }
@@ -428,7 +429,7 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
         !param.empty()) {
         std::string commandString = CommandPrefix::CommandToString(command);
         return Error("CMD_NO_PARAMETER_ALLOWED",
-                     "Command \"" + commandString +
+                     "SerialCommand \"" + commandString +
                          "\" accepts no parameters. Ignoring \"" + param +
                          "\" and sending standard " + commandString +
                          " command");
