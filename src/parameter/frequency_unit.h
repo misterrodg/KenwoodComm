@@ -1,7 +1,7 @@
 #ifndef FREQUENCY_UNIT_H
 #define FREQUENCY_UNIT_H
 
-#include "../helpers.h"
+#include "core/helpers.h"
 #include <string>
 
 class FrequencyUnit

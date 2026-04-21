@@ -1,7 +1,7 @@
 #ifndef COMMAND_BASE_H
 #define COMMAND_BASE_H
 
-#include "../command.h"
+#include "core/serial_command.h"
 #include "command_prefix.h"
 #include <string>
 

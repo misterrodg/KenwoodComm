@@ -53,7 +53,7 @@ void Session::CheckCommand(std::string command) {
     }
 
     if (!validCommand) {
-        printf("Invalid Command.\n");
+        printf("Invalid SerialCommand.\n");
     }
 }
 
@@ -96,9 +96,8 @@ void Session::write(const std::string& command, bool expectsResponse) {
             if (response.IsValid()) {
                 response.ToConsole();
             } else {
-                printf(
-                    "Error parsing response: %s\n",
-                    response.GetValidationResult().GetErrorMessage().c_str());
+                printf("Error parsing response: %s\n",
+                       response.GetValidationResult().error().message.c_str());
             }
         }
     }

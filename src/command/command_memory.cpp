@@ -46,5 +46,5 @@ std::string CommandMemory::ToCommand() {
     bufferLength += MemoryBank::MAX_MEMORY_BANK_LENGTH +
                     MemoryChannel::MAX_MEMORY_CHANNEL_LENGTH;
 
-    return Command(bufferLength, command, resultString).ToString();
+    return SerialCommand(bufferLength, command, resultString).ToString();
 }

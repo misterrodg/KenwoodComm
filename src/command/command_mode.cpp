@@ -27,7 +27,7 @@ std::string CommandMode::ToCommand() {
     std::string modeString = Mode::ModeToIntString(mode);
     bufferLength += Mode::MAX_MODE_LENGTH;
 
-    return Command(bufferLength, command, modeString).ToString();
+    return SerialCommand(bufferLength, command, modeString).ToString();
 }
 
 bool CommandMode::allowedForModelNumber(const ModelNumber& modelNumber,

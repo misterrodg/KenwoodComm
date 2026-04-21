@@ -1,8 +1,8 @@
 #ifndef MODEL_NUMBER_H
 #define MODEL_NUMBER_H
 
-#include "../core/result.h"
-#include "../helpers.h"
+#include "core/helpers.h"
+#include "core/result.h"
 #include "radios.h"
 #include <string>
 

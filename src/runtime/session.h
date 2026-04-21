@@ -3,7 +3,7 @@
 
 #include "command/commands.h"
 #include "command_dispatcher.h"
-#include "helpers.h"
+#include "core/helpers.h"
 #include "radio_profile.h"
 #include "response.h"
 #include "serial_interface.h"
