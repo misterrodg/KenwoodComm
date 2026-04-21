@@ -129,5 +129,7 @@ clean-ui:
 clean-target:
 	rm -f $(TARGET)
 
-.PHONY: all clean clean-src clean-command clean-config clean-core clean-parameter clean-runtime clean-ui clean-target
+rebuild: clean all
+
+.PHONY: all rebuild clean clean-src clean-command clean-config clean-core clean-parameter clean-runtime clean-ui clean-target
 .PHONY: test
