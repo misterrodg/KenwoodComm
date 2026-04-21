@@ -9,6 +9,7 @@
 #include "serial_interface.h"
 #include <memory>
 #include <string>
+#include <string_view>
 
 class Session {
     friend class CommandDispatcher;
@@ -17,16 +18,16 @@ public:
     Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
     Session(bool inSafeMode, ModelNumber modelNumber,
             std::unique_ptr<ISerialPort> serial);
-    void CheckCommand(std::string command);
+        void CheckCommand(const std::string& command);
     bool safeMode;
     bool localMode;
     bool sessionOpen;
 
 private:
-    void SendCommand(std::string command);
-    bool startsWithCommand(const std::string& fullCommand) const;
-    std::string getCommand(const std::string& fullCommand) const;
-    std::string getParameter(const std::string& fullCommand) const;
+    void SendCommand(const std::string& command);
+    bool startsWithCommand(std::string_view fullCommand) const;
+    std::string getCommand(std::string_view fullCommand) const;
+    std::string getParameter(std::string_view fullCommand) const;
     void write(const std::string& command, bool expectsResponse = false);
 
     std::unique_ptr<ISerialPort> serialConnection;

@@ -26,7 +26,7 @@ Session::Session(bool inSafeMode, ModelNumber modelNumberEnum,
     dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
 }
 
-void Session::CheckCommand(std::string command) {
+void Session::CheckCommand(const std::string& command) {
     bool validCommand = false;
     std::string commandUpper = Helpers::toUpper(command);
 
@@ -57,7 +57,7 @@ void Session::CheckCommand(std::string command) {
     }
 }
 
-void Session::SendCommand(std::string command) {
+void Session::SendCommand(const std::string& command) {
     std::string commandPrefixString = getCommand(command);
     CommandPrefix::CommandPrefixEnum commandPrefixEnum =
         CommandPrefix::StringToCommandPrefix(commandPrefixString);
@@ -70,17 +70,17 @@ void Session::SendCommand(std::string command) {
     }
 }
 
-bool Session::startsWithCommand(const std::string& fullCommand) const {
+bool Session::startsWithCommand(std::string_view fullCommand) const {
     std::string commandChars = getCommand(fullCommand);
     return radioProfile->VerifyCommand(commandChars);
 }
 
-std::string Session::getCommand(const std::string& fullCommand) const {
-    return fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH);
+std::string Session::getCommand(std::string_view fullCommand) const {
+    return std::string(fullCommand.substr(0, CommandPrefix::COMMAND_LENGTH));
 }
 
-std::string Session::getParameter(const std::string& fullCommand) const {
-    std::string param = fullCommand.substr(CommandPrefix::COMMAND_LENGTH);
+std::string Session::getParameter(std::string_view fullCommand) const {
+    std::string param(fullCommand.substr(CommandPrefix::COMMAND_LENGTH));
     size_t start = param.find_first_not_of(" \t\n\r\f\v");
     return (start == std::string::npos) ? "" : param.substr(start);
 }
