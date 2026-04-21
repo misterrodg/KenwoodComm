@@ -1,14 +1,15 @@
 #ifndef SERIAL_COMMAND_H
 #define SERIAL_COMMAND_H
 
+#include <string_view>
 #include <string>
 
 class SerialCommand {
 public:
-    SerialCommand(int& bufferLength, std::string& commandPrefix);
-    SerialCommand(int& bufferLength, std::string& commandPrefix,
-                  std::string& parameter);
-    std::string ToString();
+    SerialCommand(int& bufferLength, std::string_view commandPrefix);
+    SerialCommand(int& bufferLength, std::string_view commandPrefix,
+                  std::string_view parameter);
+    std::string ToString() const;
     static const int MAX_COMMAND_LENGTH = 26;
 
 private:
