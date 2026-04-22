@@ -1,8 +1,10 @@
 #include "passband.h"
 
+#include "core/error_code.h"
+
 Passband::Passband() : passband(0) {}
 
-void Passband::setPassband(const std::string &input)
+core::Result<void> Passband::setPassband(const std::string &input)
 {
     std::regex regex(R"((0[0-9]|1[0-9]|2[0-9]|3[0-1]))");
     std::smatch match;
@@ -12,11 +14,11 @@ void Passband::setPassband(const std::string &input)
         int value = std::stoi(input);
 
         passband = value;
+        return {};
     }
-    else
-    {
-        printf("Invalid passband format");
-    }
+
+    return core::Error{core::ErrorCode::InvalidPassband, "Invalid passband format: '" + input +
+                           "'. Expected a value between 00 and 31."};
 }
 
 unsigned short int Passband::getPassband() const

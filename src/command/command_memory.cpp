@@ -8,24 +8,24 @@ CommandResult CommandMemory::SetMemory(const ModelNumber& modelNumberParam,
             parameter.substr(0, MemoryBank::MAX_MEMORY_BANK_LENGTH);
         std::string channel =
             parameter.substr(MemoryBank::MAX_MEMORY_BANK_LENGTH);
-        bool bankSet = memoryBank.setMemoryBank(bank);
-        bool channelSet = memoryChannel.setMemoryChannel(channel);
+        core::Result<void> bankResult = memoryBank.setMemoryBank(bank);
+        core::Result<void> channelResult =
+            memoryChannel.setMemoryChannel(channel);
 
-        if (!bankSet) {
-            return Error("INVALID_MEMORY_BANK",
-                         "Unrecognized memory bank: " + bank);
+        if (!bankResult.OK()) {
+            return bankResult.error();
         }
-        if (!channelSet) {
-            return Error("INVALID_MEMORY_CHANNEL",
-                         "Unrecognized memory channel: " + channel);
+        if (!channelResult.OK()) {
+            return channelResult.error();
         }
         return OK();
     } else {
-        if (memoryChannel.setMemoryChannel(parameter)) {
+        core::Result<void> channelResult =
+            memoryChannel.setMemoryChannel(parameter);
+        if (channelResult.OK()) {
             return OK();
         }
-        return Error("INVALID_MEMORY_CHANNEL",
-                     "Unrecognized channel: " + parameter);
+        return channelResult.error();
     }
 }
 

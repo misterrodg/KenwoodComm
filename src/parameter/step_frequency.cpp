@@ -1,10 +1,11 @@
 #include "step_frequency.h"
 
+#include "core/error_code.h"
+
 StepFrequency::StepFrequency() : frequencyInHz(0) {}
 
-bool StepFrequency::setStepFrequency(const std::string &input)
+core::Result<void> StepFrequency::setStepFrequency(const std::string &input)
 {
-    bool result = false;
     std::regex regex(R"((\d+(\.\d+)?)([a-zA-Z]+))");
     std::smatch match;
 
@@ -19,23 +20,19 @@ bool StepFrequency::setStepFrequency(const std::string &input)
             frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
             if (frequencyInHz <= MAX_STEP_FREQUENCY_VALUE)
             {
-                result = true;
+                return {};
             }
-            else
-            {
-                printf("Step frequency must be between 0 and %dHz.\n", MAX_STEP_FREQUENCY_VALUE);
-            }
+
+            return core::Error{core::ErrorCode::ValueOutOfRange, "Step frequency must be between 0 and " +
+                                   std::to_string(MAX_STEP_FREQUENCY_VALUE) +
+                                   "Hz."};
         }
-        else
-        {
-            printf("Step frequency unit must be kHz or Hz.\n");
-        }
+
+        return core::Error{core::ErrorCode::InvalidFrequencyUnit, "Step frequency unit must be Hz or kHz."};
     }
-    else
-    {
-        printf("Invalid Step frequency format.\n");
-    }
-    return result;
+
+    return core::Error{core::ErrorCode::InvalidStepFrequency, "Invalid step frequency format: '" + input +
+                           "'. Expected <value><unit>, for example 5kHz."};
 }
 
 unsigned short int StepFrequency::getStepFrequencyInHz() const

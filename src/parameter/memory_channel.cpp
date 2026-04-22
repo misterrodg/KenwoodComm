@@ -1,12 +1,13 @@
 #include "memory_channel.h"
 
+#include "core/error_code.h"
+
 const int MemoryChannel::MAX_MEMORY_CHANNEL_LENGTH = 2;
 
 MemoryChannel::MemoryChannel() : memoryChannel(0) {}
 
-bool MemoryChannel::setMemoryChannel(const std::string &input)
+core::Result<void> MemoryChannel::setMemoryChannel(const std::string &input)
 {
-    bool result = false;
     std::regex regex(R"((\d{1,2}))");
     std::smatch match;
 
@@ -14,13 +15,11 @@ bool MemoryChannel::setMemoryChannel(const std::string &input)
     {
         int value = std::stoi(input);
         memoryChannel = value;
-        result = true;
+        return {};
     }
-    else
-    {
-        printf("Invalid channel format: ");
-    }
-    return result;
+
+    return core::Error{core::ErrorCode::InvalidMemoryChannel, "Invalid memory channel format: '" + input +
+                           "'. Expected a 1 or 2 digit channel number."};
 }
 
 short int MemoryChannel::getMemoryChannel() const

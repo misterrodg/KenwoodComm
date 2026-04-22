@@ -4,5 +4,5 @@ FA::FA() : CommandFrequency(CommandPrefix::CommandPrefixEnum::FA){};
 
 FA::FA(const std::string &parameter) : CommandFrequency(CommandPrefix::CommandPrefixEnum::FA)
 {
-    FA::SetFrequency(parameter);
+    static_cast<void>(FA::SetFrequency(parameter));
 }

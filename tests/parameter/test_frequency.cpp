@@ -5,25 +5,25 @@
 
 TEST(Frequency, ParseMHz) {
     Frequency f;
-    ASSERT_TRUE(f.setFrequency("14.1 MHz"));
+    ASSERT_TRUE(f.setFrequency("14.1 MHz").OK());
     ASSERT_EQ(f.getFrequencyInHz(), (uint64_t)14100000);
 }
 
 TEST(Frequency, ParseKHz) {
     Frequency f;
-    ASSERT_TRUE(f.setFrequency("14200 kHz"));
+    ASSERT_TRUE(f.setFrequency("14200 kHz").OK());
     ASSERT_EQ(f.getFrequencyInHz(), (uint64_t)14200000);
 }
 
 TEST(Frequency, ParseHz) {
     Frequency f;
-    ASSERT_TRUE(f.setFrequency("7000000 Hz"));
+    ASSERT_TRUE(f.setFrequency("7000000 Hz").OK());
     ASSERT_EQ(f.getFrequencyInHz(), (uint64_t)7000000);
 }
 
 TEST(Frequency, ParseCaseInsensitiveUnit) {
     Frequency f;
-    ASSERT_TRUE(f.setFrequency("144.200 MHZ"));
+    ASSERT_TRUE(f.setFrequency("144.200 MHZ").OK());
     ASSERT_EQ(f.getFrequencyInHz(), (uint64_t)144200000);
 }
 
@@ -45,20 +45,20 @@ TEST(Frequency, GetFrequencyString_SevenMHz) {
 
 TEST(Frequency, Invalid_NoUnit) {
     Frequency f;
-    ASSERT_FALSE(f.setFrequency("14100000"));
+    ASSERT_FALSE(f.setFrequency("14100000").OK());
 }
 
 TEST(Frequency, Invalid_Empty) {
     Frequency f;
-    ASSERT_FALSE(f.setFrequency(""));
+    ASSERT_FALSE(f.setFrequency("").OK());
 }
 
 TEST(Frequency, Invalid_UnknownUnit) {
     Frequency f;
-    ASSERT_FALSE(f.setFrequency("14.1 THz"));
+    ASSERT_FALSE(f.setFrequency("14.1 THz").OK());
 }
 
 TEST(Frequency, Invalid_Letters) {
     Frequency f;
-    ASSERT_FALSE(f.setFrequency("abc MHz"));
+    ASSERT_FALSE(f.setFrequency("abc MHz").OK());
 }

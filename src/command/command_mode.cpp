@@ -9,12 +9,12 @@ CommandResult CommandMode::SetMode(const ModelNumber& modelNumber,
             return OK();
         } else {
             std::string modeStr = Mode::ModeToString(modeEnum);
-            return Error("MODE_NOT_AVAILABLE",
+            return Error(core::ErrorCode::ModeNotAvailable,
                          modeStr + " not available for the " +
                              modelNumber.getModelNumberString());
         }
     }
-    return Error("INVALID_MODE",
+    return Error(core::ErrorCode::InvalidMode,
                  "Invalid mode: '" + modeString +
                      "'. Options are: LSB, USB, CW, FM, AM, FSK, CWN (or "
                      "1-7)");

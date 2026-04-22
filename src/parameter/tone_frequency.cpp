@@ -90,7 +90,6 @@ ToneFrequency::ToneFrequencyEnum ToneFrequency::StringToToneFrequency(const std:
     {
         return it->second;
     }
-    printf("Unrecognized tone. Tones are: 01-38.\n");
     return ToneFrequencyEnum::UNKNOWN;
 }
 

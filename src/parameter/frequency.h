@@ -1,16 +1,17 @@
 #ifndef FREQUENCY_H
 #define FREQUENCY_H
 
+#include "core/result.h"
 #include "frequency_unit.h"
-#include <string>
 #include <cinttypes>
 #include <regex>
+#include <string>
 
 class Frequency
 {
 public:
     Frequency();
-    bool setFrequency(const std::string &input);
+    core::Result<void> setFrequency(const std::string &input);
     uint64_t getFrequencyInHz() const;
     std::string getFrequencyString();
     static const int MAX_FREQUENCY_LENGTH;

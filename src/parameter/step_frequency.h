@@ -1,6 +1,7 @@
 #ifndef STEP_FREQUENCY_H
 #define STEP_FREQUENCY_H
 
+#include "core/result.h"
 #include "frequency_unit.h"
 #include <cstdint>
 #include <regex>
@@ -10,7 +11,7 @@ class StepFrequency
 {
 public:
     StepFrequency();
-    bool setStepFrequency(const std::string &input);
+    core::Result<void> setStepFrequency(const std::string &input);
     unsigned short int getStepFrequencyInHz() const;
     std::string getStepFrequencyString();
     static const int MAX_STEP_FREQUENCY_LENGTH = 5;

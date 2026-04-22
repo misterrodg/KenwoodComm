@@ -2,6 +2,7 @@
 #define RESULT_H
 
 #include <algorithm>
+#include "error_code.h"
 #include <string>
 #include <variant>
 
@@ -10,6 +11,16 @@ namespace core {
 struct Error {
     std::string code;
     std::string message;
+
+    Error() = default;
+
+    Error(std::string codeIn, std::string messageIn)
+        : code(std::move(codeIn)), message(std::move(messageIn)) {
+    }
+
+    Error(ErrorCode codeIn, std::string messageIn)
+        : code(ToString(codeIn)), message(std::move(messageIn)) {
+    }
 };
 
 template <typename T> class Result {
