@@ -17,15 +17,19 @@ class RadioProfile;
 class CommandDispatcher {
 private:
     struct CommandMetaData {
-        enum ParameterMode {
-            NO_PARAMETER,
-            OPTIONAL_PARAMETER,
-            REQUIRED_PARAMETER
+        enum class Parameter {
+            NONE,
+            OPTIONAL,
+            REQUIRED
         };
 
-        ParameterMode parameterMode;
-        bool expectsResponse;
-        bool disabledInSafeMode;
+        enum class SafeMode {
+            ALLOWED,
+            DISABLED
+        };
+
+        Parameter parameter;
+        SafeMode safeMode;
         std::function<CommandResult(Session*)> handler;
     };
 
