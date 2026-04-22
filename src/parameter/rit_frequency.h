@@ -1,6 +1,7 @@
 #ifndef RIT_FREQUENCY_H
 #define RIT_FREQUENCY_H
 
+#include "core/result.h"
 #include "frequency_unit.h"
 #include <cstdint>
 #include <regex>
@@ -10,7 +11,7 @@ class RITFrequency
 {
 public:
     RITFrequency();
-    bool setRITFrequency(const std::string &input);
+    core::Result<void> setRITFrequency(const std::string &input);
     short int getRITFrequencyInHz() const;
     std::string getRITFrequencyString();
     static const int MAX_RIT_FREQUENCY_LENGTH = 5;

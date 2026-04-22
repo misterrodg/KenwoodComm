@@ -1,12 +1,13 @@
 #include "frequency.h"
 
+#include "core/error_code.h"
+
 const int Frequency::MAX_FREQUENCY_LENGTH = 11;
 
 Frequency::Frequency() : frequencyInHz(0) {}
 
-bool Frequency::setFrequency(const std::string &input)
+core::Result<void> Frequency::setFrequency(const std::string &input)
 {
-    bool result = false;
     std::regex regex(R"((\d+(\.\d+)?)\s*([a-zA-Z]+))");
     std::smatch match;
 
@@ -19,14 +20,15 @@ bool Frequency::setFrequency(const std::string &input)
         if (frequencyUnit != FrequencyUnit::UNKNOWN)
         {
             frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
-            result = true;
+            return {};
         }
+
+        return core::Error{core::ErrorCode::InvalidFrequencyUnit, "Unknown frequency unit '" + unit +
+                               "'. Valid values are Hz, kHz, MHz or GHz."};
     }
-    else
-    {
-        printf("Invalid frequency format.\n");
-    }
-    return result;
+
+    return core::Error{core::ErrorCode::InvalidFrequency, "Invalid frequency format: '" + input +
+                           "'. Expected <value><unit>, for example 145.5MHz."};
 }
 
 uint64_t Frequency::getFrequencyInHz() const

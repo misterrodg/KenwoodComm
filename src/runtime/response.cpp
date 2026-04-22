@@ -1,24 +1,27 @@
 #include "response.h"
+
+#include "core/error_code.h"
+#include "core/error_reporter.h"
 #include "core/result.h"
 #include <cstring>
 
 Response::Response(const std::string& responseString)
     : commandPrefixEnum(CommandPrefix::CommandPrefixEnum::ZZ), parameters(""),
-      validationResult(core::Error{"EMPTY_RESPONSE", "Empty response"}) {
+      validationResult(core::Error{core::ErrorCode::EmptyResponse, "Empty response"}) {
     validationResult = Parse(responseString);
 }
 
 core::Result<void> Response::Parse(const std::string& responseString) {
     if (responseString.empty()) {
-        return core::Error{"EMPTY_RESPONSE", "Response is empty"};
+        return core::Error{core::ErrorCode::EmptyResponse, "Response is empty"};
     }
 
     if (responseString.length() < MIN_RESPONSE_LENGTH) {
-        return core::Error{"INVALID_FORMAT", "Response too short"};
+        return core::Error{core::ErrorCode::InvalidFormat, "Response too short"};
     }
 
     if (responseString.back() != ';') {
-        return core::Error{"MISSING_TERMINATOR", "Response missing terminator"};
+        return core::Error{core::ErrorCode::MissingTerminator, "Response missing terminator"};
     }
 
     std::string prefixStr =
@@ -27,14 +30,12 @@ core::Result<void> Response::Parse(const std::string& responseString) {
         CommandPrefix::StringToCommandPrefix(prefixStr);
 
     if (prefix == CommandPrefix::CommandPrefixEnum::ZZ) {
-        return core::Error{"INVALID_COMMAND_PREFIX",
-                           "Unknown command prefix: " + prefixStr};
+        return core::Error{core::ErrorCode::InvalidCommandPrefix, "Unknown command prefix: " + prefixStr};
     }
 
     size_t endPos = responseString.find(';');
     if (endPos == std::string::npos) {
-        return core::Error{"MISSING_TERMINATOR",
-                           "Malformed response: terminator not found"};
+        return core::Error{core::ErrorCode::MissingTerminator, "Malformed response: terminator not found"};
     }
 
     commandPrefixEnum = prefix;
@@ -67,8 +68,7 @@ void Response::ToConsole() const {
             CommandPrefix::CommandToStringExpanded(commandPrefixEnum).c_str(),
             parameters.c_str());
     } else {
-        printf("Invalid Response: %s\n",
-               validationResult.error().message.c_str());
+        printError(validationResult.error());
     }
 }
 

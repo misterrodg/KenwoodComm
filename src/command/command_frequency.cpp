@@ -2,10 +2,11 @@
 
 CommandResult
 CommandFrequency::SetFrequency(const std::string& frequencyString) {
-    if (frequency.setFrequency(frequencyString)) {
+    core::Result<void> result = frequency.setFrequency(frequencyString);
+    if (result.OK()) {
         return OK();
     }
-    return Error("INVALID_FREQUENCY", "Invalid frequency: " + frequencyString);
+    return result.error();
 }
 
 std::string CommandFrequency::ToCommand(bool readStatus) {

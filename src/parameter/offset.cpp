@@ -15,7 +15,6 @@ Offset::OffsetEnum Offset::StringToOffset(const std::string &offsetString)
     {
         return it->second;
     }
-    printf("Unrecognized option. Options are: SIMPLEX, PLUS, or MINUS.\n");
     return Offset::OffsetEnum::UNKNOWN;
 }
 

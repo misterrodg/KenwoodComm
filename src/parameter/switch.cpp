@@ -15,7 +15,6 @@ Switch::SwitchEnum Switch::StringToSwitch(const std::string &switchString)
     {
         return it->second;
     }
-    printf("Unrecognized option. Options are: ON, or OFF.\n");
     return SwitchEnum::UNKNOWN;
 }
 

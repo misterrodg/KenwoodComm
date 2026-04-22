@@ -1,5 +1,7 @@
 #include "serial.h"
 
+#include "core/error_code.h"
+#include "core/error_reporter.h"
 #include "core/serial_command.h"
 #include "response.h"
 #include <errno.h>
@@ -17,7 +19,8 @@ Serial::Serial(const std::string& portOverride) {
 void Serial::Open() {
     fdPort = open(&serialPort[0], O_RDWR);
     if (fdPort == -1) {
-        printf("Failed to open serial port.\n");
+        printError(core::Error{core::ErrorCode::SerialOpenFailed, "Failed to open serial port '" + serialPort +
+                                   "'."});
         return;
     }
 
@@ -53,7 +56,9 @@ void Serial::Open() {
 
     // Save tty settings, also checking for error
     if (tcsetattr(fdPort, TCSANOW, &settings) != 0) {
-        printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+        printError(core::Error{core::ErrorCode::SerialConfigurationFailed, "tcsetattr failed with errno " +
+                                   std::to_string(errno) + ": " +
+                                   strerror(errno)});
         Close();
         return;
     }
@@ -82,7 +87,7 @@ void Serial::Write(const std::string& command) {
     }
     int bytesWritten = write(fdPort, &outBuffer, sizeof(outBuffer));
     if (bytesWritten == -1) {
-        printf("Error writing to serial connection.\n");
+        printError(core::Error{core::ErrorCode::SerialWriteFailed, "Error writing to serial connection."});
         return;
     }
     return;

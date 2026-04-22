@@ -1,10 +1,11 @@
 #include "rit_frequency.h"
 
+#include "core/error_code.h"
+
 RITFrequency::RITFrequency() : frequencyInHz(0) {}
 
-bool RITFrequency::setRITFrequency(const std::string &input)
+core::Result<void> RITFrequency::setRITFrequency(const std::string &input)
 {
-    bool result = false;
     std::regex regex(R"(([+-]?\d+(\.\d+)?)([a-zA-Z]+))");
     std::smatch match;
 
@@ -20,23 +21,21 @@ bool RITFrequency::setRITFrequency(const std::string &input)
             frequencyInHz = FrequencyUnit::toHz(value, frequencyUnit);
             if (frequencyInHz <= MAX_RIT_FREQUENCY_VALUE && frequencyInHz >= MIN_RIT_FREQUENCY_VALUE)
             {
-                result = true;
+                return {};
             }
-            else
-            {
-                printf("RIT frequency must be between %dHz and %dHz.\n", MAX_RIT_FREQUENCY_VALUE, MIN_RIT_FREQUENCY_VALUE);
-            }
+
+            return core::Error{core::ErrorCode::ValueOutOfRange, "RIT frequency must be between " +
+                                   std::to_string(MIN_RIT_FREQUENCY_VALUE) +
+                                   "Hz and " +
+                                   std::to_string(MAX_RIT_FREQUENCY_VALUE) +
+                                   "Hz."};
         }
-        else
-        {
-            printf("RIT frequency unit must be kHz or Hz.\n");
-        }
+
+        return core::Error{core::ErrorCode::InvalidFrequencyUnit, "RIT frequency unit must be Hz or kHz."};
     }
-    else
-    {
-        printf("Invalid RIT frequency format.\n");
-    }
-    return result;
+
+    return core::Error{core::ErrorCode::InvalidRitFrequency, "Invalid RIT frequency format: '" + input +
+                           "'. Expected <signed value><unit>, for example +1.2kHz."};
 }
 
 short int RITFrequency::getRITFrequencyInHz() const

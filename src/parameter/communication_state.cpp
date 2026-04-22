@@ -15,7 +15,6 @@ CommunicationState::CommunicationStateEnum CommunicationState::StringToState(con
     {
         return it->second;
     }
-    printf("Unrecognized option. Options are: RECEIVE/RX, or TRANSMIT/TX.\n");
     return CommunicationState::CommunicationStateEnum::UNKNOWN;
 }
 

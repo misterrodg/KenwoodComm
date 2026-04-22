@@ -13,7 +13,6 @@ Lock::LockEnum Lock::StringToLock(const std::string &lockString)
     {
         return it->second;
     }
-    printf("Unrecognized option. Options are: UNLOCKED, or LOCKED.\n");
     return Lock::LockEnum::UNKNOWN;
 }
 

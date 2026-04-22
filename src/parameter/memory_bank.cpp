@@ -1,12 +1,13 @@
 #include "memory_bank.h"
 
+#include "core/error_code.h"
+
 const int MemoryBank::MAX_MEMORY_BANK_LENGTH = 1;
 
 MemoryBank::MemoryBank() : memoryBank(0) {}
 
-bool MemoryBank::setMemoryBank(const std::string &input)
+core::Result<void> MemoryBank::setMemoryBank(const std::string &input)
 {
-    bool result = false;
     std::regex regex(R"([1-4])");
     std::smatch match;
 
@@ -14,13 +15,11 @@ bool MemoryBank::setMemoryBank(const std::string &input)
     {
         int value = std::stoi(input);
         memoryBank = value;
-        result = true;
+        return {};
     }
-    else
-    {
-        printf("Invalid bank format: ");
-    }
-    return result;
+
+    return core::Error{core::ErrorCode::InvalidMemoryBank, "Invalid memory bank format: '" + input +
+                           "'. Expected a bank number from 1 to 4."};
 }
 
 unsigned short int MemoryBank::getMemoryBank() const

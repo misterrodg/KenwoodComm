@@ -33,11 +33,14 @@ ConfigManager RunSetup(const std::string& requestedProfile) {
             std::cout << "What is your callsign?" << std::endl;
             std::getline(std::cin, callSign);
             CallSign cs;
-            if (cs.setCallSign(callSign)) {
+            core::Result<void> result = cs.setCallSign(callSign);
+            if (result.OK()) {
                 config.setInSection("DEFAULT", "CALLSIGN",
                                     cs.getCallSignString());
                 callSign = cs.getCallSignString();
                 valid = true;
+            } else {
+                printError(result.error());
             }
         }
         std::cout << "Hello, " << callSign << "!" << std::endl;

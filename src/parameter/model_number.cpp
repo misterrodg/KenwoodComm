@@ -32,11 +32,12 @@ Radios ModelNumber::parseUnit(const std::string& modelStr) {
     return Radios::UNRECOGNIZED;
 }
 
+#include "core/error_code.h"
+
 core::Result<void> ModelNumber::setModelNumber(const std::string& input) {
     modelNumber = parseUnit(input);
     if (modelNumber == Radios::UNRECOGNIZED) {
-        return core::Error{"PARAM_INVALID",
-                           "Unrecognized model number: " + input};
+        return core::Error{core::ErrorCode::ParameterInvalid, "Unrecognized model number: " + input};
     }
     return {};
 }

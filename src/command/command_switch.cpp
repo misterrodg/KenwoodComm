@@ -6,7 +6,7 @@ CommandResult CommandSwitch::SetSwitch(const std::string& status) {
         enabled = switchEnum;
         return OK();
     }
-    return Error("INVALID_SWITCH_PARAMETER",
+    return Error(core::ErrorCode::InvalidSwitchParameter,
                  "Invalid switch parameter: " + status);
 }
 
