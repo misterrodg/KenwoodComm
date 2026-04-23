@@ -13,6 +13,7 @@ enum class ErrorCode {
     CommandNotImplemented,
     EmptyResponse,
     FunctionNotAvailable,
+    InvalidBusyParameter,
     InvalidCommand,
     InvalidCallSign,
     InvalidCommandPrefix,
@@ -56,6 +57,8 @@ inline std::string_view ToString(ErrorCode code) {
         return "EMPTY_RESPONSE";
     case ErrorCode::FunctionNotAvailable:
         return "FUNCTION_NOT_AVAILABLE";
+    case ErrorCode::InvalidBusyParameter:
+        return "INVALID_BUSY_PARAMETER";
     case ErrorCode::InvalidCommand:
         return "INVALID_COMMAND";
     case ErrorCode::InvalidCallSign:
