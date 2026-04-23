@@ -1,0 +1,11 @@
+-xc++
+-std=c++17
+-Isrc
+-Isrc/command
+-Isrc/config
+-Isrc/core
+-Isrc/parameter
+-Isrc/runtime
+-Isrc/ui
+-Itests
+-I.
