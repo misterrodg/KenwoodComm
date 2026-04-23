@@ -1,9 +1,9 @@
 #ifndef COMMAND_TONE_H
 #define COMMAND_TONE_H
 
+#include "command_base.h"
 #include "command_result.h"
 #include "parameter/tone_frequency.h"
-#include "command_base.h"
 
 class CommandTone : public CommandBase {
 protected:
@@ -12,7 +12,12 @@ protected:
 public:
     CommandTone(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
-    std::string ToCommand();
+
+    CommandResult set(const std::string& toneFrequencyString) override;
+    core::Result<std::string> buildSetCommand() override;
+    core::Result<std::string> buildReadCommand() override;
+
+    std::string ToCommand(bool readStatus = false);
     CommandResult SetTone(const std::string& toneFrequencyString);
 };
 

@@ -1,5 +1,27 @@
 #include "command_switch.h"
 
+CommandResult CommandSwitch::set(const std::string& status) {
+    return SetSwitch(status);
+}
+
+core::Result<std::string> CommandSwitch::buildSetCommand() {
+    if (!supportsSet()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Set command is not available for this command"};
+    }
+
+    return ToCommand();
+}
+
+core::Result<std::string> CommandSwitch::buildReadCommand() {
+    if (!supportsRead()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Read command is not available for this command"};
+    }
+
+    return ToCommand(true);
+}
+
 CommandResult CommandSwitch::SetSwitch(const std::string& status) {
     Switch::SwitchEnum switchEnum = Switch::StringToSwitch(status);
     if (switchEnum != Switch::SwitchEnum::UNKNOWN) {

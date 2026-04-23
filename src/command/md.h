@@ -3,11 +3,10 @@
 
 #include "command_mode.h"
 
-class MD : public CommandMode
-{
+class MD : public CommandMode {
 public:
     MD();
-    MD(ModelNumber &modelNumberEnum, const std::string &parameter);
+    bool supportsSet() const override;
 };
 
 #endif

@@ -1,5 +1,27 @@
 #include "command_frequency.h"
 
+CommandResult CommandFrequency::set(const std::string& frequencyString) {
+    return SetFrequency(frequencyString);
+}
+
+core::Result<std::string> CommandFrequency::buildSetCommand() {
+    if (!supportsSet()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Set command is not available for this command"};
+    }
+
+    return ToCommand();
+}
+
+core::Result<std::string> CommandFrequency::buildReadCommand() {
+    if (!supportsRead()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Read command is not available for this command"};
+    }
+
+    return ToCommand(true);
+}
+
 CommandResult
 CommandFrequency::SetFrequency(const std::string& frequencyString) {
     core::Result<void> result = frequency.setFrequency(frequencyString);

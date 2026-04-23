@@ -1,6 +1,5 @@
 #include "command_dispatcher.h"
 #include "command/command_prefix.h"
-#include "core/parameter_validator.h"
 #include "radio_profile.h"
 #include "session.h"
 
@@ -9,18 +8,16 @@ CommandDispatcher::CommandDispatcher(Session* session,
     : session(session), radioProfile(radioProfile) {
     // AI: Auto Information - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::AI] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->ai.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->ai.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->ai; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->ai, s->lastParameter);
         }};
 
     // AT: Antenna Tuner - no parameter
     registry[CommandPrefix::CommandPrefixEnum::AT] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->at; },
         [](Session* s) -> CommandResult {
             s->write(s->at.ToCommand());
             return OK();
@@ -28,41 +25,53 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // BY: Band Select - no parameter, expects response
     registry[CommandPrefix::CommandPrefixEnum::BY] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->by; },
         [](Session* s) -> CommandResult {
             s->write(s->by.ToCommand(), true);
             return OK();
         }};
 
-    // CN: CTCSS Tone Number - requires parameter
+    // CN: CTCSS Tone Number - requires parameter or read status
     registry[CommandPrefix::CommandPrefixEnum::CN] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->cn.SetTone(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->cn.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->cn; },
+        [this](Session* s) -> CommandResult {
+            if (s->lastParameter.empty()) {
+                return dispatchRead(s->ct);
+            }
+
+            return dispatchSet(s->ct, s->lastParameter);
         }};
 
     // CT: CTCSS Tone - requires parameter or read status
     registry[CommandPrefix::CommandPrefixEnum::CT] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->ct; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->ct.ToCommand(true), true);
-            } else {
-                CommandResult result = s->ct.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->ct.ToCommand());
+                return dispatchRead(s->ct);
             }
-            return OK();
+
+            return dispatchSet(s->ct, s->lastParameter);
+        }};
+
+    // DC: Destination Code - optional parameter
+    registry[CommandPrefix::CommandPrefixEnum::DC] = {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->dc; },
+        [this](Session* s) -> CommandResult {
+            if (s->lastParameter.empty()) {
+                return dispatchRead(s->dc);
+            }
+
+            return dispatchSet(s->dc, s->lastParameter);
         }};
 
     // DI: Display Information - no parameter
     registry[CommandPrefix::CommandPrefixEnum::DI] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->di; },
         [](Session* s) -> CommandResult {
             s->write(s->di.ToCommand());
             return OK();
@@ -70,22 +79,20 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // DS: Display Select - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::DS] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->ds; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->ds.ToCommand(true), true);
-            } else {
-                CommandResult result = s->ds.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->ds.ToCommand());
+                return dispatchRead(s->ds);
             }
-            return OK();
+
+            return dispatchSet(s->ds, s->lastParameter);
         }};
 
     // DN: Down - no parameter
     registry[CommandPrefix::CommandPrefixEnum::DN] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->dn; },
         [](Session* s) -> CommandResult {
             s->write(s->dn.ToCommand());
             return OK();
@@ -93,64 +100,53 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // FA: Frequency A - optional parameter, read status supported
     registry[CommandPrefix::CommandPrefixEnum::FA] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->fa; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->fa.ToCommand(true), true);
-            } else {
-                CommandResult result = s->fa.SetFrequency(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->fa.ToCommand());
+                return dispatchRead(s->fa);
             }
-            return OK();
+
+            return dispatchSet(s->fa, s->lastParameter);
         }};
 
     // FB: Frequency B - optional parameter, read status supported
     registry[CommandPrefix::CommandPrefixEnum::FB] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->fb; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->fb.ToCommand(true), true);
-            } else {
-                CommandResult result = s->fb.SetFrequency(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->fb.ToCommand());
+                return dispatchRead(s->fb);
             }
-            return OK();
+
+            return dispatchSet(s->fb, s->lastParameter);
         }};
 
     // FN: Function - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::FN] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->fn.SetFunction(
-                s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->fn.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->fn; },
+        [this](Session* s) -> CommandResult {
+            s->fn.setModelNumber(s->radioProfile->GetModelNumber());
+            return dispatchSet(s->fn, s->lastParameter);
         }};
 
     // HD: Handicap - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::HD] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->hd; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->hd.ToCommand(true), true);
-            } else {
-                CommandResult result = s->hd.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->hd.ToCommand());
+                return dispatchRead(s->hd);
             }
-            return OK();
+
+            return dispatchSet(s->hd, s->lastParameter);
         }};
 
     // ID: Identification - no parameter, expects response
     registry[CommandPrefix::CommandPrefixEnum::ID] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->id; },
         [](Session* s) -> CommandResult {
             s->write(s->id.ToCommand(), true);
             return OK();
@@ -158,7 +154,8 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // IF: Information - no parameter, expects response
     registry[CommandPrefix::CommandPrefixEnum::IF] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->information; },
         [](Session* s) -> CommandResult {
             s->write(s->information.ToCommand(), true);
             return OK();
@@ -166,22 +163,20 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // LK: Lock - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::LK] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->lk; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->lk.ToCommand(true), true);
-            } else {
-                CommandResult result = s->lk.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->lk.ToCommand());
+                return dispatchRead(s->lk);
             }
-            return OK();
+
+            return dispatchSet(s->lk, s->lastParameter);
         }};
 
     // LO: Local - no parameter
     registry[CommandPrefix::CommandPrefixEnum::LO] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->lo; },
         [](Session* s) -> CommandResult {
             s->write(s->lo.ToCommand());
             return OK();
@@ -189,76 +184,62 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // LT: Clarifier TX - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::LT] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->lt; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->lt.ToCommand(true), true);
-            } else {
-                CommandResult result = s->lt.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->lt.ToCommand());
+                return dispatchRead(s->lt);
             }
-            return OK();
+
+            return dispatchSet(s->lt, s->lastParameter);
         }};
 
     // MC: Memory Channel - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::MC] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->mc.SetMemory(
-                s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->mc.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->mc; },
+        [this](Session* s) -> CommandResult {
+            s->mc.setModelNumber(s->radioProfile->GetModelNumber());
+            return dispatchSet(s->mc, s->lastParameter);
         }};
 
     // MD: Mode - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::MD] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->md.SetMode(
-                s->radioProfile->GetModelNumber(), s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->md.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->md; },
+        [this](Session* s) -> CommandResult {
+            s->md.setModelNumber(s->radioProfile->GetModelNumber());
+            return dispatchSet(s->md, s->lastParameter);
         }};
 
     // MS: Monitor - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::MS] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->ms; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->ms.ToCommand(true), true);
-            } else {
-                CommandResult result = s->ms.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->ms.ToCommand());
+                return dispatchRead(s->ms);
             }
-            return OK();
+
+            return dispatchSet(s->ms, s->lastParameter);
         }};
 
     // MT: Monitor Tone - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::MT] = {
-        CommandMetaData::Parameter::OPTIONAL, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->mt; },
+        [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                s->write(s->mt.ToCommand(true), true);
-            } else {
-                CommandResult result = s->mt.SetSwitch(s->lastParameter);
-                if (!result.OK())
-                    return result;
-                s->write(s->mt.ToCommand());
+                return dispatchRead(s->mt);
             }
-            return OK();
+
+            return dispatchSet(s->mt, s->lastParameter);
         }};
 
     // RC: RIT Clear - no parameter
     registry[CommandPrefix::CommandPrefixEnum::RC] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->rc; },
         [](Session* s) -> CommandResult {
             s->write(s->rc.ToCommand());
             return OK();
@@ -266,7 +247,8 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // RD: RIT Decrement - no parameter
     registry[CommandPrefix::CommandPrefixEnum::RD] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->rd; },
         [](Session* s) -> CommandResult {
             s->write(s->rd.ToCommand());
             return OK();
@@ -274,18 +256,16 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // RT: RIT/XIT Toggle - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::RT] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->rt.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->rt.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->rt; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->rt, s->lastParameter);
         }};
 
     // RU: RIT Increment - no parameter
     registry[CommandPrefix::CommandPrefixEnum::RU] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->ru; },
         [](Session* s) -> CommandResult {
             s->write(s->ru.ToCommand());
             return OK();
@@ -293,7 +273,8 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // RX: Receive - no parameter, expects response
     registry[CommandPrefix::CommandPrefixEnum::RX] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->rx; },
         [](Session* s) -> CommandResult {
             s->write(s->rx.ToCommand());
             return OK();
@@ -301,40 +282,32 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // SC: Scan - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::SC] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->sc.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->sc.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->sc; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->sc, s->lastParameter);
         }};
 
     // SP: Speaker - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::SP] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->sp.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->sp.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->sp; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->sp, s->lastParameter);
         }};
 
     // ST: Status - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::ST] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->st.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->st.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->st; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->st, s->lastParameter);
         }};
 
     // TN: Tone Number - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::TN] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->tn; },
         [](Session* s) -> CommandResult {
             CommandResult result = s->tn.SetTone(s->lastParameter);
             if (!result.OK())
@@ -345,18 +318,16 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // TO: Tone - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::TO] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->to.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->to.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->to; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->to, s->lastParameter);
         }};
 
     // TX: Transmit - no parameter, DISABLED in safe mode, expects response
     registry[CommandPrefix::CommandPrefixEnum::TX] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::DISABLED,
+        CommandMetaData::SafeMode::DISABLED,
+        [](Session* s) -> CommandBase* { return &s->tx; },
         [](Session* s) -> CommandResult {
             s->write(s->tx.ToCommand());
             return OK();
@@ -364,7 +335,8 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // UP: Up - no parameter
     registry[CommandPrefix::CommandPrefixEnum::UP] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->up; },
         [](Session* s) -> CommandResult {
             s->write(s->up.ToCommand());
             return OK();
@@ -372,7 +344,8 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // VR: VFO RX - no parameter
     registry[CommandPrefix::CommandPrefixEnum::VR] = {
-        CommandMetaData::Parameter::NONE, CommandMetaData::SafeMode::ALLOWED,
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->vr; },
         [](Session* s) -> CommandResult {
             s->write(s->vr.ToCommand());
             return OK();
@@ -380,14 +353,40 @@ CommandDispatcher::CommandDispatcher(Session* session,
 
     // XT: External Frequency Reference - requires parameter
     registry[CommandPrefix::CommandPrefixEnum::XT] = {
-        CommandMetaData::Parameter::REQUIRED, CommandMetaData::SafeMode::ALLOWED,
-        [](Session* s) -> CommandResult {
-            CommandResult result = s->xt.SetSwitch(s->lastParameter);
-            if (!result.OK())
-                return result;
-            s->write(s->xt.ToCommand());
-            return OK();
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->xt; },
+        [this](Session* s) -> CommandResult {
+            return dispatchSet(s->xt, s->lastParameter);
         }};
+}
+
+CommandResult CommandDispatcher::dispatchSet(CommandBase& command,
+                                             const std::string& parameter) {
+    CommandResult setResult = command.set(parameter);
+    if (!setResult.OK()) {
+        return setResult;
+    }
+
+    core::Result<std::string> commandResult = command.buildSetCommand();
+    if (!commandResult.OK()) {
+        return commandResult.error();
+    }
+
+    session->write(commandResult.value());
+    return OK();
+}
+
+CommandResult CommandDispatcher::dispatchRead(CommandBase& command) {
+    core::Result<std::string> commandResult = command.buildReadCommand();
+    if (!commandResult.OK()) {
+        return commandResult.error();
+    }
+
+    // Always expect a response on a read; supportsAnswer() indicates the
+    // response can also be routed back through parseAnswer() once
+    // response routing is wired up.
+    session->write(commandResult.value(), true);
+    return OK();
 }
 
 CommandResult
@@ -408,27 +407,24 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
     }
 
     const CommandMetaData& metadata = it->second;
+    CommandBase* cmd = metadata.commandRef(session);
 
-    if (metadata.safeMode == CommandMetaData::SafeMode::DISABLED && session->safeMode) {
+    if (metadata.safeMode == CommandMetaData::SafeMode::DISABLED &&
+        session->safeMode) {
         std::string commandString = CommandPrefix::CommandToString(command);
         return Error(core::ErrorCode::CommandDisabledSafeMode,
                      "SerialCommand \"" + commandString +
                          "\" disabled in SAFE MODE");
     }
 
-    if (metadata.parameter == CommandMetaData::Parameter::REQUIRED) {
-        core::Result<void> validation =
-            ParameterValidator::validateNotEmpty(param, "parameter");
-        if (!validation.OK()) {
-            std::string commandString = CommandPrefix::CommandToString(command);
-            return Error(validation.error().code,
-                         "SerialCommand \"" + commandString +
-                             "\" requires a parameter");
-        }
+    if (cmd->supportsSet() && !cmd->supportsRead() && param.empty()) {
+        std::string commandString = CommandPrefix::CommandToString(command);
+        return Error(core::ErrorCode::ParameterEmpty,
+                     "SerialCommand \"" + commandString +
+                         "\" requires a parameter");
     }
 
-    if (metadata.parameter == CommandMetaData::Parameter::NONE &&
-        !param.empty()) {
+    if (!cmd->supportsSet() && !param.empty()) {
         std::string commandString = CommandPrefix::CommandToString(command);
         return Error(core::ErrorCode::CommandNoParameterAllowed,
                      "SerialCommand \"" + commandString +

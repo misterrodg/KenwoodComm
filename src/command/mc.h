@@ -3,11 +3,10 @@
 
 #include "command_memory.h"
 
-class MC : public CommandMemory
-{
+class MC : public CommandMemory {
 public:
     MC();
-    MC(ModelNumber &modelNumberEnum, const std::string &parameter);
+    bool supportsSet() const override;
 };
 
 #endif

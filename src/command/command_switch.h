@@ -1,9 +1,9 @@
 #ifndef COMMAND_SWITCH_H
 #define COMMAND_SWITCH_H
 
+#include "command_base.h"
 #include "command_result.h"
 #include "parameter/switch.h"
-#include "command_base.h"
 
 class CommandSwitch : public CommandBase {
 protected:
@@ -12,6 +12,11 @@ protected:
 public:
     CommandSwitch(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
+
+    CommandResult set(const std::string& status) override;
+    core::Result<std::string> buildSetCommand() override;
+    core::Result<std::string> buildReadCommand() override;
+
     std::string ToCommand(bool readStatus = false);
     CommandResult SetSwitch(const std::string& status);
 };

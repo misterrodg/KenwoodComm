@@ -13,6 +13,11 @@ protected:
 public:
     CommandFrequency(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
+
+    CommandResult set(const std::string& frequencyString) override;
+    core::Result<std::string> buildSetCommand() override;
+    core::Result<std::string> buildReadCommand() override;
+
     std::string ToCommand(bool readStatus = false);
     CommandResult SetFrequency(const std::string& frequencyString);
 };

@@ -10,6 +10,8 @@
 #include <memory>
 #include <string>
 
+#include "command/command_base.h"
+
 // Forward declaration
 class Session;
 class RadioProfile;
@@ -17,25 +19,23 @@ class RadioProfile;
 class CommandDispatcher {
 private:
     struct CommandMetaData {
-        enum class Parameter {
-            NONE,
-            OPTIONAL,
-            REQUIRED
-        };
-
         enum class SafeMode {
             ALLOWED,
             DISABLED
         };
 
-        Parameter parameter;
         SafeMode safeMode;
+        std::function<CommandBase*(Session*)> commandRef;
         std::function<CommandResult(Session*)> handler;
     };
 
     std::map<CommandPrefix::CommandPrefixEnum, CommandMetaData> registry;
     Session* session;
     RadioProfile* radioProfile;
+
+    CommandResult dispatchSet(CommandBase& command,
+                              const std::string& parameter);
+    CommandResult dispatchRead(CommandBase& command);
 
 public:
     CommandDispatcher(Session* session, RadioProfile* radioProfile);

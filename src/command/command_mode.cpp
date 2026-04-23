@@ -1,10 +1,26 @@
 #include "command_mode.h"
 
-CommandResult CommandMode::SetMode(const ModelNumber& modelNumber,
-                                   const std::string& modeString) {
+void CommandMode::setModelNumber(const ModelNumber& modelNumberValue) {
+    modelNumber = modelNumberValue;
+}
+
+CommandResult CommandMode::set(const std::string& modeString) {
+    return SetMode(modeString);
+}
+
+core::Result<std::string> CommandMode::buildSetCommand() {
+    if (!supportsSet()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Set command is not available for this command"};
+    }
+
+    return ToCommand();
+}
+
+CommandResult CommandMode::SetMode(const std::string& modeString) {
     Mode::ModeEnum modeEnum = Mode::StringToMode(modeString);
     if (modeEnum != Mode::ModeEnum::UNKNOWN) {
-        if (allowedForModelNumber(modelNumber, modeEnum)) {
+        if (allowedForModelNumber(modeEnum)) {
             mode = modeEnum;
             return OK();
         } else {
@@ -30,8 +46,7 @@ std::string CommandMode::ToCommand() {
     return SerialCommand(bufferLength, command, modeString).ToString();
 }
 
-bool CommandMode::allowedForModelNumber(const ModelNumber& modelNumber,
-                                        Mode::ModeEnum& modeEnum) {
+bool CommandMode::allowedForModelNumber(Mode::ModeEnum& modeEnum) {
     bool result = false;
     Radios radioEnum = modelNumber.getModelNumber();
     switch (modeEnum) {

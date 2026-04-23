@@ -6,7 +6,7 @@
 class FN : public CommandFunction {
 public:
     FN();
-    FN(const ModelNumber& modelNumberEnum, const std::string& parameter);
+    bool supportsSet() const override;
 };
 
 #endif

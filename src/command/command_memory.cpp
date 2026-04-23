@@ -1,8 +1,23 @@
 #include "command_memory.h"
 
-CommandResult CommandMemory::SetMemory(const ModelNumber& modelNumberParam,
-                                       const std::string& parameter) {
-    modelNumber = modelNumberParam;
+void CommandMemory::setModelNumber(const ModelNumber& modelNumberValue) {
+    modelNumber = modelNumberValue;
+}
+
+CommandResult CommandMemory::set(const std::string& memoryString) {
+    return SetMemory(memoryString);
+}
+
+core::Result<std::string> CommandMemory::buildSetCommand() {
+    if (!supportsSet()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Set command is not available for this command"};
+    }
+
+    return ToCommand();
+}
+
+CommandResult CommandMemory::SetMemory(const std::string& parameter) {
     if (modelNumber.getModelNumber() == Radios::TS940S) {
         std::string bank =
             parameter.substr(0, MemoryBank::MAX_MEMORY_BANK_LENGTH);

@@ -1,5 +1,22 @@
 #include "command_function.h"
 
+void CommandFunction::setModelNumber(const ModelNumber& modelNumberValue) {
+    modelNumber = modelNumberValue;
+}
+
+CommandResult CommandFunction::set(const std::string& functionString) {
+    return SetFunction(modelNumber, functionString);
+}
+
+core::Result<std::string> CommandFunction::buildSetCommand() {
+    if (!supportsSet()) {
+        return core::Error{core::ErrorCode::CommandNotImplemented,
+                           "Set command is not available for this command"};
+    }
+
+    return ToCommand();
+}
+
 CommandResult CommandFunction::SetFunction(const ModelNumber& modelNumber,
                                            const std::string& functionString) {
     Function::FunctionEnum functionEnum =
