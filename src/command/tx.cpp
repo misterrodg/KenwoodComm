@@ -1,3 +1,4 @@
 #include "tx.h"
 
-TX::TX() : CommandBase(CommandPrefix::CommandPrefixEnum::TX) {}
+TX::TX() : CommandBase(CommandPrefix::CommandPrefixEnum::TX) {
+}

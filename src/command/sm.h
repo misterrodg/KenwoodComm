@@ -1,11 +1,11 @@
-#ifndef ID_H
-#define ID_H
+#ifndef SM_H
+#define SM_H
 
 #include "command_base.h"
 
-class ID : public CommandBase {
+class SM : public CommandBase {
 public:
-    ID();
+    SM();
     bool supportsRead() const override;
     bool supportsAnswer() const override;
 };

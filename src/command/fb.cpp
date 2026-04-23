@@ -6,3 +6,15 @@ FB::FB(const std::string &parameter) : CommandFrequency(CommandPrefix::CommandPr
 {
     static_cast<void>(FB::SetFrequency(parameter));
 }
+
+bool FB::supportsSet() const {
+    return true;
+}
+
+bool FB::supportsRead() const {
+    return true;
+}
+
+bool FB::supportsAnswer() const {
+    return true;
+}

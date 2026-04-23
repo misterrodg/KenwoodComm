@@ -3,10 +3,11 @@
 
 #include "command_switch.h"
 
-class HD : public CommandSwitch
-{
+class HD : public CommandSwitch {
 public:
     HD();
+    bool supportsSet() const override;
+    bool supportsRead() const override;
 };
 
 #endif

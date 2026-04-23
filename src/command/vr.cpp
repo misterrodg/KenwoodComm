@@ -1,3 +1,4 @@
 #include "vr.h"
 
-VR::VR() : CommandBase(CommandPrefix::CommandPrefixEnum::VR) {}
+VR::VR() : CommandBase(CommandPrefix::CommandPrefixEnum::VR) {
+}

@@ -1,3 +1,4 @@
 #include "ru.h"
 
-RU::RU() : CommandBase(CommandPrefix::CommandPrefixEnum::RU) {}
+RU::RU() : CommandBase(CommandPrefix::CommandPrefixEnum::RU) {
+}

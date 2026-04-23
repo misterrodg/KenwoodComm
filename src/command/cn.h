@@ -3,11 +3,12 @@
 
 #include "command_tone.h"
 
-class CN : public CommandTone
-{
+class CN : public CommandTone {
 public:
     CN();
-    CN(const std::string &parameter);
+    bool supportsSet() const override;
+    bool supportsRead() const override;
+    bool supportsAnswer() const override;
 };
 
 #endif

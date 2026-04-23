@@ -1,3 +1,8 @@
 #include "st.h"
 
-ST::ST() : CommandSwitch(CommandPrefix::CommandPrefixEnum::ST) {}
+ST::ST() : CommandSwitch(CommandPrefix::CommandPrefixEnum::ST) {
+}
+
+bool ST::supportsSet() const {
+    return true;
+}

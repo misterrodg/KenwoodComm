@@ -3,10 +3,11 @@
 
 #include "command_base.h"
 
-class IF : public CommandBase
-{
+class IF : public CommandBase {
 public:
     IF();
+    bool supportsRead() const override;
+    bool supportsAnswer() const override;
 };
 
 #endif

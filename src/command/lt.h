@@ -3,10 +3,12 @@
 
 #include "command_switch.h"
 
-class LT : public CommandSwitch
-{
+class LT : public CommandSwitch {
 public:
     LT();
+    bool supportsSet() const override;
+    bool supportsRead() const override;
+    bool supportsAnswer() const override;
 };
 
 #endif

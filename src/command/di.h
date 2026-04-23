@@ -3,10 +3,11 @@
 
 #include "command_base.h"
 
-class DI : public CommandBase
-{
+class DI : public CommandBase {
 public:
     DI();
+    bool supportsRead() const override;
+    bool supportsAnswer() const override;
 };
 
 #endif

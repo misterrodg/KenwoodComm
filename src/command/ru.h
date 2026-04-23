@@ -3,8 +3,7 @@
 
 #include "command_base.h"
 
-class RU : public CommandBase
-{
+class RU : public CommandBase {
 public:
     RU();
 };

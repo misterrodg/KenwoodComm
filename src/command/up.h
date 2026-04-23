@@ -3,8 +3,7 @@
 
 #include "command_base.h"
 
-class UP : public CommandBase
-{
+class UP : public CommandBase {
 public:
     UP();
 };

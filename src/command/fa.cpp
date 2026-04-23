@@ -6,3 +6,15 @@ FA::FA(const std::string &parameter) : CommandFrequency(CommandPrefix::CommandPr
 {
     static_cast<void>(FA::SetFrequency(parameter));
 }
+
+bool FA::supportsSet() const {
+    return true;
+}
+
+bool FA::supportsRead() const {
+    return true;
+}
+
+bool FA::supportsAnswer() const {
+    return true;
+}

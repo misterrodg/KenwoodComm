@@ -1,3 +1,8 @@
 #include "to.h"
 
-TO::TO() : CommandSwitch(CommandPrefix::CommandPrefixEnum::TO) {}
+TO::TO() : CommandSwitch(CommandPrefix::CommandPrefixEnum::TO) {
+}
+
+bool TO::supportsSet() const {
+    return true;
+}

@@ -3,10 +3,10 @@
 
 #include "command_switch.h"
 
-class AT : public CommandSwitch
-{
+class AT : public CommandSwitch {
 public:
     AT();
+    bool supportsSet() const override;
 };
 
 #endif

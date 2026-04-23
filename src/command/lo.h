@@ -3,8 +3,7 @@
 
 #include "command_base.h"
 
-class LO : public CommandBase
-{
+class LO : public CommandBase {
 public:
     LO();
 };

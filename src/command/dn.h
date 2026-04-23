@@ -3,8 +3,7 @@
 
 #include "command_base.h"
 
-class DN : public CommandBase
-{
+class DN : public CommandBase {
 public:
     DN();
 };

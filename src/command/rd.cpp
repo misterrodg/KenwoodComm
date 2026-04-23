@@ -1,3 +1,5 @@
 #include "rd.h"
 
-RD::RD() : CommandBase(CommandPrefix::CommandPrefixEnum::RD) {}
+RD::RD() : CommandBase(CommandPrefix::CommandPrefixEnum::RD) {
+}
+
