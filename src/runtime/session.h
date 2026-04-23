@@ -18,7 +18,7 @@ public:
     Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
     Session(bool inSafeMode, ModelNumber modelNumber,
             std::unique_ptr<ISerialPort> serial);
-        void CheckCommand(const std::string& command);
+    void CheckCommand(const std::string& command);
     bool safeMode;
     bool localMode;
     bool sessionOpen;
@@ -40,6 +40,7 @@ private:
     BY by;
     CN cn;
     CT ct;
+    DC dc;
     DI di;
     DS ds;
     DN dn;

@@ -16,6 +16,7 @@ enum class ErrorCode {
     InvalidCommand,
     InvalidCallSign,
     InvalidCommandPrefix,
+    InvalidDestinationCode,
     InvalidFormat,
     InvalidFrequency,
     InvalidFrequencyUnit,
@@ -61,6 +62,8 @@ inline std::string_view ToString(ErrorCode code) {
         return "INVALID_CALL_SIGN";
     case ErrorCode::InvalidCommandPrefix:
         return "INVALID_COMMAND_PREFIX";
+    case ErrorCode::InvalidDestinationCode:
+        return "INVALID_DESTINATION_CODE";
     case ErrorCode::InvalidFormat:
         return "INVALID_FORMAT";
     case ErrorCode::InvalidFrequency:
