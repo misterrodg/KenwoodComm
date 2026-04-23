@@ -1,6 +1,6 @@
 #include "if.h"
 
-IF::IF() : CommandBase(CommandPrefix::CommandPrefixEnum::IF) {
+IF::IF() : CommandInformation(CommandPrefix::CommandPrefixEnum::IF) {
 }
 
 bool IF::supportsRead() const {

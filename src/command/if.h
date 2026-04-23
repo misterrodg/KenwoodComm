@@ -1,9 +1,9 @@
 #ifndef IF_H
 #define IF_H
 
-#include "command_base.h"
+#include "command_information.h"
 
-class IF : public CommandBase {
+class IF : public CommandInformation {
 public:
     IF();
     bool supportsRead() const override;
