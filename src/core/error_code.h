@@ -27,6 +27,7 @@ enum class ErrorCode {
     InvalidMode,
     InvalidPassband,
     InvalidRitFrequency,
+    InvalidSMeter,
     InvalidStepFrequency,
     InvalidSwitchParameter,
     InvalidToneFrequency,
@@ -85,6 +86,8 @@ inline std::string_view ToString(ErrorCode code) {
         return "INVALID_PASSBAND";
     case ErrorCode::InvalidRitFrequency:
         return "INVALID_RIT_FREQUENCY";
+    case ErrorCode::InvalidSMeter:
+        return "INVALID_S_METER";
     case ErrorCode::InvalidStepFrequency:
         return "INVALID_STEP_FREQUENCY";
     case ErrorCode::InvalidSwitchParameter:
