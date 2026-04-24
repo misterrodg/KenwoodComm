@@ -1,24 +1,25 @@
 #ifndef MODEL_NUMBER_H
 #define MODEL_NUMBER_H
 
-#include "core/helpers.h"
-#include "core/result.h"
-#include "radios.h"
 #include <string>
+
+// Kenwood Parameter #16: Model Number (e.g. 001 for TS-711, etc.)
 
 class ModelNumber {
 public:
-    ModelNumber();
-    core::Result<void> setModelNumber(const std::string& input);
-    Radios getModelNumber() const;
-    std::string getModelNumberString() const;
-    std::string getGeneric();
-    std::string getAll();
+    enum class ModelNumberEnum {
+        TS711 = 1,
+        TS811 = 2,
+        TS940 = 3,
+        TS140_680 = 6,
+        UNRECOGNIZED = -1
+    };
 
-private:
-    static Radios parseUnit(const std::string& unitStr);
+    static constexpr int MAX_MODEL_NUMBER_LENGTH = 3;
 
-    Radios modelNumber = Radios::UNRECOGNIZED;
+    static ModelNumberEnum StringToModelNumber(const std::string& modelNumber);
+    static std::string ModelNumberToIntString(const ModelNumberEnum& modelNumber);
+    static std::string ModelNumberToString(const ModelNumberEnum& modelNumber);
 };
 
 #endif

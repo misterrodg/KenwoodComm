@@ -7,14 +7,15 @@
 #include <regex>
 #include <string>
 
-class MemoryChannel
-{
+// Kenwood Parameter #7: Memory Channel (with 2 digits, e.g. 02 for CH2)
+
+class MemoryChannel {
 public:
     MemoryChannel();
-    core::Result<void> setMemoryChannel(const std::string &input);
+    core::Result<void> setMemoryChannel(const std::string& input);
     short int getMemoryChannel() const;
     std::string getMemoryChannelString();
-    static const int MAX_MEMORY_CHANNEL_LENGTH;
+    static constexpr int MAX_MEMORY_CHANNEL_LENGTH = 2;
 
 private:
     short int memoryChannel;

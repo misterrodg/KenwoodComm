@@ -2,7 +2,6 @@
 
 #include "core/error_code.h"
 
-const int MemoryBank::MAX_MEMORY_BANK_LENGTH = 1;
 
 MemoryBank::MemoryBank() : memoryBank(0) {}
 

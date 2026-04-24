@@ -7,14 +7,16 @@
 #include <regex>
 #include <string>
 
-class Frequency
-{
+// Kenwood Parameter #4: Frequency (in Hz, with 11 digits, e.g. 00144000000 for
+// 144 MHz)
+
+class Frequency {
 public:
     Frequency();
-    core::Result<void> setFrequency(const std::string &input);
+    core::Result<void> setFrequency(const std::string& input);
     uint64_t getFrequencyInHz() const;
     std::string getFrequencyString();
-    static const int MAX_FREQUENCY_LENGTH;
+    static constexpr int MAX_FREQUENCY_LENGTH = 11;
 
 private:
     uint64_t frequencyInHz;

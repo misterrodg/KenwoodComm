@@ -1,6 +1,5 @@
 #include "mode.h"
 
-const int Mode::MAX_MODE_LENGTH = 3;
 
 Mode::ModeEnum Mode::StringToMode(const std::string &modeString)
 {

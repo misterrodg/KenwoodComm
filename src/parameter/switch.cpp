@@ -1,6 +1,5 @@
 #include "switch.h"
 
-const int Switch::MAX_SWITCH_LENGTH = 3;
 
 Switch::SwitchEnum Switch::StringToSwitch(const std::string &switchString)
 {

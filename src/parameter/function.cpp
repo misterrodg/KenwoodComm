@@ -1,6 +1,5 @@
 #include "function.h"
 
-const int Function::MAX_FUNCTION_LENGTH = 6;
 
 Function::FunctionEnum Function::StringToFunction(const std::string &functionString)
 {

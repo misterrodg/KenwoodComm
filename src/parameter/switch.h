@@ -4,19 +4,15 @@
 #include <map>
 #include <string>
 
-class Switch
-{
+// Kenwood Parameter #1: Switch (ON/OFF)
+
+class Switch {
 public:
-    enum class SwitchEnum
-    {
-        OFF,
-        ON,
-        UNKNOWN
-    };
-    static SwitchEnum StringToSwitch(const std::string &switchString);
-    static std::string SwitchToBoolString(const SwitchEnum &switchEnum);
-    static std::string SwitchToString(const SwitchEnum &switchEnum);
-    static const int MAX_SWITCH_LENGTH;
+    enum class SwitchEnum { OFF = 0, ON = 1, UNKNOWN = -1 };
+    static SwitchEnum StringToSwitch(const std::string& switchString);
+    static std::string SwitchToBoolString(const SwitchEnum& switchEnum);
+    static std::string SwitchToString(const SwitchEnum& switchEnum);
+    static constexpr int MAX_SWITCH_LENGTH = 3;
 };
 
 #endif

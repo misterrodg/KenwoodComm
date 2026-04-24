@@ -6,11 +6,12 @@
 #include <regex>
 #include <string>
 
-class CallSign
-{
+// Kenwood Parameter #15: Call Sign (with up to 8 characters, e.g. N0CALL)
+
+class CallSign {
 public:
     CallSign();
-    core::Result<void> setCallSign(const std::string &input);
+    core::Result<void> setCallSign(const std::string& input);
     std::string getCallSignString();
 
 private:

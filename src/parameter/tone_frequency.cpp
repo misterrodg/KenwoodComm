@@ -1,6 +1,5 @@
 #include "tone_frequency.h"
 
-const int ToneFrequency::MAX_TONE_LENGTH = 2;
 
 ToneFrequency::ToneFrequencyEnum ToneFrequency::StringToToneFrequency(const std::string &toneString)
 {

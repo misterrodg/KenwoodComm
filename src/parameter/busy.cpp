@@ -1,6 +1,5 @@
 #include "busy.h"
 
-const int Busy::MAX_BUSY_LENGTH = 3;
 
 Busy::BusyEnum Busy::StringToBusy(const std::string& busyString) {
     static const std::map<std::string, Busy::BusyEnum> enumMap = {

@@ -1,114 +1,60 @@
 #include "model_number.h"
 
-ModelNumber::ModelNumber() : modelNumber(Radios::UNRECOGNIZED) {
-}
+#include <map>
 
-Radios ModelNumber::parseUnit(const std::string& modelStr) {
-    std::string lowerStr = Helpers::toLower(modelStr);
-    if (lowerStr == "ts50s")
-        return Radios::TS50S;
-    if (lowerStr == "ts60s")
-        return Radios::TS60S;
-    if (lowerStr == "ts140s")
-        return Radios::TS140S;
-    if (lowerStr == "ts680s")
-        return Radios::TS680S;
-    if (lowerStr == "ts711a")
-        return Radios::TS711A;
-    if (lowerStr == "ts711e")
-        return Radios::TS711E;
-    if (lowerStr == "ts790a")
-        return Radios::TS790A;
-    if (lowerStr == "ts790e")
-        return Radios::TS790E;
-    if (lowerStr == "ts811a")
-        return Radios::TS811A;
-    if (lowerStr == "ts811b")
-        return Radios::TS811B;
-    if (lowerStr == "ts811e")
-        return Radios::TS811E;
-    if (lowerStr == "ts940s")
-        return Radios::TS940S;
-    return Radios::UNRECOGNIZED;
-}
+ModelNumber::ModelNumberEnum
+ModelNumber::StringToModelNumber(const std::string& modelNumber) {
+    static const std::map<std::string, ModelNumber::ModelNumberEnum> enumMap = {
+        {"TS711", ModelNumber::ModelNumberEnum::TS711},
+        {"1", ModelNumber::ModelNumberEnum::TS711},
+        {"001", ModelNumber::ModelNumberEnum::TS711},
+        {"TS811", ModelNumber::ModelNumberEnum::TS811},
+        {"2", ModelNumber::ModelNumberEnum::TS811},
+        {"002", ModelNumber::ModelNumberEnum::TS811},
+        {"TS940", ModelNumber::ModelNumberEnum::TS940},
+        {"3", ModelNumber::ModelNumberEnum::TS940},
+        {"003", ModelNumber::ModelNumberEnum::TS940},
+        {"TS140/680", ModelNumber::ModelNumberEnum::TS140_680},
+        {"6", ModelNumber::ModelNumberEnum::TS140_680},
+        {"006", ModelNumber::ModelNumberEnum::TS140_680},
+    };
 
-#include "core/error_code.h"
-
-core::Result<void> ModelNumber::setModelNumber(const std::string& input) {
-    modelNumber = parseUnit(input);
-    if (modelNumber == Radios::UNRECOGNIZED) {
-        return core::Error{core::ErrorCode::ParameterInvalid, "Unrecognized model number: " + input};
+    auto it = enumMap.find(modelNumber);
+    if (it != enumMap.end()) {
+        return it->second;
     }
-    return {};
+
+    return ModelNumber::ModelNumberEnum::UNRECOGNIZED;
 }
 
-Radios ModelNumber::getModelNumber() const {
-    return modelNumber;
-}
-
-std::string ModelNumber::getModelNumberString() const {
+std::string
+ModelNumber::ModelNumberToIntString(const ModelNumberEnum& modelNumber) {
     switch (modelNumber) {
-    case Radios::TS50S:
-        return "TS50S";
-    case Radios::TS60S:
-        return "TS60S";
-    case Radios::TS140S:
-        return "TS140S";
-    case Radios::TS680S:
-        return "TS680S";
-    case Radios::TS711A:
-        return "TS711A";
-    case Radios::TS711E:
-        return "TS711E";
-    case Radios::TS790A:
-        return "TS790A";
-    case Radios::TS790E:
-        return "TS790E";
-    case Radios::TS811A:
-        return "TS811A";
-    case Radios::TS811B:
-        return "TS811B";
-    case Radios::TS811E:
-        return "TS811E";
-    case Radios::TS940S:
-        return "TS940S";
+    case ModelNumber::ModelNumberEnum::TS711:
+        return "001";
+    case ModelNumber::ModelNumberEnum::TS811:
+        return "002";
+    case ModelNumber::ModelNumberEnum::TS940:
+        return "003";
+    case ModelNumber::ModelNumberEnum::TS140_680:
+        return "006";
     default:
-        return "UNRECOGNIZED";
+        return "UNKNOWN";
     }
 }
 
-std::string ModelNumber::getGeneric() {
+std::string
+ModelNumber::ModelNumberToString(const ModelNumberEnum& modelNumber) {
     switch (modelNumber) {
-    case Radios::TS50S:
-        return "50";
-    case Radios::TS60S:
-        return "60";
-    case Radios::TS140S:
-        return "140";
-    case Radios::TS680S:
-        return "680";
-    case Radios::TS711A:
-        return "711";
-    case Radios::TS711E:
-        return "711";
-    case Radios::TS790A:
-        return "790";
-    case Radios::TS790E:
-        return "790";
-    case Radios::TS811A:
-        return "811";
-    case Radios::TS811B:
-        return "811";
-    case Radios::TS811E:
-        return "811";
-    case Radios::TS940S:
-        return "940";
+    case ModelNumber::ModelNumberEnum::TS711:
+        return "TS711";
+    case ModelNumber::ModelNumberEnum::TS811:
+        return "TS811";
+    case ModelNumber::ModelNumberEnum::TS940:
+        return "TS940";
+    case ModelNumber::ModelNumberEnum::TS140_680:
+        return "TS140/680";
     default:
-        return "UNRECOGNIZED";
+        return "UNKNOWN";
     }
-}
-
-std::string ModelNumber::getAll() {
-    return "TS50S / TS60S / TS140S / TS680S / TS711A / TS711E / TS790A / "
-           "TS790E / TS811A / TS811B / TS811E / TS940S";
 }

@@ -1,6 +1,5 @@
 #include "destination_code.h"
 
-const int DestinationCode::MAX_CODE_LENGTH = 4;
 
 DestinationCode::CodeEnum
 DestinationCode::StringToCode(const std::string& codeString) {

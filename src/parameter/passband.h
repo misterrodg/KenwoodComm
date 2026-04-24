@@ -7,11 +7,13 @@
 #include <regex>
 #include <string>
 
-class Passband
-{
+// Kenwood Parameter #12: Passband (with 2 digits, e.g. 00 for Narrow, 31 for
+// Wide)
+
+class Passband {
 public:
     Passband();
-    core::Result<void> setPassband(const std::string &input);
+    core::Result<void> setPassband(const std::string& input);
     unsigned short int getPassband() const;
     std::string getPassbandString();
 

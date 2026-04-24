@@ -16,6 +16,6 @@ public:
     static LockEnum StringToLock(const std::string &lockString);
     static std::string LockToIntString(const LockEnum &lockEnum);
     static std::string LockToString(const LockEnum &lockEnum);
-    static const int MAX_LOCK_LENGTH = 8;
+    static constexpr int MAX_LOCK_LENGTH = 8;
 };
 #endif

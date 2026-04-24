@@ -2,7 +2,6 @@
 
 #include "core/error_code.h"
 
-const int MemoryChannel::MAX_MEMORY_CHANNEL_LENGTH = 2;
 
 MemoryChannel::MemoryChannel() : memoryChannel(0) {}
 
