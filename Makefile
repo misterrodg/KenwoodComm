@@ -36,6 +36,7 @@ PARAMETER_OBJ_FILES = $(patsubst $(PARAMETER_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(PAR
 RUNTIME_OBJ_FILES = $(patsubst $(RUNTIME_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(RUNTIME_FILES))
 UI_OBJ_FILES = $(patsubst $(UI_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(UI_FILES))
 OBJ_FILES = $(SRC_OBJ_FILES) $(COMMAND_OBJ_FILES) $(CONFIG_OBJ_FILES) $(CORE_OBJ_FILES) $(PARAMETER_OBJ_FILES) $(RUNTIME_OBJ_FILES) $(UI_OBJ_FILES)
+DEP_FILES = $(OBJ_FILES:.o=.d)
 
 # Default target
 all: $(TARGET)
@@ -69,37 +70,39 @@ $(TARGET): $(OBJ_FILES)
 # Compile main source
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile command directory files
 $(BUILD_DIR)/%.o: $(COMMAND_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile config directory files
 $(BUILD_DIR)/%.o: $(CONFIG_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile core directory files
 $(BUILD_DIR)/%.o: $(CORE_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile parameter directory files
 $(BUILD_DIR)/%.o: $(PARAMETER_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile runtime directory files
 $(BUILD_DIR)/%.o: $(RUNTIME_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
 
 # Compile ui directory files
 $(BUILD_DIR)/%.o: $(UI_DIR)/%.cpp
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -MMD -MP $(INCLUDES) -c -o $@ $<
+
+-include $(DEP_FILES)
 
 # Clean target
 clean:
