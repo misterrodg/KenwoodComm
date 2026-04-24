@@ -50,7 +50,6 @@ bool CommandFunction::allowedForModelNumber(
     Radios radioEnum = modelNumber.getModelNumber();
     if (functionEnum == Function::FunctionEnum::COM) {
         return (radioEnum == Radios::TS711A || radioEnum == Radios::TS711E ||
-                radioEnum == Radios::TS790A || radioEnum == Radios::TS790E ||
                 radioEnum == Radios::TS811A || radioEnum == Radios::TS811B ||
                 radioEnum == Radios::TS811E);
     }
