@@ -53,7 +53,8 @@ void Session::CheckCommand(const std::string& command) {
     }
 
     if (!validCommand) {
-        printError(core::Error{core::ErrorCode::InvalidCommand, "Invalid SerialCommand."});
+        printError(core::Error{core::ErrorCode::InvalidCommand,
+                               "Invalid SerialCommand."});
     }
 }
 
