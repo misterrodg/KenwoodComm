@@ -48,12 +48,11 @@ std::string CommandFunction::ToCommand() {
 bool CommandFunction::allowedForModelNumber(
     const ModelNumber& modelNumber, Function::FunctionEnum& functionEnum) {
     Radios radioEnum = modelNumber.getModelNumber();
-    if ((radioEnum == Radios::TS711A || radioEnum == Radios::TS711E ||
-         radioEnum == Radios::TS790A || radioEnum == Radios::TS790E ||
-         radioEnum == Radios::TS811A || radioEnum == Radios::TS811B ||
-         radioEnum == Radios::TS811E) &&
-        functionEnum == Function::FunctionEnum::COM) {
-        return true;
+    if (functionEnum == Function::FunctionEnum::COM) {
+        return (radioEnum == Radios::TS711A || radioEnum == Radios::TS711E ||
+                radioEnum == Radios::TS790A || radioEnum == Radios::TS790E ||
+                radioEnum == Radios::TS811A || radioEnum == Radios::TS811B ||
+                radioEnum == Radios::TS811E);
     }
-    return false;
+    return true;
 }
