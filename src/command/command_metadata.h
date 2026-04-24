@@ -2,6 +2,7 @@
 #define COMMAND_METADATA_H
 
 #include <array>
+#include <cstddef>
 #include <string_view>
 
 struct CommandMetadata {
@@ -9,7 +10,7 @@ struct CommandMetadata {
     std::string_view expanded;
 };
 
-constexpr std::array COMMAND_REGISTRY = {
+inline const std::array<CommandMetadata, 44> COMMAND_REGISTRY{{
     CommandMetadata{"AI", "AUTO INFORMATION"},
     CommandMetadata{"AT", "ANTENNA TUNER"},
     CommandMetadata{"BY", "BUSY"},
@@ -54,7 +55,7 @@ constexpr std::array COMMAND_REGISTRY = {
     CommandMetadata{"VR", "VOICE RECALL"},
     CommandMetadata{"XT", "XIT"},
     CommandMetadata{"ZZ", "NOT A COMMAND"},
-};
+}};
 
 enum class CommandPrefixEnum {
     AI,
@@ -102,5 +103,8 @@ enum class CommandPrefixEnum {
     XT,
     ZZ
 };
+
+static_assert(44 == static_cast<std::size_t>(CommandPrefixEnum::ZZ) + 1,
+              "COMMAND_REGISTRY size must match CommandPrefixEnum values");
 
 #endif
