@@ -15,8 +15,8 @@ class Session {
     friend class CommandDispatcher;
 
 public:
-    Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumber);
-    Session(bool inSafeMode, ModelNumber modelNumber,
+    Session(bool inSafeMode, bool inLocalMode, Radios modelNumber);
+    Session(bool inSafeMode, Radios modelNumber,
             std::unique_ptr<ISerialPort> serial);
     void CheckCommand(const std::string& command);
     bool safeMode;

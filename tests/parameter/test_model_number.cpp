@@ -1,32 +1,28 @@
 #include "parameter/model_number.h"
 #include "test_framework.h"
 
-TEST(ModelNumber, AcceptsTS50S) {
-    ModelNumber mn;
-    ASSERT_TRUE(mn.setModelNumber("TS50S").OK());
-    ASSERT_EQ(mn.getModelNumber(), Radios::TS50S);
+TEST(ModelNumber, AcceptsTS711ByCode) {
+    ASSERT_EQ(ModelNumber::StringToModelNumber("001"),
+              ModelNumber::ModelNumberEnum::TS711);
 }
 
-TEST(ModelNumber, AcceptsTS60S) {
-    ModelNumber mn;
-    ASSERT_TRUE(mn.setModelNumber("TS60S").OK());
-    ASSERT_EQ(mn.getModelNumber(), Radios::TS60S);
+TEST(ModelNumber, AcceptsTS811ByNumber) {
+    ASSERT_EQ(ModelNumber::StringToModelNumber("2"),
+              ModelNumber::ModelNumberEnum::TS811);
 }
 
-TEST(ModelNumber, AcceptsLowercaseInput) {
-    ModelNumber mn;
-    ASSERT_TRUE(mn.setModelNumber("ts140s").OK());
-    ASSERT_EQ(mn.getModelNumber(), Radios::TS140S);
+TEST(ModelNumber, AcceptsTS940ByName) {
+    ASSERT_EQ(ModelNumber::StringToModelNumber("TS940"),
+              ModelNumber::ModelNumberEnum::TS940);
 }
 
-TEST(ModelNumber, AcceptsTS811B) {
-    ModelNumber mn;
-    ASSERT_TRUE(mn.setModelNumber("TS811B").OK());
-    ASSERT_EQ(mn.getModelNumber(), Radios::TS811B);
+TEST(ModelNumber, IntStringUsesThreeDigits) {
+    ASSERT_EQ(ModelNumber::ModelNumberToIntString(
+                  ModelNumber::ModelNumberEnum::TS140_680),
+              "006");
 }
 
 TEST(ModelNumber, RejectsInvalidModel) {
-    ModelNumber mn;
-    ASSERT_FALSE(mn.setModelNumber("TS999Z").OK());
-    ASSERT_EQ(mn.getModelNumber(), Radios::UNRECOGNIZED);
+    ASSERT_EQ(ModelNumber::StringToModelNumber("TS999"),
+              ModelNumber::ModelNumberEnum::UNRECOGNIZED);
 }

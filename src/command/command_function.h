@@ -3,26 +3,26 @@
 
 #include "command_base.h"
 #include "command_result.h"
+#include "core/radio.h"
 #include "parameter/function.h"
-#include "parameter/model_number.h"
 
 class CommandFunction : public CommandBase {
 protected:
     Function::FunctionEnum function = Function::FunctionEnum::VFOA;
-    ModelNumber modelNumber;
-    bool allowedForModelNumber(const ModelNumber& modelNumber,
+    Radios radioModel = Radios::UNRECOGNIZED;
+    bool allowedForModelNumber(Radios radioModel,
                                Function::FunctionEnum& functionEnum);
 
 public:
     CommandFunction(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
 
-    void setModelNumber(const ModelNumber& modelNumber);
+    void setModelNumber(Radios modelNumber);
     CommandResult set(const std::string& functionString) override;
     core::Result<std::string> buildSetCommand() override;
 
     std::string ToCommand();
-    CommandResult SetFunction(const ModelNumber& modelNumber,
+    CommandResult SetFunction(Radios modelNumber,
                               const std::string& functionString);
 };
 

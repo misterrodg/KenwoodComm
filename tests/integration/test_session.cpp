@@ -1,15 +1,15 @@
-#include "test_framework.h"
+#include "core/radio.h"
 #include "mock_serial.h"
-#include "parameter/model_number.h"
 #include "session.h"
+#include "test_framework.h"
 
 // Build a Session backed by MockSerial for a given radio model.
 static Session makeSession(const std::string& model, MockSerial*& outMock) {
-    ModelNumber mn;
-    mn.setModelNumber(model);
+    core::Result<Radios> parsed = Radio::parse(model);
+    ASSERT_TRUE(parsed.OK());
     auto mock = std::make_unique<MockSerial>();
     outMock = mock.get();
-    return Session(false, mn, std::move(mock));
+    return Session(false, parsed.value(), std::move(mock));
 }
 
 // ---- Dispatcher: parameter validation ----
@@ -61,11 +61,11 @@ TEST(Dispatcher, RX_NoParam_SendsCommand) {
 }
 
 TEST(Dispatcher, TX_BlockedInSafeMode) {
-    ModelNumber mn;
-    mn.setModelNumber("TS140S");
+    core::Result<Radios> parsed = Radio::parse("TS140S");
+    ASSERT_TRUE(parsed.OK());
     auto mock = std::make_unique<MockSerial>();
     MockSerial* rawMock = mock.get();
-    Session session(true /*safeMode*/, mn, std::move(mock));
+    Session session(true /*safeMode*/, parsed.value(), std::move(mock));
     rawMock->reset();
     session.CheckCommand("TX");
     ASSERT_TRUE(rawMock->written.empty());

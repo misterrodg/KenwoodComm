@@ -2,7 +2,7 @@
 #define COMMANDSET_METADATA_H
 
 #include "command/command_prefix.h"
-#include "parameter/radios.h"
+#include "core/radio.h"
 #include <array>
 #include <vector>
 

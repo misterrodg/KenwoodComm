@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     }
 
     auto config = ui::RunSetup(requestedProfile);
-    auto modelNumber = ui::ResolveModelNumber(config);
+    auto modelNumber = ui::ResolveRadioModel(config);
 
     Session session(safeMode, localMode, modelNumber);
     ui::RunSessionLoop(session);

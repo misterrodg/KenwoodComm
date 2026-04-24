@@ -3,7 +3,7 @@
 #include "core/error_reporter.h"
 #include "serial.h"
 
-Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
+Session::Session(bool inSafeMode, bool inLocalMode, Radios modelNumberEnum)
     : safeMode(inSafeMode), localMode(inLocalMode), sessionOpen(true) {
 
     radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
@@ -17,7 +17,7 @@ Session::Session(bool inSafeMode, bool inLocalMode, ModelNumber modelNumberEnum)
     dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
 }
 
-Session::Session(bool inSafeMode, ModelNumber modelNumberEnum,
+Session::Session(bool inSafeMode, Radios modelNumberEnum,
                  std::unique_ptr<ISerialPort> serial)
     : safeMode(inSafeMode), localMode(true), sessionOpen(true),
       serialConnection(std::move(serial)) {

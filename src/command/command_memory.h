@@ -3,13 +3,13 @@
 
 #include "command_base.h"
 #include "command_result.h"
+#include "core/radio.h"
 #include "parameter/memory_bank.h"
 #include "parameter/memory_channel.h"
-#include "parameter/model_number.h"
 
 class CommandMemory : public CommandBase {
 protected:
-    ModelNumber modelNumber;
+    Radios radioModel = Radios::UNRECOGNIZED;
     MemoryBank memoryBank;
     MemoryChannel memoryChannel;
 
@@ -17,7 +17,7 @@ public:
     CommandMemory(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
 
-    void setModelNumber(const ModelNumber& modelNumberValue);
+    void setModelNumber(Radios modelNumberValue);
     CommandResult set(const std::string& param) override;
     core::Result<std::string> buildSetCommand() override;
 

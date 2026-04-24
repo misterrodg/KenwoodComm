@@ -1,11 +1,11 @@
 #include "command_function.h"
 
-void CommandFunction::setModelNumber(const ModelNumber& modelNumberValue) {
-    modelNumber = modelNumberValue;
+void CommandFunction::setModelNumber(Radios modelNumberValue) {
+    radioModel = modelNumberValue;
 }
 
 CommandResult CommandFunction::set(const std::string& functionString) {
-    return SetFunction(modelNumber, functionString);
+    return SetFunction(radioModel, functionString);
 }
 
 core::Result<std::string> CommandFunction::buildSetCommand() {
@@ -17,7 +17,7 @@ core::Result<std::string> CommandFunction::buildSetCommand() {
     return ToCommand();
 }
 
-CommandResult CommandFunction::SetFunction(const ModelNumber& modelNumber,
+CommandResult CommandFunction::SetFunction(Radios modelNumber,
                                            const std::string& functionString) {
     Function::FunctionEnum functionEnum =
         Function::StringToFunction(functionString);
@@ -28,7 +28,7 @@ CommandResult CommandFunction::SetFunction(const ModelNumber& modelNumber,
         } else {
             return Error(core::ErrorCode::FunctionNotAvailable,
                          "COM function not available for the " +
-                             modelNumber.getModelNumberString());
+                             Radio::toString(modelNumber));
         }
     }
     return Error(core::ErrorCode::InvalidFunction,
@@ -46,8 +46,7 @@ std::string CommandFunction::ToCommand() {
 }
 
 bool CommandFunction::allowedForModelNumber(
-    const ModelNumber& modelNumber, Function::FunctionEnum& functionEnum) {
-    Radios radioEnum = modelNumber.getModelNumber();
+    Radios radioEnum, Function::FunctionEnum& functionEnum) {
     if (functionEnum == Function::FunctionEnum::COM) {
         return (radioEnum == Radios::TS711A || radioEnum == Radios::TS711E ||
                 radioEnum == Radios::TS811A || radioEnum == Radios::TS811B ||

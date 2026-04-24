@@ -1,7 +1,7 @@
 #include "radio_profile.h"
 
-RadioProfile::RadioProfile(ModelNumber modelNumber)
-    : radioType(modelNumber.getModelNumber()), availableCommands(radioType),
+RadioProfile::RadioProfile(Radios modelNumber)
+    : radioType(modelNumber), availableCommands(radioType),
       modelNumber(modelNumber) {
 }
 
@@ -9,7 +9,7 @@ Radios RadioProfile::GetRadioType() const {
     return radioType;
 }
 
-const ModelNumber& RadioProfile::GetModelNumber() const {
+Radios RadioProfile::GetModelNumber() const {
     return modelNumber;
 }
 

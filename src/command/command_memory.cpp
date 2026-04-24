@@ -1,7 +1,7 @@
 #include "command_memory.h"
 
-void CommandMemory::setModelNumber(const ModelNumber& modelNumberValue) {
-    modelNumber = modelNumberValue;
+void CommandMemory::setModelNumber(Radios modelNumberValue) {
+    radioModel = modelNumberValue;
 }
 
 CommandResult CommandMemory::set(const std::string& memoryString) {
@@ -18,7 +18,7 @@ core::Result<std::string> CommandMemory::buildSetCommand() {
 }
 
 CommandResult CommandMemory::SetMemory(const std::string& parameter) {
-    if (modelNumber.getModelNumber() == Radios::TS940S) {
+    if (radioModel == Radios::TS940S) {
         std::string bank =
             parameter.substr(0, MemoryBank::MAX_MEMORY_BANK_LENGTH);
         std::string channel =
@@ -51,7 +51,7 @@ std::string CommandMemory::ToCommand() {
     std::string resultString = "";
     std::string channelString = memoryChannel.getMemoryChannelString();
 
-    if (modelNumber.getModelNumber() == Radios::TS940S) {
+    if (radioModel == Radios::TS940S) {
         std::string bankString = memoryBank.getMemoryBankString();
         resultString = bankString + channelString;
     } else {

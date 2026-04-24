@@ -54,12 +54,11 @@ ConfigManager RunSetup(const std::string& requestedProfile) {
         bool valid = false;
         while (!valid) {
             std::cout << "What is the model number of your radio?" << std::endl;
-            ModelNumber mn;
-            std::cout << mn.getAll() << std::endl;
+            std::cout << Radio::allSupported() << std::endl;
             std::getline(std::cin, modelNumber);
-            core::Result<void> result = mn.setModelNumber(modelNumber);
+            core::Result<Radios> result = Radio::parse(modelNumber);
             if (result.OK()) {
-                modelNumber = mn.getModelNumberString();
+                modelNumber = Radio::toString(result.value());
                 profileName = modelNumber;
                 valid = true;
             } else {
@@ -87,19 +86,20 @@ ConfigManager RunSetup(const std::string& requestedProfile) {
     return config;
 }
 
-ModelNumber ResolveModelNumber(const ConfigManager& config) {
+Radios ResolveRadioModel(const ConfigManager& config) {
     std::string modelNumberStr =
         config.getFromSection(config.getCurrentProfile(), "MODEL_NUMBER");
     if (modelNumberStr.empty()) {
         modelNumberStr = config.getFromSection("DEFAULT", "MODEL_NUMBER");
     }
 
-    ModelNumber modelNumber;
-    core::Result<void> result = modelNumber.setModelNumber(modelNumberStr);
+    core::Result<Radios> result = Radio::parse(modelNumberStr);
     if (!result.OK()) {
         printError(result.error());
+        return Radios::UNRECOGNIZED;
     }
-    return modelNumber;
+
+    return result.value();
 }
 
 } // namespace ui

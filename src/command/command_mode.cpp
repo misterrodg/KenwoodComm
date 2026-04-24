@@ -1,7 +1,7 @@
 #include "command_mode.h"
 
-void CommandMode::setModelNumber(const ModelNumber& modelNumberValue) {
-    modelNumber = modelNumberValue;
+void CommandMode::setModelNumber(Radios modelNumberValue) {
+    radioModel = modelNumberValue;
 }
 
 CommandResult CommandMode::set(const std::string& modeString) {
@@ -27,7 +27,7 @@ CommandResult CommandMode::SetMode(const std::string& modeString) {
             std::string modeStr = Mode::ModeToString(modeEnum);
             return Error(core::ErrorCode::ModeNotAvailable,
                          modeStr + " not available for the " +
-                             modelNumber.getModelNumberString());
+                             Radio::toString(radioModel));
         }
     }
     return Error(core::ErrorCode::InvalidMode,
@@ -48,7 +48,7 @@ std::string CommandMode::ToCommand() {
 
 bool CommandMode::allowedForModelNumber(Mode::ModeEnum& modeEnum) {
     bool result = false;
-    Radios radioEnum = modelNumber.getModelNumber();
+    Radios radioEnum = radioModel;
     switch (modeEnum) {
     case Mode::ModeEnum::LSB:
         result = true;

@@ -1,0 +1,102 @@
+#include "radio.h"
+
+#include "core/error_code.h"
+#include "core/helpers.h"
+
+namespace Radio {
+
+core::Result<Radios> parse(const std::string& modelStr) {
+    std::string lowerStr = Helpers::toLower(modelStr);
+    if (lowerStr == "ts50s")
+        return Radios::TS50S;
+    if (lowerStr == "ts60s")
+        return Radios::TS60S;
+    if (lowerStr == "ts140s")
+        return Radios::TS140S;
+    if (lowerStr == "ts680s")
+        return Radios::TS680S;
+    if (lowerStr == "ts711a")
+        return Radios::TS711A;
+    if (lowerStr == "ts711e")
+        return Radios::TS711E;
+    if (lowerStr == "ts790a")
+        return Radios::TS790A;
+    if (lowerStr == "ts790e")
+        return Radios::TS790E;
+    if (lowerStr == "ts811a")
+        return Radios::TS811A;
+    if (lowerStr == "ts811b")
+        return Radios::TS811B;
+    if (lowerStr == "ts811e")
+        return Radios::TS811E;
+    if (lowerStr == "ts940s")
+        return Radios::TS940S;
+
+    return core::Error{core::ErrorCode::ParameterInvalid,
+                       "Unrecognized model number: " + modelStr};
+}
+
+std::string toString(Radios radio) {
+    switch (radio) {
+    case Radios::TS50S:
+        return "TS50S";
+    case Radios::TS60S:
+        return "TS60S";
+    case Radios::TS140S:
+        return "TS140S";
+    case Radios::TS680S:
+        return "TS680S";
+    case Radios::TS711A:
+        return "TS711A";
+    case Radios::TS711E:
+        return "TS711E";
+    case Radios::TS790A:
+        return "TS790A";
+    case Radios::TS790E:
+        return "TS790E";
+    case Radios::TS811A:
+        return "TS811A";
+    case Radios::TS811B:
+        return "TS811B";
+    case Radios::TS811E:
+        return "TS811E";
+    case Radios::TS940S:
+        return "TS940S";
+    default:
+        return "UNRECOGNIZED";
+    }
+}
+
+std::string toGeneric(Radios radio) {
+    switch (radio) {
+    case Radios::TS50S:
+        return "50";
+    case Radios::TS60S:
+        return "60";
+    case Radios::TS140S:
+        return "140";
+    case Radios::TS680S:
+        return "680";
+    case Radios::TS711A:
+    case Radios::TS711E:
+        return "711";
+    case Radios::TS790A:
+    case Radios::TS790E:
+        return "790";
+    case Radios::TS811A:
+    case Radios::TS811B:
+    case Radios::TS811E:
+        return "811";
+    case Radios::TS940S:
+        return "940";
+    default:
+        return "UNRECOGNIZED";
+    }
+}
+
+std::string allSupported() {
+    return "TS50S / TS60S / TS140S / TS680S / TS711A / TS711E / TS790A / "
+           "TS790E / TS811A / TS811B / TS811E / TS940S";
+}
+
+} // namespace Radio

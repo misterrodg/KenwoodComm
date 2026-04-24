@@ -2,7 +2,7 @@
 #define SETUP_H
 
 #include "config/config_manager.h"
-#include "parameter/model_number.h"
+#include "core/radio.h"
 #include <string>
 
 namespace ui {
@@ -13,7 +13,7 @@ ConfigManager RunSetup(const std::string& requestedProfile);
 
 // Reads the model number out of a fully-initialized ConfigManager.
 // Prints a structured error and returns an UNRECOGNIZED model on failure.
-ModelNumber ResolveModelNumber(const ConfigManager& config);
+Radios ResolveRadioModel(const ConfigManager& config);
 
 } // namespace ui
 

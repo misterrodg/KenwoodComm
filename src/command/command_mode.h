@@ -3,12 +3,12 @@
 
 #include "command_base.h"
 #include "command_result.h"
+#include "core/radio.h"
 #include "parameter/mode.h"
-#include "parameter/model_number.h"
 
 class CommandMode : public CommandBase {
 protected:
-    ModelNumber modelNumber;
+    Radios radioModel = Radios::UNRECOGNIZED;
     Mode::ModeEnum mode = Mode::ModeEnum::LSB;
     bool allowedForModelNumber(Mode::ModeEnum& modeEnum);
 
@@ -16,7 +16,7 @@ public:
     CommandMode(CommandPrefix::CommandPrefixEnum prefix)
         : CommandBase(prefix) {};
 
-    void setModelNumber(const ModelNumber& modelNumberValue);
+    void setModelNumber(Radios modelNumberValue);
     CommandResult set(const std::string& modeString) override;
     core::Result<std::string> buildSetCommand() override;
 
