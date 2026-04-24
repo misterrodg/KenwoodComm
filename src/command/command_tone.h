@@ -14,6 +14,7 @@ public:
         : CommandBase(prefix) {};
 
     CommandResult set(const std::string& toneFrequencyString) override;
+    CommandResult parseAnswer(const std::string& payload) override;
     core::Result<std::string> buildSetCommand() override;
     core::Result<std::string> buildReadCommand() override;
 

@@ -4,6 +4,10 @@ CommandResult CommandBusy::set(const std::string& status) {
     return SetBusy(status);
 }
 
+CommandResult CommandBusy::parseAnswer(const std::string& payload) {
+    return SetBusy(payload);
+}
+
 core::Result<std::string> CommandBusy::buildSetCommand() {
     if (!supportsSet()) {
         return core::Error{core::ErrorCode::CommandNotImplemented,

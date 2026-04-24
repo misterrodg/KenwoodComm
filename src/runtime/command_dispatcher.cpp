@@ -382,9 +382,6 @@ CommandResult CommandDispatcher::dispatchRead(CommandBase& command) {
         return commandResult.error();
     }
 
-    // Always expect a response on a read; supportsAnswer() indicates the
-    // response can also be routed back through parseAnswer() once
-    // response routing is wired up.
     session->write(commandResult.value(), true);
     return OK();
 }
@@ -436,4 +433,28 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
     session->lastParameter = param;
 
     return metadata.handler(session);
+}
+
+CommandResult
+CommandDispatcher::RouteAnswer(CommandPrefix::CommandPrefixEnum cmd,
+                               const std::string& payload) {
+    auto it = registry.find(cmd);
+    if (it == registry.end()) {
+        return Error(core::ErrorCode::CommandNotImplemented,
+                     "SerialCommand not implemented");
+    }
+
+    CommandBase* command = it->second.commandRef(session);
+    if (!command->supportsAnswer()) {
+        return OK();
+    }
+
+    CommandResult result = command->parseAnswer(payload);
+    if (!result.OK() &&
+        result.error().code ==
+            core::ToString(core::ErrorCode::CommandNotImplemented)) {
+        return OK();
+    }
+
+    return result;
 }

@@ -4,6 +4,10 @@ CommandResult CommandTone::set(const std::string& toneFrequencyString) {
     return SetTone(toneFrequencyString);
 }
 
+CommandResult CommandTone::parseAnswer(const std::string& payload) {
+    return SetTone(payload);
+}
+
 core::Result<std::string> CommandTone::buildSetCommand() {
     if (!supportsSet()) {
         return core::Error{core::ErrorCode::CommandNotImplemented,

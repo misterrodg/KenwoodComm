@@ -4,6 +4,10 @@ CommandResult CommandFrequency::set(const std::string& frequencyString) {
     return SetFrequency(frequencyString);
 }
 
+CommandResult CommandFrequency::parseAnswer(const std::string& payload) {
+    return SetFrequency(payload + " Hz");
+}
+
 core::Result<std::string> CommandFrequency::buildSetCommand() {
     if (!supportsSet()) {
         return core::Error{core::ErrorCode::CommandNotImplemented,

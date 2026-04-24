@@ -4,6 +4,10 @@ CommandResult CommandDestinationCode::set(const std::string& codeString) {
     return SetDestinationCode(codeString);
 }
 
+CommandResult CommandDestinationCode::parseAnswer(const std::string& payload) {
+    return SetDestinationCode(payload);
+}
+
 core::Result<std::string> CommandDestinationCode::buildSetCommand() {
     if (!supportsSet()) {
         return core::Error{core::ErrorCode::CommandNotImplemented,

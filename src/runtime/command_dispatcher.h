@@ -41,6 +41,8 @@ public:
     CommandDispatcher(Session* session, RadioProfile* radioProfile);
     CommandResult Dispatch(CommandPrefix::CommandPrefixEnum cmd,
                            const std::string& parameter);
+    CommandResult RouteAnswer(CommandPrefix::CommandPrefixEnum cmd,
+                              const std::string& payload);
 };
 
 #endif

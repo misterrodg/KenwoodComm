@@ -95,6 +95,12 @@ void Session::write(const std::string& command, bool expectsResponse) {
 
             if (response.IsValid()) {
                 response.ToConsole();
+
+                CommandResult answerResult = dispatcher->RouteAnswer(
+                    response.GetCommandPrefix(), response.GetParameters());
+                if (!answerResult.OK()) {
+                    printError(answerResult.error());
+                }
             } else {
                 printError(response.GetValidationResult().error());
             }

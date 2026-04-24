@@ -4,6 +4,10 @@ CommandResult CommandSwitch::set(const std::string& status) {
     return SetSwitch(status);
 }
 
+CommandResult CommandSwitch::parseAnswer(const std::string& payload) {
+    return SetSwitch(payload);
+}
+
 core::Result<std::string> CommandSwitch::buildSetCommand() {
     if (!supportsSet()) {
         return core::Error{core::ErrorCode::CommandNotImplemented,
