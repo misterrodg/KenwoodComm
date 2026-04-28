@@ -35,10 +35,30 @@ uint64_t Frequency::getFrequencyInHz() const {
     return frequencyInHz;
 }
 
-std::string Frequency::getFrequencyString() {
+std::string Frequency::getFrequencyString() const {
     char formattedFrequency[12];
     snprintf(formattedFrequency, sizeof(formattedFrequency), "%011" PRIu64,
              frequencyInHz);
 
     return formattedFrequency;
+}
+
+std::string Frequency::getFrequencyDisplayString() const {
+    double value = static_cast<double>(frequencyInHz);
+    const char* unit = "Hz";
+
+    if (frequencyInHz >= 1'000'000'000ULL) {
+        value /= 1'000'000'000.0;
+        unit = "GHz";
+    } else if (frequencyInHz >= 1'000'000ULL) {
+        value /= 1'000'000.0;
+        unit = "MHz";
+    } else if (frequencyInHz >= 1'000ULL) {
+        value /= 1'000.0;
+        unit = "kHz";
+    }
+
+    char formatted[32];
+    snprintf(formatted, sizeof(formatted), "%.3f %s", value, unit);
+    return formatted;
 }

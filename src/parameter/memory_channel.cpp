@@ -1,35 +1,51 @@
-#include "memory_channel.h"
+#include <cstdio>
 
 #include "core/error_code.h"
+#include "memory_channel.h"
 
+MemoryChannel::MemoryChannelEnum
+MemoryChannel::StringToChannelEnum(const std::string& memoryChannel) {
+    std::string s = memoryChannel;
 
-MemoryChannel::MemoryChannel() : memoryChannel(0) {}
-
-core::Result<void> MemoryChannel::setMemoryChannel(const std::string &input)
-{
-    std::regex regex(R"((\d{1,2}))");
-    std::smatch match;
-
-    if (std::regex_match(input, regex))
-    {
-        int value = std::stoi(input);
-        memoryChannel = value;
-        return {};
+    // Strip optional "CH" or "MC" prefix
+    if (s.size() >= 2 && (s.substr(0, 2) == "CH" || s.substr(0, 2) == "MC")) {
+        s = s.substr(2);
     }
 
-    return core::Error{core::ErrorCode::InvalidMemoryChannel, "Invalid memory channel format: '" + input +
-                           "'. Expected a 1 or 2 digit channel number."};
+    if (s.empty() || s.find_first_not_of("0123456789") != std::string::npos) {
+        return MemoryChannelEnum::UNKNOWN;
+    }
+
+    int value = std::stoi(s);
+    if (value >= 0 && value <= 99) {
+        return static_cast<MemoryChannelEnum>(value);
+    }
+    return MemoryChannelEnum::UNKNOWN;
 }
 
-short int MemoryChannel::getMemoryChannel() const
-{
-    return memoryChannel;
+std::string
+MemoryChannel::ChannelEnumToIntString(const MemoryChannelEnum& memoryChannel) {
+    int value = static_cast<int>(memoryChannel);
+    if (value < 0 || value > 99) {
+        return "UNKNOWN";
+    }
+    char buf[3];
+    snprintf(buf, sizeof(buf), "%02d", value);
+    return buf;
 }
 
-std::string MemoryChannel::getMemoryChannelString()
-{
-    char formattedChannel[3];
-    snprintf(formattedChannel, sizeof(formattedChannel), "%02d", memoryChannel);
+std::string
+MemoryChannel::ChannelEnumToString(const MemoryChannelEnum& memoryChannel) {
+    int value = static_cast<int>(memoryChannel);
+    if (value < 0 || value > 99) {
+        return "UNKNOWN";
+    }
+    char buf[5];
+    snprintf(buf, sizeof(buf), "MC%02d", value);
+    return buf;
+}
 
-    return formattedChannel;
+std::string MemoryChannel::ChannelEnumToFriendlyString(
+    const MemoryChannelEnum& memoryChannel) {
+    return ChannelEnumToString(memoryChannel);
 }

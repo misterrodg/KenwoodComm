@@ -12,6 +12,7 @@ public:
     static SwitchEnum StringToSwitch(const std::string& switchString);
     static std::string SwitchToBoolString(const SwitchEnum& switchEnum);
     static std::string SwitchToString(const SwitchEnum& switchEnum);
+    static std::string SwitchToFriendlyString(const SwitchEnum& switchEnum);
     static constexpr int MAX_SWITCH_LENGTH = 3;
 };
 

@@ -58,3 +58,8 @@ ModelNumber::ModelNumberToString(const ModelNumberEnum& modelNumber) {
         return "UNKNOWN";
     }
 }
+
+std::string
+ModelNumber::ModelNumberToFriendlyString(const ModelNumberEnum& modelNumber) {
+    return ModelNumberToString(modelNumber);
+}

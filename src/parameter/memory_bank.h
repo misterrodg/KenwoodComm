@@ -11,14 +11,14 @@
 
 class MemoryBank {
 public:
-    MemoryBank();
-    core::Result<void> setMemoryBank(const std::string& input);
-    unsigned short int getMemoryBank() const;
-    std::string getMemoryBankString();
-    static constexpr int MAX_MEMORY_BANK_LENGTH = 1;
+    enum class MemoryBankEnum { MB0 = 0, MB1 = 1, MB2 = 2, UNKNOWN = -1 };
 
-private:
-    unsigned short int memoryBank;
+    static MemoryBankEnum StringToBankEnum(const std::string& memoryBank);
+    static std::string BankEnumToIntString(const MemoryBankEnum& memoryBank);
+    static std::string BankEnumToString(const MemoryBankEnum& memoryBank);
+    static std::string
+    BankEnumToFriendlyString(const MemoryBankEnum& memoryBank);
+    static constexpr int MAX_MEMORY_BANK_LENGTH = 1;
 };
 
 #endif

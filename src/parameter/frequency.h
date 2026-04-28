@@ -15,7 +15,8 @@ public:
     Frequency();
     core::Result<void> setFrequency(const std::string& input);
     uint64_t getFrequencyInHz() const;
-    std::string getFrequencyString();
+    std::string getFrequencyString() const;
+    std::string getFrequencyDisplayString() const;
     static constexpr int MAX_FREQUENCY_LENGTH = 11;
 
 private:

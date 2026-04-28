@@ -2,34 +2,54 @@
 
 #include "core/error_code.h"
 
-
-MemoryBank::MemoryBank() : memoryBank(0) {}
-
-core::Result<void> MemoryBank::setMemoryBank(const std::string &input)
-{
-    std::regex regex(R"([1-4])");
-    std::smatch match;
-
-    if (std::regex_match(input, regex))
-    {
-        int value = std::stoi(input);
-        memoryBank = value;
-        return {};
+MemoryBank::MemoryBankEnum
+MemoryBank::StringToBankEnum(const std::string& memoryBank) {
+    if (memoryBank == "0" || memoryBank == "MB0") {
+        return MemoryBankEnum::MB0;
+    } else if (memoryBank == "1" || memoryBank == "MB1") {
+        return MemoryBankEnum::MB1;
+    } else if (memoryBank == "2" || memoryBank == "MB2") {
+        return MemoryBankEnum::MB2;
     }
-
-    return core::Error{core::ErrorCode::InvalidMemoryBank, "Invalid memory bank format: '" + input +
-                           "'. Expected a bank number from 1 to 4."};
+    return MemoryBankEnum::UNKNOWN;
 }
 
-unsigned short int MemoryBank::getMemoryBank() const
-{
-    return memoryBank;
+std::string MemoryBank::BankEnumToIntString(const MemoryBankEnum& memoryBank) {
+    switch (memoryBank) {
+    case MemoryBankEnum::MB0:
+        return "0";
+    case MemoryBankEnum::MB1:
+        return "1";
+    case MemoryBankEnum::MB2:
+        return "2";
+    default:
+        return "UNKNOWN";
+    }
 }
 
-std::string MemoryBank::getMemoryBankString()
-{
-    char formattedBank[2];
-    snprintf(formattedBank, sizeof(formattedBank), "%1d", memoryBank);
+std::string MemoryBank::BankEnumToString(const MemoryBankEnum& memoryBank) {
+    switch (memoryBank) {
+    case MemoryBankEnum::MB0:
+        return "MB0";
+    case MemoryBankEnum::MB1:
+        return "MB1";
+    case MemoryBankEnum::MB2:
+        return "MB2";
+    default:
+        return "UNKNOWN";
+    }
+}
 
-    return formattedBank;
+std::string
+MemoryBank::BankEnumToFriendlyString(const MemoryBankEnum& memoryBank) {
+    switch (memoryBank) {
+    case MemoryBankEnum::MB0:
+        return "Memory Bank 0";
+    case MemoryBankEnum::MB1:
+        return "Memory Bank 1";
+    case MemoryBankEnum::MB2:
+        return "Memory Bank 2";
+    default:
+        return "Unknown Memory Bank";
+    }
 }

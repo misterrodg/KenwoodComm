@@ -15,11 +15,13 @@ public:
         UNRECOGNIZED = -1
     };
 
-    static constexpr int MAX_MODEL_NUMBER_LENGTH = 3;
-
     static ModelNumberEnum StringToModelNumber(const std::string& modelNumber);
-    static std::string ModelNumberToIntString(const ModelNumberEnum& modelNumber);
+    static std::string
+    ModelNumberToIntString(const ModelNumberEnum& modelNumber);
     static std::string ModelNumberToString(const ModelNumberEnum& modelNumber);
+    static std::string
+    ModelNumberToFriendlyString(const ModelNumberEnum& modelNumber);
+    static constexpr int MAX_MODEL_NUMBER_LENGTH = 3;
 };
 
 #endif

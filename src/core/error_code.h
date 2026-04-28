@@ -25,6 +25,8 @@ enum class ErrorCode {
     InvalidMemoryBank,
     InvalidMemoryChannel,
     InvalidMode,
+    InvalidModelNumber,
+    InvalidOffset,
     InvalidPassband,
     InvalidRitFrequency,
     InvalidSMeter,
@@ -82,6 +84,10 @@ inline std::string_view ToString(ErrorCode code) {
         return "INVALID_MEMORY_CHANNEL";
     case ErrorCode::InvalidMode:
         return "INVALID_MODE";
+    case ErrorCode::InvalidModelNumber:
+        return "INVALID_MODEL_NUMBER";
+    case ErrorCode::InvalidOffset:
+        return "INVALID_OFFSET";
     case ErrorCode::InvalidPassband:
         return "INVALID_PASSBAND";
     case ErrorCode::InvalidRitFrequency:

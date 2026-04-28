@@ -11,9 +11,8 @@ core::Result<void> RITFrequency::setRITFrequency(const std::string &input)
 
     if (std::regex_match(input, match, regex))
     {
-        std::string sign = match[1].str();
-        double value = std::stod(match[2].str());
-        std::string unit = match[4].str();
+        double value = std::stod(match[1].str());
+        std::string unit = match[3].str();
 
         FrequencyUnit::Unit frequencyUnit = FrequencyUnit::parseUnit(unit);
         if (frequencyUnit != FrequencyUnit::UNKNOWN && frequencyUnit != FrequencyUnit::MHZ && frequencyUnit != FrequencyUnit::GHZ)

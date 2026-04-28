@@ -1,6 +1,5 @@
 #include "destination_code.h"
 
-
 DestinationCode::CodeEnum
 DestinationCode::StringToCode(const std::string& codeString) {
     static const std::map<std::string, CodeEnum> enumMap = {
@@ -34,4 +33,8 @@ std::string DestinationCode::CodeToString(const CodeEnum& codeEnum) {
         return it->second;
     }
     return "UNKNOWN";
+}
+
+std::string DestinationCode::CodeToFriendlyString(const CodeEnum& codeEnum) {
+    return CodeToString(codeEnum);
 }

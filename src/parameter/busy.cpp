@@ -1,6 +1,5 @@
 #include "busy.h"
 
-
 Busy::BusyEnum Busy::StringToBusy(const std::string& busyString) {
     static const std::map<std::string, Busy::BusyEnum> enumMap = {
         {"OFF", Busy::BusyEnum::OFF},
@@ -35,4 +34,8 @@ std::string Busy::BusyToString(const BusyEnum& busyEnum) {
         return it->second;
     }
     return "UNKNOWN";
+}
+
+std::string Busy::BusyToFriendlyString(const BusyEnum& busyEnum) {
+    return BusyToString(busyEnum);
 }

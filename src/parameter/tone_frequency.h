@@ -56,6 +56,8 @@ public:
     ToneFrequencyToFreqString(const ToneFrequencyEnum& toneEnum);
     static std::string
     ToneFrequencyToIntString(const ToneFrequencyEnum& toneEnum);
+    static std::string
+    ToneFrequencyToFriendlyString(const ToneFrequencyEnum& toneEnum);
     static constexpr int MAX_TONE_LENGTH = 2;
 };
 

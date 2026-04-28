@@ -12,6 +12,7 @@ public:
     static BusyEnum StringToBusy(const std::string& busyString);
     static std::string BusyToBoolString(const BusyEnum& busyEnum);
     static std::string BusyToString(const BusyEnum& busyEnum);
+    static std::string BusyToFriendlyString(const BusyEnum& busyEnum);
     static constexpr int MAX_BUSY_LENGTH = 3;
 };
 
