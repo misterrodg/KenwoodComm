@@ -26,6 +26,10 @@ core::Result<std::string> CommandBusy::buildReadCommand() {
     return ToCommand(true);
 }
 
+std::string CommandBusy::getDisplayValue() const {
+    return Busy::BusyToFriendlyString(enabled);
+}
+
 CommandResult CommandBusy::SetBusy(const std::string& status) {
     Busy::BusyEnum busyEnum = Busy::StringToBusy(status);
     if (busyEnum != Busy::BusyEnum::UNKNOWN) {

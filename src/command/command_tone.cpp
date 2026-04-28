@@ -26,6 +26,10 @@ core::Result<std::string> CommandTone::buildReadCommand() {
     return ToCommand(true);
 }
 
+std::string CommandTone::getDisplayValue() const {
+    return ToneFrequency::ToneFrequencyToFriendlyString(toneFrequency);
+}
+
 CommandResult CommandTone::SetTone(const std::string& toneFrequencyString) {
     ToneFrequency::ToneFrequencyEnum toneEnum =
         ToneFrequency::StringToToneFrequency(toneFrequencyString);

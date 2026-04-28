@@ -38,10 +38,10 @@ CommandDispatcher::CommandDispatcher(Session* session,
         [](Session* s) -> CommandBase* { return &s->cn; },
         [this](Session* s) -> CommandResult {
             if (s->lastParameter.empty()) {
-                return dispatchRead(s->ct);
+                return dispatchRead(s->cn);
             }
 
-            return dispatchSet(s->ct, s->lastParameter);
+            return dispatchSet(s->cn, s->lastParameter);
         }};
 
     // CT: CTCSS Tone - requires parameter or read status
@@ -457,4 +457,19 @@ CommandDispatcher::RouteAnswer(CommandPrefix::CommandPrefixEnum cmd,
     }
 
     return result;
+}
+
+std::string CommandDispatcher::GetAnswerDisplayValue(
+    CommandPrefix::CommandPrefixEnum cmd) const {
+    auto it = registry.find(cmd);
+    if (it == registry.end()) {
+        return "";
+    }
+
+    CommandBase* command = it->second.commandRef(session);
+    if (!command) {
+        return "";
+    }
+
+    return command->getDisplayValue();
 }

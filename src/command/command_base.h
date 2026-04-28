@@ -24,6 +24,7 @@ public:
     virtual core::Result<std::string> buildSetCommand();
     virtual core::Result<std::string> buildReadCommand();
     virtual CommandResult parseAnswer(const std::string& payload);
+    virtual std::string getDisplayValue() const;
 
     std::string ToCommand();
 };

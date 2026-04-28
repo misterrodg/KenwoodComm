@@ -10,8 +10,9 @@
 class CommandMemory : public CommandBase {
 protected:
     Radios radioModel = Radios::UNRECOGNIZED;
-    MemoryBank memoryBank;
-    MemoryChannel memoryChannel;
+    MemoryBank::MemoryBankEnum memoryBank = MemoryBank::MemoryBankEnum::MB0;
+    MemoryChannel::MemoryChannelEnum memoryChannel =
+        MemoryChannel::MemoryChannelEnum::MC00;
 
 public:
     CommandMemory(CommandPrefix::CommandPrefixEnum prefix)

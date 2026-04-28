@@ -7,6 +7,7 @@
 int main(int argc, char** argv) {
     bool localMode = false;
     bool safeMode = false;
+    bool friendlyMode = false;
     std::string requestedProfile;
 
     for (int i = 1; i < argc; ++i) {
@@ -15,6 +16,8 @@ int main(int argc, char** argv) {
             localMode = true;
         } else if (arg == "safe") {
             safeMode = true;
+        } else if (arg == "friendly") {
+            friendlyMode = true;
         } else if (arg.rfind("profile=", 0) == 0 && arg.size() > 8) {
             requestedProfile = arg.substr(8);
         }
@@ -23,7 +26,7 @@ int main(int argc, char** argv) {
     auto config = ui::RunSetup(requestedProfile);
     auto modelNumber = ui::ResolveRadioModel(config);
 
-    Session session(safeMode, localMode, modelNumber);
+    Session session(safeMode, localMode, modelNumber, friendlyMode);
     ui::RunSessionLoop(session);
 
     return 0;

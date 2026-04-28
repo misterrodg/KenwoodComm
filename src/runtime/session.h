@@ -15,12 +15,14 @@ class Session {
     friend class CommandDispatcher;
 
 public:
-    Session(bool inSafeMode, bool inLocalMode, Radios modelNumber);
+    Session(bool inSafeMode, bool inLocalMode, Radios modelNumber,
+            bool inFriendlyMode = false);
     Session(bool inSafeMode, Radios modelNumber,
-            std::unique_ptr<ISerialPort> serial);
+            std::unique_ptr<ISerialPort> serial, bool inFriendlyMode = false);
     void CheckCommand(const std::string& command);
     bool safeMode;
     bool localMode;
+    bool friendlyMode;
     bool sessionOpen;
 
 private:

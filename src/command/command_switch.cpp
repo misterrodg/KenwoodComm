@@ -26,6 +26,10 @@ core::Result<std::string> CommandSwitch::buildReadCommand() {
     return ToCommand(true);
 }
 
+std::string CommandSwitch::getDisplayValue() const {
+    return Switch::SwitchToFriendlyString(enabled);
+}
+
 CommandResult CommandSwitch::SetSwitch(const std::string& status) {
     Switch::SwitchEnum switchEnum = Switch::StringToSwitch(status);
     if (switchEnum != Switch::SwitchEnum::UNKNOWN) {

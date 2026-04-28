@@ -17,6 +17,7 @@ public:
     CommandResult parseAnswer(const std::string& payload) override;
     core::Result<std::string> buildSetCommand() override;
     core::Result<std::string> buildReadCommand() override;
+    std::string getDisplayValue() const override;
 
     std::string ToCommand(bool readStatus = false);
     CommandResult SetSwitch(const std::string& status);

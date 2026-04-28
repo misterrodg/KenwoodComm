@@ -34,6 +34,10 @@ CommandResult CommandBase::parseAnswer(const std::string& payload) {
                  "Answer parsing not supported for this command");
 }
 
+std::string CommandBase::getDisplayValue() const {
+    return "";
+}
+
 std::string CommandBase::ToCommand() {
     std::string command = CommandPrefix::CommandToString(commandPrefix);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;

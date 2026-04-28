@@ -43,6 +43,7 @@ public:
                            const std::string& parameter);
     CommandResult RouteAnswer(CommandPrefix::CommandPrefixEnum cmd,
                               const std::string& payload);
+    std::string GetAnswerDisplayValue(CommandPrefix::CommandPrefixEnum cmd) const;
 };
 
 #endif

@@ -2,15 +2,21 @@
 
 #include "core/error_reporter.h"
 #include "serial.h"
+#include "mock/mock_radio.h"
 
-Session::Session(bool inSafeMode, bool inLocalMode, Radios modelNumberEnum)
-    : safeMode(inSafeMode), localMode(inLocalMode), sessionOpen(true) {
+Session::Session(bool inSafeMode, bool inLocalMode, Radios modelNumberEnum,
+                 bool inFriendlyMode)
+    : safeMode(inSafeMode), localMode(inLocalMode),
+      friendlyMode(inFriendlyMode), sessionOpen(true) {
 
     radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
     radioProfile->PrintAvailableCommands();
 
-    serialConnection = std::make_unique<Serial>();
-    if (!localMode) {
+    if (localMode) {
+        serialConnection = std::make_unique<MockRadio>();
+        serialConnection->Open();
+    } else {
+        serialConnection = std::make_unique<Serial>();
         serialConnection->Open();
     }
 
@@ -18,9 +24,9 @@ Session::Session(bool inSafeMode, bool inLocalMode, Radios modelNumberEnum)
 }
 
 Session::Session(bool inSafeMode, Radios modelNumberEnum,
-                 std::unique_ptr<ISerialPort> serial)
-    : safeMode(inSafeMode), localMode(true), sessionOpen(true),
-      serialConnection(std::move(serial)) {
+                 std::unique_ptr<ISerialPort> serial, bool inFriendlyMode)
+    : safeMode(inSafeMode), localMode(true), friendlyMode(inFriendlyMode),
+      sessionOpen(true), serialConnection(std::move(serial)) {
 
     radioProfile = std::make_unique<RadioProfile>(modelNumberEnum);
     dispatcher = std::make_unique<CommandDispatcher>(this, radioProfile.get());
@@ -95,12 +101,22 @@ void Session::write(const std::string& command, bool expectsResponse) {
             Response response(rawResponse);
 
             if (response.IsValid()) {
-                response.ToConsole();
+                if (friendlyMode) {
+                    response.ToConsole();
+                } else {
+                    printf("Response: %s\n", rawResponse.c_str());
+                }
 
                 CommandResult answerResult = dispatcher->RouteAnswer(
                     response.GetCommandPrefix(), response.GetParameters());
                 if (!answerResult.OK()) {
                     printError(answerResult.error());
+                } else if (friendlyMode) {
+                    std::string decoded = dispatcher->GetAnswerDisplayValue(
+                        response.GetCommandPrefix());
+                    if (!decoded.empty()) {
+                        printf("Decoded: %s\n", decoded.c_str());
+                    }
                 }
             } else {
                 printError(response.GetValidationResult().error());

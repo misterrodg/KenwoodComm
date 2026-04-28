@@ -26,6 +26,10 @@ core::Result<std::string> CommandDestinationCode::buildReadCommand() {
     return ToCommand(true);
 }
 
+std::string CommandDestinationCode::getDisplayValue() const {
+    return DestinationCode::CodeToFriendlyString(destination);
+}
+
 CommandResult
 CommandDestinationCode::SetDestinationCode(const std::string& codeString) {
     DestinationCode::CodeEnum codeEnum =

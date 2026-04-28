@@ -26,6 +26,10 @@ core::Result<std::string> CommandFrequency::buildReadCommand() {
     return ToCommand(true);
 }
 
+std::string CommandFrequency::getDisplayValue() const {
+    return frequency.getFrequencyDisplayString();
+}
+
 CommandResult
 CommandFrequency::SetFrequency(const std::string& frequencyString) {
     core::Result<void> result = frequency.setFrequency(frequencyString);

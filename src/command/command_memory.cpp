@@ -23,24 +23,30 @@ CommandResult CommandMemory::SetMemory(const std::string& parameter) {
             parameter.substr(0, MemoryBank::MAX_MEMORY_BANK_LENGTH);
         std::string channel =
             parameter.substr(MemoryBank::MAX_MEMORY_BANK_LENGTH);
-        core::Result<void> bankResult = memoryBank.setMemoryBank(bank);
-        core::Result<void> channelResult =
-            memoryChannel.setMemoryChannel(channel);
-
-        if (!bankResult.OK()) {
-            return bankResult.error();
+        MemoryBank::MemoryBankEnum bankEnum =
+            MemoryBank::StringToBankEnum(bank);
+        MemoryChannel::MemoryChannelEnum channelEnum =
+            MemoryChannel::StringToChannelEnum(channel);
+        if (bankEnum == MemoryBank::MemoryBankEnum::UNKNOWN) {
+            return Error(core::ErrorCode::InvalidMemoryBank,
+                         "Invalid memory bank: " + bank);
         }
-        if (!channelResult.OK()) {
-            return channelResult.error();
+        if (channelEnum == MemoryChannel::MemoryChannelEnum::UNKNOWN) {
+            return Error(core::ErrorCode::InvalidMemoryChannel,
+                         "Invalid memory channel: " + channel);
         }
+        memoryBank = bankEnum;
+        memoryChannel = channelEnum;
         return OK();
     } else {
-        core::Result<void> channelResult =
-            memoryChannel.setMemoryChannel(parameter);
-        if (channelResult.OK()) {
+        MemoryChannel::MemoryChannelEnum channelEnum =
+            MemoryChannel::StringToChannelEnum(parameter);
+        if (channelEnum != MemoryChannel::MemoryChannelEnum::UNKNOWN) {
+            memoryChannel = channelEnum;
             return OK();
         }
-        return channelResult.error();
+        return Error(core::ErrorCode::InvalidMemoryChannel,
+                     "Invalid memory channel: " + parameter);
     }
 }
 
@@ -49,10 +55,11 @@ std::string CommandMemory::ToCommand() {
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
     std::string resultString = "";
-    std::string channelString = memoryChannel.getMemoryChannelString();
+    std::string channelString =
+        MemoryChannel::ChannelEnumToIntString(memoryChannel);
 
     if (radioModel == Radios::TS940S) {
-        std::string bankString = memoryBank.getMemoryBankString();
+        std::string bankString = MemoryBank::BankEnumToIntString(memoryBank);
         resultString = bankString + channelString;
     } else {
         resultString = " " + channelString;
