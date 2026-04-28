@@ -15,7 +15,7 @@ public:
     StepFrequency();
     core::Result<void> setStepFrequency(const std::string& input);
     unsigned short int getStepFrequencyInHz() const;
-    std::string getStepFrequencyString();
+    std::string getStepFrequencyString() const;
     static constexpr int MAX_STEP_FREQUENCY_LENGTH = 5;
     static const unsigned int MAX_STEP_FREQUENCY_VALUE = 99999;
 
