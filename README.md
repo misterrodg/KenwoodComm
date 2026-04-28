@@ -42,6 +42,16 @@ You can confirm that you are in safe mode by looking for the `SAFE` at the begin
 SAFE ::
 ```
 
+### Friendly Response Mode
+
+An optional `friendly` argument can be passed to display parsed answers in a human-friendly form. This is useful when reading values like switch state or frequency from the radio.
+
+```
+KenwoodComm friendly
+```
+
+Without `friendly`, the program prints raw radio responses (for example, `BY1;` or `MT0;`).
+
 ## Initial Run
 
 When running the program for the first time, it will prompt you for your callsign and radio model. The prompts are case-insensitive, and will always store/use the values in all caps.
