@@ -12,6 +12,14 @@ bool CommandBase::supportsAnswer() const {
     return false;
 }
 
+CommandBase::ParamPolicy CommandBase::setParamPolicy() const {
+    return supportsSet() ? ParamPolicy::Required : ParamPolicy::Forbidden;
+}
+
+CommandBase::ParamPolicy CommandBase::readParamPolicy() const {
+    return ParamPolicy::Forbidden;
+}
+
 CommandResult CommandBase::set(const std::string& param) {
     static_cast<void>(param);
     return Error(core::ErrorCode::CommandNotImplemented,
@@ -26,6 +34,15 @@ core::Result<std::string> CommandBase::buildSetCommand() {
 core::Result<std::string> CommandBase::buildReadCommand() {
     return core::Error{core::ErrorCode::CommandNotImplemented,
                        "Read command is not available for this command"};
+}
+
+core::Result<std::string>
+CommandBase::buildReadCommand(const std::string& param) {
+    if (!param.empty() && readParamPolicy() == ParamPolicy::Forbidden) {
+        return core::Error{core::ErrorCode::CommandNoParameterAllowed,
+                           "Read does not accept parameters for this command"};
+    }
+    return buildReadCommand();
 }
 
 CommandResult CommandBase::parseAnswer(const std::string& payload) {
