@@ -212,6 +212,14 @@ CommandDispatcher::CommandDispatcher(Session* session,
             return dispatchSet(s->md, s->lastParameter);
         }};
 
+    // MR: Memory Read - requires parameter
+    registry[CommandPrefix::CommandPrefixEnum::MR] = {
+        CommandMetaData::SafeMode::ALLOWED,
+        [](Session* s) -> CommandBase* { return &s->mr; },
+        [this](Session* s) -> CommandResult {
+            return dispatchRead(s->mr, s->lastParameter);
+        }};
+
     // MS: Monitor - optional parameter
     registry[CommandPrefix::CommandPrefixEnum::MS] = {
         CommandMetaData::SafeMode::ALLOWED,
@@ -386,6 +394,17 @@ CommandResult CommandDispatcher::dispatchRead(CommandBase& command) {
     return OK();
 }
 
+CommandResult CommandDispatcher::dispatchRead(CommandBase& command,
+                                              const std::string& param) {
+    core::Result<std::string> commandResult = command.buildReadCommand(param);
+    if (!commandResult.OK()) {
+        return commandResult.error();
+    }
+
+    session->write(commandResult.value(), true);
+    return OK();
+}
+
 CommandResult
 CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
                             const std::string& param) {
@@ -414,20 +433,37 @@ CommandDispatcher::Dispatch(CommandPrefix::CommandPrefixEnum command,
                          "\" disabled in SAFE MODE");
     }
 
-    if (cmd->supportsSet() && !cmd->supportsRead() && param.empty()) {
-        std::string commandString = CommandPrefix::CommandToString(command);
-        return Error(core::ErrorCode::ParameterEmpty,
-                     "SerialCommand \"" + commandString +
-                         "\" requires a parameter");
+    // Determine operation: read vs. set
+    bool isRead = false;
+    if (cmd->supportsRead() && cmd->supportsSet()) {
+        // Commands that support both: read if no param, set if param given
+        isRead = param.empty();
+    } else if (cmd->supportsRead()) {
+        // Read-only commands
+        isRead = true;
+    } else {
+        // Set-only commands
+        isRead = false;
     }
 
-    if (!cmd->supportsSet() && !param.empty()) {
+    // Validate parameter against the operation's policy
+    CommandBase::ParamPolicy policy =
+        isRead ? cmd->readParamPolicy() : cmd->setParamPolicy();
+
+    if (policy == CommandBase::ParamPolicy::Forbidden && !param.empty()) {
         std::string commandString = CommandPrefix::CommandToString(command);
         return Error(core::ErrorCode::CommandNoParameterAllowed,
                      "SerialCommand \"" + commandString +
                          "\" accepts no parameters. Ignoring \"" + param +
                          "\" and sending standard " + commandString +
                          " command");
+    }
+
+    if (policy == CommandBase::ParamPolicy::Required && param.empty()) {
+        std::string commandString = CommandPrefix::CommandToString(command);
+        return Error(core::ErrorCode::ParameterEmpty,
+                     "SerialCommand \"" + commandString +
+                         "\" requires a parameter");
     }
 
     session->lastParameter = param;

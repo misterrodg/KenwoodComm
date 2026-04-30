@@ -36,6 +36,8 @@ private:
     CommandResult dispatchSet(CommandBase& command,
                               const std::string& parameter);
     CommandResult dispatchRead(CommandBase& command);
+    CommandResult dispatchRead(CommandBase& command,
+                               const std::string& param);
 
 public:
     CommandDispatcher(Session* session, RadioProfile* radioProfile);
