@@ -62,7 +62,7 @@ std::string CommandMemory::ToCommand() {
         std::string bankString = MemoryBank::BankEnumToIntString(memoryBank);
         resultString = bankString + channelString;
     } else {
-        resultString = " " + channelString;
+        resultString = "0" + channelString;
     }
 
     bufferLength += MemoryBank::MAX_MEMORY_BANK_LENGTH +
