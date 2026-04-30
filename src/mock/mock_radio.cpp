@@ -1,12 +1,16 @@
 #include "mock_radio.h"
+#include "memory_slot.h"
 #include "parameter/communication_state.h"
 #include "parameter/function.h"
 #include "parameter/memory_bank.h"
 #include "parameter/memory_channel.h"
+#include "parameter/memory_channel_split.h"
+#include "parameter/memory_lockout.h"
 #include "parameter/mode.h"
 #include "parameter/offset.h"
 #include "parameter/switch.h"
 #include "parameter/tone_frequency.h"
+#include <cstdio>
 #include <string>
 
 MockRadio::MockRadio() : established(false), lastResponse("") {
@@ -14,6 +18,17 @@ MockRadio::MockRadio() : established(false), lastResponse("") {
     FrequencyB.setFrequency("144 MHz");
     SMeter.setSMeter("0000");
     StepFrequency.setStepFrequency("5Hz");
+    memoryMap[0][0] =
+        MemorySlot{.occupied = true,
+                   .split = MemoryChannelSplit::MemoryChannelSplitEnum::RECEIVE,
+                   .hasFrequency = true,
+                   .frequency = Frequency(),
+                   .mode = Mode::ModeEnum::FM,
+                   .lockout = MemoryLockout::MemoryLockoutEnum::NOT_LOCKED_OUT,
+                   .toneStatus = Switch::SwitchEnum::ON,
+                   .toneFrequency = ToneFrequency::ToneFrequencyEnum::TN22,
+                   .offset = Offset::OffsetEnum::MINUS};
+    memoryMap[0][0].frequency.setFrequency("146.730 MHz");
 }
 
 void MockRadio::Open() {
@@ -34,7 +49,24 @@ void MockRadio::Write(const std::string& command) {
     std::string params = command.substr(2, command.length() - 3);
     bool isRead = params.empty();
 
-    if (isRead) {
+    if (prefix == "MR") {
+        if (params.length() >= 3) {
+            int bank = params[0] - '0';
+            int channel = std::stoi(params.substr(1, 2));
+            auto bankIt = memoryMap.find(bank);
+            if (bankIt != memoryMap.end()) {
+                auto chanIt = bankIt->second.find(channel);
+                if (chanIt != bankIt->second.end() && chanIt->second.occupied) {
+                    lastResponse =
+                        "MR" +
+                        serializeMemorySlot(bank, channel, chanIt->second) +
+                        ";";
+                    return;
+                }
+            }
+        }
+        lastResponse = "MR" + std::string(21, ' ') + ";";
+    } else if (isRead) {
         if (prefix == "BY") {
             lastResponse =
                 "BY" + Busy::BusyToBoolString(BusyIndicatorStatus) + ";";
@@ -64,10 +96,6 @@ void MockRadio::Write(const std::string& command) {
         } else if (prefix == "MN") {
             lastResponse =
                 "MN" + ModelNumber::ModelNumberToIntString(ModelNumber) + ";";
-        } else if (prefix == "MR") {
-            lastResponse =
-                "MR" + MemoryBank::BankEnumToIntString(MemoryBank) +
-                MemoryChannel::ChannelEnumToIntString(MemoryChannel) + ";";
         } else if (prefix == "MT") {
             lastResponse = "MT" + Switch::SwitchToBoolString(MuteStatus) + ";";
         } else if (prefix == "SM") {
@@ -89,9 +117,9 @@ std::string MockRadio::buildIFPayload() const {
         freq = FrequencyB.getFrequencyString();
     }
 
-    std::string stepFrequency = "     "; // 5 chars, blank if unknown
+    std::string stepFreq = "     "; // 5 chars, blank if step not active
     if (StepStatus == Switch::SwitchEnum::ON) {
-        stepFrequency = StepFrequency.getStepFrequencyString();
+        stepFreq = StepFrequency.getStepFrequencyString();
     }
 
     std::string bank =
@@ -103,8 +131,8 @@ std::string MockRadio::buildIFPayload() const {
             ? "  "
             : MemoryChannel::ChannelEnumToIntString(MemoryChannel); // 2 chars
 
-        return freq + stepFrequency +                  // Step frequency (5)
-            "     " +                               // RIT frequency (5, blank)
+    return freq + stepFreq +                       // freq(11) + step(5)
+           "     " +                               // RIT freq (5, blank)
            Switch::SwitchToBoolString(RITStatus) + // rit status (1)
            Switch::SwitchToBoolString(XITStatus) + // xit status (1)
            bank +                                  // mem bank (1)
@@ -119,6 +147,52 @@ std::string MockRadio::buildIFPayload() const {
            ToneFrequency::ToneFrequencyToIntString(
                ToneFrequency) +               // tone freq (2)
            Offset::OffsetToIntString(Offset); // offset (1)
+}
+
+std::string MockRadio::serializeMemorySlot(int bank, int channel,
+                                           const MemorySlot& slot) const {
+    char bankBuf[2], chanBuf[3];
+    snprintf(bankBuf, sizeof(bankBuf), "%d", bank);
+    snprintf(chanBuf, sizeof(chanBuf), "%02d", channel);
+
+    // Each UNKNOWN field renders as the correct number of spaces so the
+    // response is always exactly 21 chars (matching a blank MR response).
+    std::string freq =
+        slot.hasFrequency
+            ? slot.frequency.getFrequencyString()
+            : std::string(Frequency::MAX_FREQUENCY_LENGTH, ' '); // 11 chars
+
+    std::string split =
+        (slot.split != MemoryChannelSplit::MemoryChannelSplitEnum::UNKNOWN)
+            ? MemoryChannelSplit::MemoryChannelSplitToIntString(slot.split)
+            : " ";
+
+    std::string mode = (slot.mode != Mode::ModeEnum::UNKNOWN)
+                           ? Mode::ModeToIntString(slot.mode)
+                           : " ";
+
+    std::string lockout =
+        (slot.lockout != MemoryLockout::MemoryLockoutEnum::UNKNOWN)
+            ? MemoryLockout::MemoryLockoutToIntString(slot.lockout)
+            : " ";
+
+    std::string toneStatus = (slot.toneStatus != Switch::SwitchEnum::UNKNOWN)
+                                 ? Switch::SwitchToBoolString(slot.toneStatus)
+                                 : " ";
+
+    std::string toneFreq =
+        (slot.toneFrequency != ToneFrequency::ToneFrequencyEnum::UNKNOWN)
+            ? ToneFrequency::ToneFrequencyToIntString(slot.toneFrequency)
+            : std::string(ToneFrequency::MAX_TONE_LENGTH, ' '); // 2 chars
+
+    std::string offset = (slot.offset != Offset::OffsetEnum::UNKNOWN)
+                             ? Offset::OffsetToIntString(slot.offset)
+                             : " ";
+
+    // Total: bank(1)+channel(2)+freq(11)+split(1)+mode(1)+lockout(1)
+    //        +toneStatus(1)+toneFreq(2)+offset(1) = 21 chars
+    return std::string(bankBuf) + chanBuf + freq + split + mode + lockout +
+           toneStatus + toneFreq + offset;
 }
 
 void MockRadio::applyWriteToState(const std::string& prefix,
@@ -160,21 +234,48 @@ void MockRadio::applyWriteToState(const std::string& prefix,
             ToneFrequency::StringToToneFrequency(params);
         if (tf != ToneFrequency::ToneFrequencyEnum::UNKNOWN)
             ToneFrequency = tf;
-    } else if (prefix == "MC") {
-        if (params.length() >= 3) {
-            MemoryBank::MemoryBankEnum b =
-                MemoryBank::StringToBankEnum(params.substr(0, 1));
-            if (b != MemoryBank::MemoryBankEnum::UNKNOWN)
-                MemoryBank = b;
-            MemoryChannel::MemoryChannelEnum ch =
-                MemoryChannel::StringToChannelEnum(params.substr(1, 2));
-            if (ch != MemoryChannel::MemoryChannelEnum::UNKNOWN)
-                MemoryChannel = ch;
-        } else {
-            MemoryChannel::MemoryChannelEnum ch =
-                MemoryChannel::StringToChannelEnum(params);
-            if (ch != MemoryChannel::MemoryChannelEnum::UNKNOWN)
-                MemoryChannel = ch;
+    } else if (prefix == "MW") {
+        // MW: [bank(1)][channel(2)][freq(11)][split(1)][mode(1)][lockout(1)]
+        //     [toneStatus(1)][toneFreq(2)][offset(1)] = 21 chars total
+        if (params.length() == 21) {
+            int bank = params[0] - '0';
+            int channel = std::stoi(params.substr(1, 2));
+            MemorySlot& slot = memoryMap[bank][channel];
+            slot.occupied = true;
+
+            std::string freqStr = params.substr(3, 11);
+            if (freqStr.find_first_not_of(' ') != std::string::npos) {
+                slot.hasFrequency =
+                    slot.frequency.setFrequency(freqStr + "Hz").OK();
+            } else {
+                slot.hasFrequency = false;
+            }
+
+            std::string splitStr = params.substr(14, 1);
+            if (splitStr != " ")
+                slot.split =
+                    MemoryChannelSplit::StringToMemoryChannelSplit(splitStr);
+
+            std::string modeStr = params.substr(15, 1);
+            if (modeStr != " ")
+                slot.mode = Mode::StringToMode(modeStr);
+
+            std::string lockoutStr = params.substr(16, 1);
+            if (lockoutStr != " ")
+                slot.lockout = MemoryLockout::StringToMemoryLockout(lockoutStr);
+
+            std::string toneStatusStr = params.substr(17, 1);
+            if (toneStatusStr != " ")
+                slot.toneStatus = Switch::StringToSwitch(toneStatusStr);
+
+            std::string toneFreqStr = params.substr(18, 2);
+            if (toneFreqStr.find_first_not_of(' ') != std::string::npos)
+                slot.toneFrequency =
+                    ToneFrequency::StringToToneFrequency(toneFreqStr);
+
+            std::string offsetStr = params.substr(20, 1);
+            if (offsetStr != " ")
+                slot.offset = Offset::StringToOffset(offsetStr);
         }
     }
 }

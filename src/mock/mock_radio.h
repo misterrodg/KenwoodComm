@@ -1,6 +1,7 @@
 #ifndef MOCK_RADIO_H
 #define MOCK_RADIO_H
 
+#include "memory_slot.h"
 #include "parameter/busy.h"
 #include "parameter/communication_state.h"
 #include "parameter/destination_code.h"
@@ -38,6 +39,7 @@ public:
     bool GetEstablished() override;
 
 private:
+    std::map<int, std::map<int, MemorySlot>> memoryMap;
     Switch::SwitchEnum AutoInformationStatus = Switch::SwitchEnum::OFF;
     Busy::BusyEnum BusyIndicatorStatus = Busy::BusyEnum::OFF;
     CommunicationState::CommunicationStateEnum CommunicationState =
@@ -71,6 +73,8 @@ private:
     Switch::SwitchEnum XITStatus = Switch::SwitchEnum::OFF;
 
     std::string buildIFPayload() const;
+    std::string serializeMemorySlot(int bank, int channel,
+                                    const MemorySlot& slot) const;
     void applyWriteToState(const std::string& prefix,
                            const std::string& params);
 
