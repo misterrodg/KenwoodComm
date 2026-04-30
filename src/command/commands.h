@@ -24,6 +24,7 @@
 #include "lt.h"
 #include "mc.h"
 #include "md.h"
+#include "mr.h"
 #include "ms.h"
 #include "mt.h"
 #include "rd.h"
