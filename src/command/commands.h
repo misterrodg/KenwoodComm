@@ -1,13 +1,13 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "command_prefix.h"
-#include "command_base.h"
-#include "command_switch.h"
 #include "ai.h"
 #include "at.h"
 #include "by.h"
 #include "cn.h"
+#include "command_base.h"
+#include "command_prefix.h"
+#include "command_switch.h"
 #include "ct.h"
 #include "dc.h"
 #include "di.h"
@@ -27,8 +27,8 @@
 #include "mr.h"
 #include "ms.h"
 #include "mt.h"
-#include "rd.h"
 #include "rc.h"
+#include "rd.h"
 #include "rt.h"
 #include "ru.h"
 #include "rx.h"
