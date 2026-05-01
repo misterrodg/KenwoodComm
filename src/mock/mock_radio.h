@@ -1,7 +1,6 @@
 #ifndef MOCK_RADIO_H
 #define MOCK_RADIO_H
 
-#include "memory_slot.h"
 #include "parameter/busy.h"
 #include "parameter/communication_state.h"
 #include "parameter/destination_code.h"
@@ -9,6 +8,7 @@
 #include "parameter/function.h"
 #include "parameter/memory_bank.h"
 #include "parameter/memory_channel.h"
+#include "parameter/memory_slot.h"
 #include "parameter/mode.h"
 #include "parameter/model_number.h"
 #include "parameter/offset.h"
