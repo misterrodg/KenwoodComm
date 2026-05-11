@@ -20,9 +20,10 @@ public:
 
     void setModelNumber(Radios modelNumberValue);
     CommandResult set(const std::string& param) override;
-    core::Result<std::string> buildSetCommand() override;
+    CommandResult parseAnswer(const std::string& payload) override;
+    std::string getDisplayValue() const override;
 
-    std::string ToCommand();
+    std::string ToCommand(bool readStatus = false);
     CommandResult SetMemory(const std::string& parameter);
 };
 

@@ -8,13 +8,19 @@ CommandResult CommandMemory::set(const std::string& memoryString) {
     return SetMemory(memoryString);
 }
 
-core::Result<std::string> CommandMemory::buildSetCommand() {
-    if (!supportsSet()) {
-        return core::Error{core::ErrorCode::CommandNotImplemented,
-                           "Set command is not available for this command"};
-    }
+CommandResult CommandMemory::parseAnswer(const std::string& payload) {
+    return SetMemory(payload);
+}
 
-    return ToCommand();
+std::string CommandMemory::getDisplayValue() const {
+    std::string bankString = MemoryBank::BankEnumToString(memoryBank);
+    std::string channelString =
+        MemoryChannel::ChannelEnumToFriendlyString(memoryChannel);
+    if (radioModel == Radios::TS940S) {
+        return bankString + channelString;
+    } else {
+        return channelString;
+    }
 }
 
 CommandResult CommandMemory::SetMemory(const std::string& parameter) {
@@ -50,7 +56,7 @@ CommandResult CommandMemory::SetMemory(const std::string& parameter) {
     }
 }
 
-std::string CommandMemory::ToCommand() {
+std::string CommandMemory::ToCommand(bool readStatus) {
     std::string command = CommandPrefix::CommandToString(commandPrefix);
     int bufferLength = CommandPrefix::COMMAND_LENGTH;
 
